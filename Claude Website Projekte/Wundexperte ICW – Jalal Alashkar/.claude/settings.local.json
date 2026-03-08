@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version)",
+      "Bash(npx --version)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where npx)",
+      "Bash(where node)",
+      "Bash(where npm)",
+      "Bash(where serve)",
+      "Bash(npm install -g serve)",
+      "Bash(python3 -c \"import sys,json; p=json.load\\(sys.stdin\\); print\\(p.get\\(''bin'',{}\\)\\)\")",
+      "Bash(node -e \"const p=require\\(''C:/Users/jonas/AppData/Roaming/npm/node_modules/serve/package.json''\\); console.log\\(JSON.stringify\\(p.bin\\)\\)\")",
+      "Bash(node \"/c/Users/jonas/AppData/Roaming/npm/node_modules/serve/build/main.js\" --version)"
+    ]
+  }
+}

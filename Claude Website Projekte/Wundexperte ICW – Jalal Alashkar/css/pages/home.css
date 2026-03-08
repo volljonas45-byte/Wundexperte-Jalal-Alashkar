@@ -1,0 +1,231 @@
+/* ============================================================
+   HOME PAGE — index.html
+   ============================================================ */
+
+/* ── Fade-in animation (data-fade elements) ── */
+[data-fade] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+[data-fade].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-fade="delay-1"] { transition-delay: 0.10s; }
+[data-fade="delay-2"] { transition-delay: 0.20s; }
+[data-fade="delay-3"] { transition-delay: 0.30s; }
+[data-fade="delay-4"] { transition-delay: 0.40s; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding: var(--space-7) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 55%;
+  height: 100%;
+  background: var(--color-bg-soft);
+  z-index: -1;
+  border-radius: 0 0 0 60px;
+}
+
+.hero-content {
+  padding-right: var(--space-4);
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--color-accent-light);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-3);
+}
+
+.hero h1 {
+  font-size: var(--font-size-h1);
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+  line-height: 1.15;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--color-accent);
+}
+
+.hero-subline {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+  max-width: 520px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.hero-trust-badges {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.hero-image {
+  position: relative;
+}
+
+.hero-image .img-placeholder {
+  min-height: 560px;
+  border-radius: var(--radius-xl);
+}
+
+.hero-image-badge {
+  position: absolute;
+  bottom: var(--space-4);
+  left: -var(--space-3);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2) var(--space-3);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 200px;
+}
+
+.hero-image-badge .badge-icon {
+  font-size: 32px;
+}
+
+.hero-image-badge p {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  max-width: none;
+}
+
+.hero-image-badge strong {
+  display: block;
+  font-size: 15px;
+  color: var(--color-primary);
+}
+
+/* ── TARGET GROUPS ── */
+.target-group-card {
+  padding: var(--space-4);
+}
+
+.target-group-card .tg-icon {
+  font-size: 40px;
+  margin-bottom: var(--space-2);
+}
+
+.target-group-card h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-1);
+  color: var(--color-primary);
+}
+
+.target-group-card p {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  max-width: none;
+}
+
+/* ── ABOUT TEASER ── */
+.about-teaser-img .img-placeholder {
+  min-height: 460px;
+}
+
+.about-teaser-content {
+  padding: var(--space-2) 0;
+}
+
+.about-teaser-content .checklist {
+  margin: var(--space-4) 0;
+}
+
+/* ── TESTIMONIAL SECTION ── */
+.testimonial-section {
+  background: var(--color-bg-soft);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 992px) {
+  .hero-image-badge {
+    display: none;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: var(--space-6) 0;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero::before {
+    display: none;
+  }
+
+  .hero-content {
+    padding-right: 0;
+    order: 1;
+  }
+
+  .hero-image {
+    order: 0;
+  }
+
+  .hero-image .img-placeholder {
+    min-height: 320px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-ctas {
+    flex-direction: column;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+}
