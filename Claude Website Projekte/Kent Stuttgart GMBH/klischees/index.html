@@ -4,973 +4,756 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Klischees — Kent Stuttgart GmbH</title>
+  <meta name="description" content="Hochwertige Druckplatten für den Tampondruck. Stahlklischees, Bandstahl, Walzen, Kunststoff, Aluminium-Laser. Seit der Firmengründung." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ═══ TOKENS ═══ */
+    /* ══════════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════════ */
     :root {
-      --blue:   #1058C0;
-      --blue2:  #1A76F0;
-      --blue3:  #0C469E;
-      --red:    #C8221C;
-      --red2:   #E03530;
-      --bg:     #04091A;
-      --bg1:    #070D20;
-      --bg2:    #0A1228;
-      --surface:#101C3A;
-      --muted:  #374F72;
-      --dim:    #6088B0;
-      --light:  #C2D4E8;
-      --white:  #FFFFFF;
-
-      --font-display: 'Barlow Condensed', sans-serif;
-      --font-body:    'Barlow', sans-serif;
-      --font-mono:    'Space Mono', monospace;
-
-      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+      --ink:       #0B1526;
+      --ink2:      #1C2E45;
+      --paper:     #FFFFFF;
+      --paper2:    #F5F7FA;
+      --paper3:    #EEF1F6;
+      --blue:      #1058C0;
+      --blue2:     #1A76F0;
+      --blue-soft: #EBF2FF;
+      --red:       #C8221C;
+      --red2:      #E03530;
+      --red-soft:  #FEF0EF;
+      --text:      #0B1526;
+      --text2:     #3A526B;
+      --text3:     #6B8299;
+      --border:    #DDE4EE;
+      --border2:   #C8D5E8;
+      --fd: 'Big Shoulders Display', sans-serif;
+      --fo: 'Oswald', sans-serif;
+      --fb: 'DM Sans', sans-serif;
+      --fm: 'JetBrains Mono', monospace;
+      --ease: cubic-bezier(0.19,1,0.22,1);
     }
 
-    /* ═══ RESET ═══ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
-      color: var(--light);
-      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--text2);
+      font-family: var(--fb);
       font-weight: 400;
-      line-height: 1.6;
+      line-height: 1.7;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--paper2); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-    /* ═══ NOISE TEXTURE ═══ */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px;
+    @keyframes fadeUp  { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+
+    .reveal { opacity:0; transform:translateY(20px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal.visible { opacity:1; transform:none; }
+    .reveal-delay-1 { transition-delay:.1s; }
+    .reveal-delay-2 { transition-delay:.2s; }
+    .reveal-delay-3 { transition-delay:.3s; }
+    .reveal-delay-4 { transition-delay:.4s; }
+    .reveal-delay-5 { transition-delay:.5s; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .divider { height: 1px; background: var(--border); }
+    .divider-accent {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue2) 35%, var(--red) 65%, transparent);
+      opacity: .2;
     }
 
-    /* ═══ NAV ═══ */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 4rem;
-      height: 72px;
+    /* ════════════════════════════════════════
+       TOPBAR
+    ════════════════════════════════════════ */
+    #topbar {
+      background: var(--blue); padding: .45rem 2rem;
+      position: relative; z-index: 600;
     }
-    nav::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: transparent;
-      backdrop-filter: blur(0px);
-      transition: backdrop-filter 0.4s, background 0.4s, border-color 0.4s;
+    .topbar-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .topbar-left {
+      font-family: var(--fm); font-size: .52rem;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+    }
+    .topbar-phone {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--fd); font-size: .95rem; font-weight: 700;
+      color: #fff; background: var(--red);
+      padding: .28rem .95rem; border-radius: 5px;
+      transition: background .18s;
+    }
+    .topbar-phone:hover { background: var(--red2); }
+    @media (max-width:768px) { #topbar { padding:.4rem 1.25rem; } .topbar-left { display:none; } }
+
+    /* ════════════════════════════════════════
+       NAV
+    ════════════════════════════════════════ */
+    #nav {
+      position: fixed; top: 37px; left: 0; right: 0;
+      z-index: 500; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      transition: top .3s var(--ease);
+    }
+    #nav.bar-gone { top: 0; }
+    #nav::before {
+      content: ''; position: absolute; inset: 0;
+      background: transparent; backdrop-filter: blur(0);
       border-bottom: 1px solid transparent;
+      transition: all .35s var(--ease);
     }
-    nav.scrolled::before {
-      background: rgba(6,23,42,0.95);
+    #nav.scrolled::before {
+      background: rgba(255,255,255,.96);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(43,114,212,0.15);
+      border-bottom-color: var(--border);
+      box-shadow: 0 1px 20px rgba(0,0,0,.06);
     }
-    .nav-logo {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .nav-logo-img {
-      height: 34px;
-      width: auto;
-      display: block;
-      mix-blend-mode: screen;
-    }
+    .nav-logo { position:relative; z-index:1; }
+    .nav-logo-img { height: 30px; width: auto; mix-blend-mode: screen; transition: filter .3s; }
+    #nav.scrolled .nav-logo-img { mix-blend-mode: normal; }
+
     .nav-links {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      list-style: none;
+      position:relative; z-index:1;
+      display:flex; align-items:center; gap:2.2rem; list-style:none;
     }
     .nav-links a {
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--dim);
-      transition: color 0.2s;
-      position: relative;
+      font-family: var(--fd); font-size: .8rem; font-weight: 600;
+      letter-spacing: .09em; text-transform: uppercase;
+      color: rgba(255,255,255,.65);
+      transition: color .2s; position: relative;
     }
+    #nav.scrolled .nav-links a { color: var(--text2); }
     .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--blue2);
-      transition: width 0.3s var(--ease-out-expo);
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 2px; background: var(--blue2);
+      transition: width .25s var(--ease);
     }
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active {
-      color: var(--white);
-    }
-    .nav-links a.active::after {
-      width: 100%;
-      background: var(--red);
-    }
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .nav-lang {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    .nav-lang:hover { color: var(--dim); }
-    .nav-cta {
-      position: relative;
-      font-family: var(--font-display);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--white);
-      padding: 0.6rem 1.6rem;
-      background: transparent;
-      border: 1px solid rgba(43,114,212,0.6);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-    }
-    .nav-cta:hover {
-      background: var(--blue2);
-      border-color: var(--blue2);
-    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    #nav.scrolled .nav-links a:hover, #nav.scrolled .nav-links a.active { color: var(--text); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
-    /* ═══ HERO ═══ */
+    .nav-right { position:relative; z-index:1; display:flex; align-items:center; gap:1.2rem; }
+    .nav-cta {
+      font-family: var(--fd); font-size: .75rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: #fff; padding: .5rem 1.35rem;
+      border: 1.5px solid rgba(255,255,255,.3); border-radius: 7px;
+      transition: all .2s;
+    }
+    #nav.scrolled .nav-cta { color: var(--text); border-color: var(--border2); }
+    .nav-cta:hover { background: var(--blue2); border-color: var(--blue2); color: #fff !important; }
+
+    @media (max-width:768px) { #nav { padding:0 1.25rem; } .nav-links { display:none; } }
+
+    /* ════════════════════════════════════════
+       HERO  —  dark
+    ════════════════════════════════════════ */
     .hero {
       position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      height: 65vh; min-height: 500px;
       overflow: hidden;
-      padding: 10rem 4rem 7rem;
-    }
-    .hero-light {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 75% 55% at 65% 35%, rgba(26,118,240,0.16) 0%, transparent 60%),
-        radial-gradient(ellipse 55% 45% at 20% 75%, rgba(200,34,28,0.10) 0%, transparent 55%),
-        radial-gradient(ellipse 35% 30% at 80% 70%, rgba(16,88,192,0.06) 0%, transparent 50%);
-      animation: heroBreath 9s ease-in-out infinite;
-    }
-    @keyframes heroBreath {
-      0%, 100% { opacity: 0.75; transform: scale(1); }
-      50%       { opacity: 1;    transform: scale(1.04); }
+      background: #080F1E;
+      display: flex; align-items: flex-end;
     }
     .hero-grid {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
+      position:absolute; inset:0; pointer-events:none;
       background-image:
-        linear-gradient(rgba(43,114,212,0.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(43,114,212,0.022) 1px, transparent 1px);
-      background-size: 90px 90px;
+        linear-gradient(rgba(26,118,240,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,118,240,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(6,23,42,0.7) 100%);
+    .hero-glow {
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 70% at 15% 55%, rgba(16,88,192,.2) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 50% at 75% 70%, rgba(200,34,28,.09) 0%, transparent 60%);
+      animation: heroBreath 9s ease-in-out infinite;
+    }
+    @keyframes heroBreath { 0%,100% { opacity:.8; } 50% { opacity:1; } }
+    .hero-fade-bottom {
+      position:absolute; bottom:0; left:0; right:0; height:35%;
+      background: linear-gradient(to top, #080F1E, transparent);
+      pointer-events:none;
     }
     .hero-content {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      position:relative; z-index:10;
+      padding: 0 2.5rem 5rem;
+      max-width: 760px;
     }
     .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(43,114,212,0.7);
-      margin-bottom: 5rem;
-      opacity: 0;
-      animation: fadeIn 1s ease 0.4s forwards;
+      font-family: var(--fm); font-size: .55rem;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(26,118,240,.85);
+      display: flex; align-items: center; gap: .65rem;
+      margin-bottom: 1.8rem;
+      opacity: 0; animation: fadeIn 1s ease .3s forwards;
     }
-    .hero-eyebrow-dot {
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: rgba(26,118,240,0.5);
-      flex-shrink: 0;
+    .hero-eyebrow::before { content: ''; width: 20px; height: 1px; background: rgba(26,118,240,.7); }
+    .hero-h1 {
+      font-family: var(--fd); font-weight: 900;
+      font-size: clamp(5rem, 12vw, 13rem);
+      line-height: .88; letter-spacing: -.01em;
+      text-transform: uppercase; color: #fff;
+      opacity: 0; transform: translateY(40px);
+      animation: fadeUp 1.4s var(--ease) .5s forwards;
     }
-    .hero-eyebrow-dot:last-child {
-      background: rgba(200,34,28,0.65);
-    }
-    .hero-headline {
-      font-family: var(--font-display);
-      font-size: clamp(5.5rem, 13vw, 15rem);
-      font-weight: 800;
-      line-height: 0.9;
-      letter-spacing: -0.01em;
-      color: var(--white);
-      text-transform: uppercase;
-      opacity: 0;
-      transform: translateY(50px);
-      animation: fadeUp 1.4s cubic-bezier(0.19, 1, 0.22, 1) 0.6s forwards;
-    }
-    .hero-headline .hl-ghost {
+    .hero-h1 .ghost {
       display: block;
-      color: rgba(194,212,232,0.10);
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      font-size: 0.7em;
+      color: rgba(255,255,255,.08);
+      font-weight: 300; letter-spacing: .06em; font-size: .65em;
     }
-    .hero-headline .hl-solid {
-      display: block;
-      color: var(--white);
-    }
-    .hero-headline .hl-accent {
-      display: block;
-      color: var(--red);
-      font-size: 0.52em;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-    }
-    .hero-divider {
-      margin: 4rem 0 3rem;
-      width: 1px;
-      height: 64px;
-      background: linear-gradient(to bottom, rgba(26,118,240,0.7), rgba(200,34,28,0.4), transparent);
-      opacity: 0;
-      animation: fadeIn 0.8s ease 1.4s forwards;
-    }
+    .hero-h1 .solid { display: block; }
     .hero-sub {
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--dim);
-      opacity: 0;
-      animation: fadeIn 0.8s ease 1.6s forwards;
+      font-family: var(--fo); font-size: 1rem; font-weight: 400;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-top: 2rem;
+      opacity: 0; animation: fadeIn 1s ease 1.4s forwards;
     }
-    .hero-scroll {
-      position: absolute;
-      bottom: 3.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.7rem;
-      opacity: 0;
-      animation: fadeIn 1s ease 2.4s forwards;
+    .hero-cta {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeIn 1s ease 1.6s forwards;
     }
-    .hero-scroll span {
-      font-family: var(--font-mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(61,90,122,0.5);
+    .btn-hero-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--fd); font-size: .85rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: #fff; background: var(--blue2);
+      padding: .8rem 1.8rem; border-radius: 7px;
+      transition: background .2s, transform .2s;
+      box-shadow: 0 4px 20px rgba(26,118,240,.35);
     }
-    .hero-scroll-line {
-      width: 1px;
-      height: 52px;
-      background: linear-gradient(to bottom, rgba(26,118,240,0.45), rgba(200,34,28,0.2), transparent);
-      animation: scrollPulse 3s ease-in-out 2.5s infinite;
+    .btn-hero-primary:hover { background: var(--blue); transform: translateY(-1px); }
+    .btn-hero-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--fd); font-size: .85rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: rgba(255,255,255,.7); border: 1.5px solid rgba(255,255,255,.2);
+      padding: .8rem 1.8rem; border-radius: 7px;
+      transition: all .2s;
     }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(0.9); }
-      50%       { opacity: 1;   transform: scaleY(1.1); }
-    }
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
+    .btn-hero-outline:hover { color: #fff; border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
 
-    /* ═══ SECTION HELPERS ═══ */
-    .section {
-      position: relative;
-      padding: 10rem 4rem;
+    /* ════════════════════════════════════════
+       STATS STRIP  —  dark
+    ════════════════════════════════════════ */
+    .stats-strip {
+      background: var(--ink);
+      padding: 3.5rem 2rem;
     }
-    .section-inner {
-      max-width: 1200px;
-      margin: 0 auto;
+    .stats-strip-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
     }
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--blue2);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 1.5rem;
-    }
-    .section-label::before {
-      content: '';
-      width: 24px; height: 1px;
-      background: var(--blue2);
-    }
-
-    /* Reveal animation */
-    .reveal {
-      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
-    }
-    .reveal.animate-in {
-      animation: revealIn 0.9s var(--ease-out-expo) both;
-    }
-    @keyframes revealIn {
-      from { opacity: 0; transform: translateY(36px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ═══ GRADIENT DIVIDER ═══ */
-    .gradient-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--blue2) 30%, var(--red) 70%, transparent);
-      opacity: 0.4;
-    }
-
-    /* ═══ INTRO SECTION ═══ */
-    .intro-section {
-      background: var(--bg1);
-    }
-    .intro-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8rem;
-      align-items: start;
-    }
-    .intro-heading {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 5vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-    }
-    .intro-heading .slash {
-      color: var(--blue2);
-    }
-    .intro-body {
-      font-size: 0.95rem;
-      line-height: 1.85;
-      color: var(--dim);
-      font-weight: 300;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Stats column */
-    .stats-column {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .stat-block {
-      padding: 2.5rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      position: relative;
-    }
-    .stat-block:first-child {
-      padding-top: 0;
-    }
-    .stat-block:last-child {
-      border-bottom: none;
-    }
-    .stat-block::before {
-      content: '';
-      position: absolute;
-      left: -2rem;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--blue2), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .stat-block:nth-child(even)::before {
-      background: linear-gradient(to bottom, var(--red), transparent);
-    }
-    .stat-block:hover::before { opacity: 1; }
+    .stat-item { text-align: center; }
     .stat-num {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 5vw, 5rem);
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1;
-      letter-spacing: -0.03em;
+      font-family: var(--fd); font-size: clamp(2.8rem, 4vw, 4rem);
+      font-weight: 900; line-height: 1; color: #fff;
+      letter-spacing: -.02em;
     }
-    .stat-num .stat-accent {
-      color: var(--blue2);
-    }
-    .stat-block:nth-child(even) .stat-num .stat-accent {
-      color: var(--red);
-    }
+    .stat-num span { color: var(--blue2); }
+    .stat-num.red span { color: var(--red); }
     .stat-unit {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 0.4rem;
-      display: block;
+      font-family: var(--fm); font-size: .52rem;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); display: block; margin-top: .4rem;
     }
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--dim);
-      margin-top: 0.3rem;
-    }
+    @media (max-width:768px) { .stats-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1rem; } }
 
-    /* ═══ CATEGORIES SECTION ═══ */
-    .categories-section {
-      background: var(--bg);
+    /* ════════════════════════════════════════
+       INTRO SECTION
+    ════════════════════════════════════════ */
+    .intro-section { background: var(--paper2); padding: 7rem 2rem; }
+    .intro-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 420px;
+      gap: 6rem; align-items: start;
     }
-    .categories-header {
-      margin-bottom: 5rem;
-      text-align: center;
-    }
-    .categories-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      text-transform: uppercase;
-    }
-    .categories-title .slash {
+    .eyebrow {
+      font-family: var(--fm); font-size: .58rem;
+      letter-spacing: .28em; text-transform: uppercase;
       color: var(--blue2);
+      display: inline-flex; align-items: center; gap: .65rem;
+      margin-bottom: 1rem;
     }
+    .eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--blue2); flex-shrink:0; }
+    .eyebrow.red { color: var(--red); }
+    .eyebrow.red::before { background: var(--red); }
+    .section-h2 {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(2.8rem,4.5vw,5rem);
+      line-height: .92; letter-spacing: -.01em;
+      text-transform: uppercase; color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .section-h2 em { font-style:normal; color: var(--blue2); }
+    .section-h2 .accent-r { font-style:normal; color: var(--red); }
+    .section-h2.on-dark { color: #fff; }
+    .intro-body {
+      font-size: .95rem; line-height: 1.8;
+      color: var(--text2); max-width: 520px;
+    }
+    .intro-body + .intro-body { margin-top: 1rem; }
 
-    /* 2×3 grid */
+    /* Right column — numbered facts */
+    .fact-list { display: flex; flex-direction: column; gap: 0; }
+    .fact-row {
+      display: flex; align-items: flex-start; gap: 1.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .fact-row:first-child { padding-top: 0; }
+    .fact-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .fact-num {
+      font-family: var(--fo); font-size: 2.4rem; font-weight: 600;
+      line-height: 1; color: var(--blue2); flex-shrink: 0; min-width: 60px;
+    }
+    .fact-row:nth-child(even) .fact-num { color: var(--red); }
+    .fact-label {
+      font-family: var(--fd); font-size: 1.1rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .04em;
+      color: var(--text); margin-bottom: .25rem;
+    }
+    .fact-desc { font-size: .85rem; color: var(--text3); line-height: 1.6; }
+
+    @media (max-width:1024px) { .intro-inner { grid-template-columns: 1fr; gap: 3.5rem; } }
+
+    /* ════════════════════════════════════════
+       CATEGORIES SECTION
+    ════════════════════════════════════════ */
+    .categories-section { background: var(--paper); padding: 7rem 2rem; }
+    .categories-header {
+      max-width: 1200px; margin: 0 auto 4.5rem;
+    }
     .categories-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
     .cat-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--blue2);
+      padding: 2.5rem 2.5rem 2rem;
       position: relative;
-      background: var(--surface);
-      padding: 3rem;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.06);
-      overflow: hidden;
+      transition: border-color .3s, box-shadow .3s, transform .3s var(--ease);
       cursor: pointer;
-      transition: border-color 0.4s, transform 0.4s cubic-bezier(0.19,1,0.22,1), box-shadow 0.4s;
     }
-    .cat-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.5s;
-      border-radius: 16px;
-    }
-    .cat-card.blue::before {
-      background: linear-gradient(145deg, rgba(26,118,240,0.09) 0%, transparent 55%);
-    }
-    .cat-card.red::before {
-      background: linear-gradient(145deg, rgba(200,34,28,0.09) 0%, transparent 55%);
-    }
+    .cat-card.red-accent { border-left-color: var(--red); }
     .cat-card:hover {
-      transform: translateY(-4px);
+      border-color: var(--border2);
+      box-shadow: 0 8px 40px rgba(0,0,0,.07);
+      transform: translateY(-2px);
     }
-    .cat-card.blue:hover {
-      border-color: rgba(26,118,240,0.3);
-      box-shadow: 0 20px 60px rgba(4,9,26,0.5), 0 0 0 1px rgba(26,118,240,0.14);
+    .cat-card.red-accent:hover { border-left-color: var(--red2); border-color: rgba(200,34,28,.25); }
+    .cat-card:not(.red-accent):hover { border-left-color: var(--blue); border-color: rgba(26,118,240,.25); }
+    .cat-index {
+      font-family: var(--fo); font-size: .65rem; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 1.2rem;
     }
-    .cat-card.red:hover {
-      border-color: rgba(200,34,28,0.3);
-      box-shadow: 0 20px 60px rgba(4,9,26,0.5), 0 0 0 1px rgba(200,34,28,0.14);
-    }
-    .cat-card:hover::before { opacity: 1; }
-
-    /* CAD corner brackets */
-    .cat-card::after {
-      content: '';
-      position: absolute;
-      bottom: 10px; right: 10px;
-      width: 14px; height: 14px;
-      border-right: 1px solid rgba(43,114,212,0.18);
-      border-bottom: 1px solid rgba(43,114,212,0.18);
-      pointer-events: none;
-      transition: border-color 0.35s;
-    }
-    .cat-card.red::after {
-      border-color: rgba(200,34,28,0.18);
-    }
-    .cat-card.blue:hover::after { border-color: rgba(43,114,212,0.45); }
-    .cat-card.red:hover::after { border-color: rgba(200,34,28,0.45); }
-
-    .cat-num {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      margin-bottom: 1.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    .cat-num::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(43,114,212,0.18), transparent);
-    }
-    .cat-card.red .cat-num::after {
-      background: linear-gradient(90deg, rgba(200,34,28,0.18), transparent);
-    }
-    .cat-name {
-      font-family: var(--font-display);
-      font-size: 1.9rem;
-      font-weight: 800;
-      color: var(--white);
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-      line-height: 1;
-      margin-bottom: 1rem;
+    .cat-title {
+      font-family: var(--fd); font-size: clamp(1.6rem,2.5vw,2.2rem);
+      font-weight: 800; text-transform: uppercase;
+      letter-spacing: -.01em; line-height: 1;
+      color: var(--text); margin-bottom: .75rem;
     }
     .cat-desc {
-      font-size: 0.88rem;
-      line-height: 1.75;
-      color: var(--dim);
-      font-weight: 300;
-      margin-bottom: 1.8rem;
+      font-size: .88rem; line-height: 1.7;
+      color: var(--text2); margin-bottom: 1.5rem;
+      max-width: 340px;
     }
     .cat-badge {
-      display: inline-flex;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.8rem;
-      border-radius: 4px;
-      margin-bottom: 2rem;
+      display: inline-flex; align-items: center;
+      font-family: var(--fm); font-size: .58rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .3rem .75rem; border-radius: 4px;
+      margin-bottom: 1.8rem;
+      background: var(--blue-soft); color: var(--blue);
+      border: 1px solid rgba(26,118,240,.2);
     }
-    .cat-card.blue .cat-badge {
-      color: var(--blue2);
-      background: rgba(26,118,240,0.1);
-      border: 1px solid rgba(26,118,240,0.2);
-    }
-    .cat-card.red .cat-badge {
-      color: var(--red2);
-      background: rgba(200,34,28,0.1);
-      border: 1px solid rgba(200,34,28,0.2);
+    .cat-card.red-accent .cat-badge {
+      background: var(--red-soft); color: var(--red);
+      border-color: rgba(200,34,28,.2);
     }
     .cat-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: color 0.2s, gap 0.2s;
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: var(--fd); font-size: .78rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--blue2);
+      transition: gap .2s;
     }
-    .cat-link:hover { gap: 0.8rem; }
-    .cat-card.blue .cat-link:hover { color: var(--blue2); }
-    .cat-card.red .cat-link:hover { color: var(--red2); }
+    .cat-card.red-accent .cat-link { color: var(--red); }
+    .cat-link:hover { gap: .75rem; }
+    .cat-corner {
+      position: absolute; bottom: 1.2rem; right: 1.5rem;
+      font-family: var(--fm); font-size: .5rem;
+      letter-spacing: .15em; color: var(--border2);
+    }
 
-    /* CTA strip */
-    .cta-strip {
-      margin-top: 5rem;
-      text-align: center;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--white);
-      padding: 0.85rem 2.4rem;
-      background: transparent;
-      border: 1px solid rgba(43,114,212,0.5);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      position: relative;
-    }
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(43,114,212,0.08);
-      opacity: 0;
-      transition: opacity 0.3s;
-      border-radius: 10px;
-    }
-    .btn-primary:hover {
-      border-color: rgba(26,118,240,0.9);
-      box-shadow: 0 0 28px rgba(26,118,240,0.22), 0 0 8px rgba(200,34,28,0.08), inset 0 0 20px rgba(26,118,240,0.05);
-    }
-    .btn-primary:hover::before { opacity: 1; }
+    @media (max-width:900px) { .categories-grid { grid-template-columns: 1fr; } }
 
-    /* ═══ FOOTER ═══ */
+    /* ════════════════════════════════════════
+       CTA SECTION  —  dark
+    ════════════════════════════════════════ */
+    .cta-section {
+      background: var(--ink);
+      padding: 7rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 80% at 20% 50%, rgba(16,88,192,.15) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 60% at 80% 60%, rgba(200,34,28,.08) 0%, transparent 60%);
+    }
+    .cta-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: center;
+    }
+    .cta-heading {
+      font-family: var(--fd); font-weight: 900;
+      font-size: clamp(2.5rem,4vw,4.5rem);
+      line-height: .92; text-transform: uppercase;
+      color: #fff; letter-spacing: -.01em;
+      position: relative; z-index: 1;
+    }
+    .cta-heading span { color: var(--blue2); }
+    .cta-sub {
+      font-size: .95rem; color: rgba(255,255,255,.45);
+      margin-top: 1rem; max-width: 480px;
+      position: relative; z-index: 1;
+    }
+    .cta-actions {
+      display: flex; flex-direction: column; gap: 1rem;
+      position: relative; z-index: 1;
+      flex-shrink: 0;
+    }
+    .btn-cta-primary {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-family: var(--fd); font-size: .85rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: #fff; background: var(--blue2);
+      padding: .9rem 2rem; border-radius: 7px;
+      box-shadow: 0 4px 20px rgba(26,118,240,.35);
+      transition: background .2s, transform .2s;
+    }
+    .btn-cta-primary:hover { background: var(--blue); transform: translateY(-1px); }
+    .btn-cta-outline {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-family: var(--fd); font-size: .85rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,.65); border: 1.5px solid rgba(255,255,255,.2);
+      padding: .9rem 2rem; border-radius: 7px;
+      transition: all .2s;
+    }
+    .btn-cta-outline:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+
+    @media (max-width:768px) { .cta-inner { grid-template-columns: 1fr; } .cta-actions { flex-direction: row; flex-wrap: wrap; } }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
     footer {
-      background: var(--bg);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 4rem 4rem 2.5rem;
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 4rem 2rem 2.5rem;
     }
     .footer-top {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 4rem;
-      padding-bottom: 3rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem; padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
       margin-bottom: 2rem;
     }
-    .footer-logo-img {
-      height: 36px;
-      width: auto;
-      display: block;
-      margin-bottom: 1rem;
-      mix-blend-mode: screen;
-    }
-    .footer-tagline {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 260px;
-      margin-bottom: 1.2rem;
-    }
-    .footer-address-line {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-    .footer-certs {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
+    .footer-logo-img { height: 32px; width: auto; display: block; margin-bottom: 1rem; mix-blend-mode: screen; }
+    .footer-tagline { font-size: .82rem; color: rgba(255,255,255,.3); line-height: 1.7; max-width: 260px; margin-bottom: 1.2rem; }
+    .footer-address-line { font-size: .78rem; color: rgba(255,255,255,.28); line-height: 1.75; }
+    .footer-certs { display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
     .footer-cert {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-family: var(--font-mono);
-      font-size: 0.48rem;
-      letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.16);
-      text-transform: uppercase;
+      display: flex; align-items: center; gap: .4rem;
+      font-family: var(--fm); font-size: .47rem;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: rgba(255,255,255,.18);
     }
-    .footer-cert::before {
-      content: '▸';
-      color: rgba(43,114,212,0.38);
-      font-size: 0.45rem;
-    }
+    .footer-cert::before { content: '▸'; color: rgba(26,118,240,.4); font-size: .44rem; }
     .footer-col-title {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--dim);
-      margin-bottom: 1.2rem;
+      font-family: var(--fd); font-size: .7rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.55); margin-bottom: 1.2rem;
     }
-    .footer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-    }
-    .footer-links a {
-      font-size: 0.85rem;
-      color: var(--muted);
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--light); }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-links a { font-size: .82rem; color: rgba(255,255,255,.28); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.7); }
     .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .footer-copy {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-    }
-    .footer-legal {
-      display: flex;
-      gap: 2rem;
-    }
-    .footer-legal a {
-      font-size: 0.75rem;
-      color: var(--muted);
-      transition: color 0.2s;
-    }
-    .footer-legal a:hover { color: var(--dim); }
-
-    /* ═══ SCROLLBAR ═══ */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-
-    /* ═══ RESPONSIVE ═══ */
-    @media (max-width: 1024px) {
-      .intro-layout { grid-template-columns: 1fr; gap: 4rem; }
-      .categories-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
-      .section { padding: 6rem 2rem; }
-    }
-    @media (max-width: 768px) {
-      nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
-      .hero { padding: 6rem 1.5rem 4rem; }
-      .hero-headline { font-size: clamp(4rem, 18vw, 7rem); }
-      .hero-eyebrow { margin-bottom: 3rem; }
-      .footer-top { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
-    }
+    .footer-copy { font-family: var(--fm); font-size: .6rem; color: rgba(255,255,255,.22); letter-spacing: .1em; }
+    .footer-legal { display: flex; gap: 2rem; }
+    .footer-legal a { font-size: .75rem; color: rgba(255,255,255,.28); transition: color .2s; }
+    .footer-legal a:hover { color: rgba(255,255,255,.6); }
+    @media (max-width:1024px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+    @media (max-width:600px) { .footer-top { grid-template-columns: 1fr; gap: 2rem; } .footer-bottom { flex-direction:column; gap:1rem; text-align:center; } }
   </style>
 </head>
 <body>
 
-  <!-- ════ NAV ════ -->
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-inner">
+      <span class="topbar-left">Tampondruck · Seit 1987 · Stuttgart</span>
+      <a href="tel:+49711000000" class="topbar-phone">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 .01h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        +49 (0)711 ———
+      </a>
+    </div>
+  </div>
+
+  <!-- NAV -->
   <nav id="nav">
     <a href="../index.html" class="nav-logo">
       <img src="../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img">
     </a>
     <ul class="nav-links">
-      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html">Startseite</a></li>
       <li><a href="../maschinen/index.html">Maschinen</a></li>
       <li><a href="index.html" class="active">Klischees</a></li>
       <li><a href="../ueber-uns.html">Unternehmen</a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang">DE · EN</span>
-      <a href="mailto:info@kent-stuttgart.de" class="nav-cta">Anfrage</a>
+      <a href="../index.html#kontakt" class="nav-cta">Anfrage</a>
     </div>
   </nav>
 
-  <!-- ════ HERO ════ -->
-  <section class="hero" id="hero">
-    <div class="hero-light"></div>
+  <!-- HERO -->
+  <section class="hero">
     <div class="hero-grid"></div>
-
+    <div class="hero-glow"></div>
+    <div class="hero-fade-bottom"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">
-        <span class="hero-eyebrow-dot"></span>
-        Klischees · Kent Stuttgart GmbH
-        <span class="hero-eyebrow-dot"></span>
-      </div>
-
-      <h1 class="hero-headline">
-        <span class="hl-ghost">KLISCHEES</span>
-        <span class="hl-solid">UNSER MATERIAL.</span>
-        <span class="hl-accent">Präzise Druckplatten seit der Firmengründung</span>
+      <div class="hero-eyebrow">Klischees &nbsp;·&nbsp; Kent Stuttgart GmbH &nbsp;·&nbsp; Seit 1987</div>
+      <h1 class="hero-h1">
+        <span class="ghost">DRUCKPLATTEN</span>
+        <span class="solid">KLISCHEES.</span>
       </h1>
-
-      <div class="hero-divider"></div>
-
-      <p class="hero-sub">Stahlklischees · Kunststoff · Aluminium · Laser Repro</p>
-    </div>
-
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="hero-scroll-line"></div>
-    </div>
-  </section>
-
-  <div class="gradient-divider"></div>
-
-  <!-- ════ INTRO ════ -->
-  <section class="section intro-section" id="intro">
-    <div class="section-inner">
-      <div class="intro-layout">
-        <!-- Left: big statement -->
-        <div class="reveal">
-          <div class="section-label">Über unsere Klischees</div>
-          <h2 class="intro-heading">
-            IN LANGER <span class="slash">/</span><br>TRADITION.
-          </h2>
-          <p class="intro-body">
-            In langer Tradition fertigt Kent Klischees für das Tampondruckverfahren. Hochqualifizierte Fachkräfte sorgen für eine hervorragende Qualität der Druckplatten. Unsere Reproabteilung verfügt über jahrzehntelange Erfahrung bei der Herstellung von Farbsätzen und schwierigen Druckmotiven.
-          </p>
-          <p class="intro-body">
-            Auf modernen EDV-Anlagen verarbeiten wir Dateien in allen gängigen Grafikformaten für Mac und PC. Unsere Ätzerei verfügt über modernste Anlagen zur Herstellung von allen Arten von Stahlklischees. Kürzeste Liefertermine bei gleichbleibend hoher Qualität.
-          </p>
-        </div>
-
-        <!-- Right: 3 key stats -->
-        <div class="stats-column reveal" style="transition-delay:0.15s">
-          <div class="stat-block">
-            <div class="stat-num"><span class="stat-accent">30+</span></div>
-            <span class="stat-unit">Jahre</span>
-            <div class="stat-label">Klischee-Erfahrung</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num"><span class="stat-accent">65 Rc</span></div>
-            <span class="stat-unit">Härte</span>
-            <div class="stat-label">Stahlklischee-Legierung</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num"><span class="stat-accent">500k+</span></div>
-            <span class="stat-unit">Drucke</span>
-            <div class="stat-label">Haltbarkeit Stahlklischee</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="gradient-divider"></div>
-
-  <!-- ════ 6 CATEGORIES ════ -->
-  <section class="section categories-section" id="materialien">
-    <div class="section-inner">
-      <div class="categories-header reveal">
-        <div class="section-label" style="justify-content:center">Produktübersicht</div>
-        <h2 class="categories-title">
-          SECHS MATERIALIEN. <span class="slash">/</span><br>EINE QUALITÄT.
-        </h2>
-      </div>
-
-      <div class="categories-grid">
-
-        <!-- Card 1 — blue -->
-        <div class="cat-card blue reveal">
-          <div class="cat-num">01</div>
-          <div class="cat-name">Stahlklischees</div>
-          <p class="cat-desc">Erste Wahl für Top-Qualität und extrem lange Lebensdauer.</p>
-          <div class="cat-badge">bis 500.000 Drucke</div>
-          <a href="stahlklischees.html" class="cat-link">
-            Mehr erfahren
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 2 — red -->
-        <div class="cat-card red reveal" style="transition-delay:0.08s">
-          <div class="cat-num">02</div>
-          <div class="cat-name">Bandstahl-Klischees</div>
-          <p class="cat-desc">Hochwertig, flexibel — hergestellt nach dem gleichen Qualitätsverfahren.</p>
-          <div class="cat-badge">0,25–0,5 mm</div>
-          <a href="bandstahlklischees.html" class="cat-link">
-            Mehr erfahren
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 3 — blue -->
-        <div class="cat-card blue reveal" style="transition-delay:0.12s">
-          <div class="cat-num">03</div>
-          <div class="cat-name">Stahl-Walzen</div>
-          <p class="cat-desc">Im Rotationstampondruck — gleiche Qualitätsstandards wie Stahlklischees.</p>
-          <div class="cat-badge">Rotationsdruck</div>
-          <a href="stahlwalzen.html" class="cat-link">
-            Mehr erfahren
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 4 — red -->
-        <div class="cat-card red reveal" style="transition-delay:0.16s">
-          <div class="cat-num">04</div>
-          <div class="cat-name">Kunststoff-Klischees</div>
-          <p class="cat-desc">Für kleine Auflagen — ideal und unschlagbar im Preis-/Leistungsverhältnis.</p>
-          <div class="cat-badge">3 Qualitäten</div>
-          <a href="kunststoffklischees.html" class="cat-link">
-            Mehr erfahren
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 5 — blue -->
-        <div class="cat-card blue reveal" style="transition-delay:0.20s">
-          <div class="cat-num">05</div>
-          <div class="cat-name">Aluminium-Laser-Klischee</div>
-          <p class="cat-desc">Direkte Laserbearbeitung vom PC — keine Chemikalien, keine Wartezeiten.</p>
-          <div class="cat-badge">175 lpi · 5 µm</div>
-          <a href="aluminiumlaserklischee.html" class="cat-link">
-            Mehr erfahren
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 6 — red -->
-        <div class="cat-card red reveal" style="transition-delay:0.24s">
-          <div class="cat-num">06</div>
-          <div class="cat-name">Laser Repro</div>
-          <p class="cat-desc">Präzise Druckvorlagen — hochqualifizierte Fachleute, alle gängigen Formate.</p>
-          <div class="cat-badge">Mac & PC</div>
-          <a href="laser-repro.html" class="cat-link">
-            Mehr erfahren
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-      </div>
-
-      <!-- CTA -->
-      <div class="cta-strip reveal">
-        <a href="mailto:info@kent-stuttgart.de" class="btn-primary" style="font-size:0.88rem; padding:1.1rem 2.8rem;">
-          Klischee anfragen
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <p class="hero-sub">Stahlklischees &nbsp;·&nbsp; Bandstahl &nbsp;·&nbsp; Walzen &nbsp;·&nbsp; Kunststoff &nbsp;·&nbsp; Aluminium&nbsp;·&nbsp; Laser Repro</p>
+      <div class="hero-cta">
+        <a href="#materialien" class="btn-hero-primary">
+          Materialien entdecken
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+        <a href="../index.html#kontakt" class="btn-hero-outline">
+          Anfrage stellen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stats-strip-inner">
+      <div class="stat-item reveal">
+        <div class="stat-num"><span>30+</span></div>
+        <span class="stat-unit">Jahre Erfahrung</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num"><span>65</span> Rc</div>
+        <span class="stat-unit">Stahl-Härte</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num red"><span>500k+</span></div>
+        <span class="stat-unit">Max. Drucke (Stahl)</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-num"><span style="color:rgba(255,255,255,.7)">Made in</span></div>
+        <span class="stat-unit">Germany · Stuttgart</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-accent"></div>
+
+  <!-- INTRO -->
+  <section class="intro-section" id="intro">
+    <div class="intro-inner">
+      <div class="reveal">
+        <span class="eyebrow">Über unsere Klischees</span>
+        <h2 class="section-h2">IN LANGER<br><em>TRADITION.</em></h2>
+        <p class="intro-body">
+          In langer Tradition fertigt Kent Klischees für das Tampondruckverfahren. Hochqualifizierte Fachkräfte sorgen für eine hervorragende Qualität der Druckplatten. Unsere Reproabteilung verfügt über jahrzehntelange Erfahrung bei der Herstellung von Farbsätzen und schwierigen Druckmotiven.
+        </p>
+        <p class="intro-body" style="margin-top:1rem;">
+          Auf modernen EDV-Anlagen verarbeiten wir Dateien in allen gängigen Grafikformaten für Mac und PC. Unsere Ätzerei verfügt über modernste Anlagen zur Herstellung von allen Arten von Stahlklischees. Kürzeste Liefertermine bei gleichbleibend hoher Qualität.
+        </p>
+      </div>
+      <div class="fact-list reveal reveal-delay-2">
+        <div class="fact-row">
+          <div class="fact-num">65</div>
+          <div>
+            <div class="fact-label">Rockwell-Härte</div>
+            <div class="fact-desc">Unsere Stahlklischees bestehen aus einer speziellen Legierung mit ca. 65 Rc — Industriestandard für maximale Haltbarkeit.</div>
+          </div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-num">500k</div>
+          <div>
+            <div class="fact-label">Drucke Haltbarkeit</div>
+            <div class="fact-desc">Stahlklischees halten über 500.000 Drucke unter optimalen Bedingungen. Unübertroffene Wirtschaftlichkeit.</div>
+          </div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-num">6</div>
+          <div>
+            <div class="fact-label">Materialien</div>
+            <div class="fact-desc">Von Stahl bis Laser-Aluminium — sechs Klischee-Typen für jede Auflagengröße und jede Anwendung.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-accent"></div>
+
+  <!-- CATEGORIES -->
+  <section class="categories-section" id="materialien">
+    <div class="categories-header reveal">
+      <span class="eyebrow">Produktübersicht</span>
+      <h2 class="section-h2">SECHS MATERIALIEN.<br><em>EINE QUALITÄT.</em></h2>
+    </div>
+    <div class="categories-grid">
+
+      <div class="cat-card reveal">
+        <div class="cat-index">01 / Stahlklischees</div>
+        <div class="cat-title">Stahlklischees</div>
+        <p class="cat-desc">Erste Wahl für Top-Qualität und extrem lange Lebensdauer. Seit der Firmengründung das Kernprodukt von Kent Stuttgart.</p>
+        <div class="cat-badge">bis 500.000 Drucke</div>
+        <br>
+        <a href="stahlklischees.html" class="cat-link">
+          Mehr erfahren
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="cat-corner">65 Rc</div>
+      </div>
+
+      <div class="cat-card red-accent reveal reveal-delay-1">
+        <div class="cat-index">02 / Bandstahlklischees</div>
+        <div class="cat-title">Bandstahl-Klischees</div>
+        <p class="cat-desc">Hochwertig, flexibel — hergestellt nach dem gleichen Qualitätsverfahren wie Stahlklischees. Ideal für geschlossene und offene Systeme.</p>
+        <div class="cat-badge">0,25 mm bis 0,5 mm</div>
+        <br>
+        <a href="bandstahlklischees.html" class="cat-link">
+          Mehr erfahren
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="cat-corner">50 Rc</div>
+      </div>
+
+      <div class="cat-card reveal reveal-delay-1">
+        <div class="cat-index">03 / Stahlwalzen</div>
+        <div class="cat-title">Stahl-Walzen</div>
+        <p class="cat-desc">Im Rotationstampondruck eingesetzt — mit denselben Qualitätsstandards und der gleichen Ätzpräzision wie unsere Stahlklischees.</p>
+        <div class="cat-badge">Rotationsdruck</div>
+        <br>
+        <a href="stahlwalzen.html" class="cat-link">
+          Mehr erfahren
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="cat-corner">Rotation</div>
+      </div>
+
+      <div class="cat-card red-accent reveal reveal-delay-2">
+        <div class="cat-index">04 / Kunststoffklischees</div>
+        <div class="cat-title">Kunststoff-Klischees</div>
+        <p class="cat-desc">Für kleine Auflagen — ideal und unschlagbar im Preis-/Leistungsverhältnis. In drei verschiedenen Qualitätsstufen erhältlich.</p>
+        <div class="cat-badge">3 Qualitätsstufen</div>
+        <br>
+        <a href="kunststoffklischees.html" class="cat-link">
+          Mehr erfahren
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="cat-corner">Klein-Auflage</div>
+      </div>
+
+      <div class="cat-card reveal reveal-delay-2">
+        <div class="cat-index">05 / Aluminium-Laser</div>
+        <div class="cat-title">Aluminium-Laser-Klischee</div>
+        <p class="cat-desc">Direkte Laserbearbeitung vom PC — keine Chemikalien, keine Wartezeiten. 175 lpi Auflösung bei 5 µm Gravurtiefe.</p>
+        <div class="cat-badge">175 lpi · 5 µm</div>
+        <br>
+        <a href="aluminiumlaserklischee.html" class="cat-link">
+          Mehr erfahren
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="cat-corner">Lasergravur</div>
+      </div>
+
+      <div class="cat-card red-accent reveal reveal-delay-3">
+        <div class="cat-index">06 / Laser Repro</div>
+        <div class="cat-title">Laser Repro</div>
+        <p class="cat-desc">Präzise Druckvorlagen — hochqualifizierte Fachleute mit jahrzehntelanger Erfahrung. Alle gängigen Grafikformate für Mac und PC.</p>
+        <div class="cat-badge">Mac &amp; PC · Alle Formate</div>
+        <br>
+        <a href="laser-repro.html" class="cat-link">
+          Mehr erfahren
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="cat-corner">Repro-Service</div>
+      </div>
 
     </div>
   </section>
 
-  <!-- ════ FOOTER ════ -->
+  <div class="divider-accent"></div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="cta-inner">
+      <div class="reveal">
+        <h2 class="cta-heading">KLISCHEE<br><span>ANFRAGEN.</span></h2>
+        <p class="cta-sub">Teilen Sie uns Ihr Motiv und Ihre Anforderungen mit — wir erstellen Ihnen ein unverbindliches Angebot.</p>
+      </div>
+      <div class="cta-actions reveal reveal-delay-1">
+        <a href="../index.html#kontakt" class="btn-cta-primary">
+          Jetzt anfragen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="../maschinen/index.html" class="btn-cta-outline">
+          Maschinen ansehen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-top">
-      <div class="footer-brand">
+      <div>
         <img src="../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
         <p class="footer-tagline">Tampondruckmaschinen und Klischees für die internationale Industrie. Entwickelt und gefertigt in Stuttgart seit 1987.</p>
-        <div class="footer-address">
+        <div>
           <div class="footer-address-line">Kent Stuttgart GmbH</div>
           <div class="footer-address-line">Böblinger Straße, 70565 Stuttgart</div>
-          <div class="footer-address-line">Deutschland</div>
-          <div class="footer-address-line" style="margin-top:0.5rem">info@kent-stuttgart.de</div>
-          <div class="footer-address-line">+49 (0)711 — — —</div>
+          <div class="footer-address-line" style="margin-top:.4rem">info@kent-stuttgart.de</div>
         </div>
         <div class="footer-certs">
           <span class="footer-cert">DIN EN ISO 9001</span>
@@ -990,54 +773,55 @@
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Unternehmen</div>
+        <div class="footer-col-title">Maschinen</div>
         <ul class="footer-links">
-          <li><a href="../ueber-uns.html">Über Kent Stuttgart</a></li>
-          <li><a href="../maschinen/index.html">Maschinen</a></li>
-          <li><a href="../index.html">Startseite</a></li>
-          <li><a href="#">Karriere</a></li>
-          <li><a href="#">Presse &amp; News</a></li>
+          <li><a href="../maschinen/index.html">Übersicht Maschinen</a></li>
+          <li><a href="../maschinen/standardmaschinen/index.html">Standardmaschinen</a></li>
+          <li><a href="../maschinen/sondermaschinen/alf-serie.html">Sondermaschinen</a></li>
+          <li><a href="../maschinen/siebdruck/sp-400.html">Siebdruck</a></li>
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Service &amp; Kontakt</div>
+        <div class="footer-col-title">Unternehmen</div>
         <ul class="footer-links">
-          <li><a href="mailto:info@kent-stuttgart.de">Klischee anfragen</a></li>
-          <li><a href="#">After-Sales-Service</a></li>
-          <li><a href="#">Schulung &amp; Training</a></li>
-          <li><a href="#">Händlernetz weltweit</a></li>
-          <li><a href="#">Downloads &amp; Dokumentation</a></li>
+          <li><a href="../ueber-uns.html">Über Kent Stuttgart</a></li>
+          <li><a href="../index.html#kontakt">Kontakt</a></li>
+          <li><a href="../index.html">Startseite</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Kent Stuttgart GmbH · Alle Rechte vorbehalten · HRB 12345 Amtsgericht Stuttgart</span>
+      <span class="footer-copy">© 2026 Kent Stuttgart GmbH · Alle Rechte vorbehalten</span>
       <div class="footer-legal">
         <a href="#">Impressum</a>
-        <a href="#">Datenschutzerklärung</a>
+        <a href="#">Datenschutz</a>
         <a href="#">AGB</a>
       </div>
     </div>
   </footer>
 
   <script>
-    // ─── Nav Scroll ───
+    // Topbar + nav scroll
+    const topbar = document.getElementById('topbar');
     const nav = document.getElementById('nav');
+    let barH = topbar.offsetHeight;
     window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 40);
+      nav.classList.toggle('bar-gone', y > barH);
     }, { passive: true });
 
-    // ─── Reveal on scroll ───
+    // Reveal observer
     const reveals = document.querySelectorAll('.reveal');
-    const revealObs = new IntersectionObserver((entries) => {
+    const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting && !e.target.classList.contains('animate-in')) {
-          e.target.classList.add('animate-in');
-          revealObs.unobserve(e.target);
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
         }
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(r => revealObs.observe(r));
+    reveals.forEach(r => obs.observe(r));
   </script>
 </body>
 </html>
