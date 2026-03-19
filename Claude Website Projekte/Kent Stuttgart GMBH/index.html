@@ -4,28 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kent Stuttgart GmbH — Tampondruckmaschinen seit 1987</title>
-  <meta name="description" content="Kent Stuttgart GmbH — Präzisions-Tampondruckmaschinen. Entwickelt und gefertigt in Stuttgart seit 1987. 500+ Anlagen in 40 Ländern." />
+  <meta name="description" content="Kent Stuttgart GmbH fertigt präzise Tampondruckmaschinen seit 1987. 500+ Anlagen in 40 Ländern. Direkt vom Hersteller aus Stuttgart." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
+    /* ══════════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════════ */
     :root {
-      --bg:      #04091A;
-      --bg1:     #070E20;
-      --bg2:     #0A1428;
-      --surface: rgba(255,255,255,0.035);
-      --surf2:   rgba(255,255,255,0.06);
-      --blue:    #1058C0;
-      --blue2:   #1A76F0;
-      --blue3:   #0A3D8A;
-      --red:     #C8221C;
-      --red2:    #E03530;
-      --white:   #FFFFFF;
-      --dim:     #6088B0;
-      --muted:   #374F72;
-      --border:  rgba(255,255,255,0.07);
-      --border2: rgba(26,118,240,0.18);
+      /* Dark (hero) */
+      --ink:      #0B1526;
+      --ink2:     #1C2E45;
+      /* Light (body) */
+      --paper:    #FFFFFF;
+      --paper2:   #F5F7FA;
+      --paper3:   #EEF1F6;
+      /* Brand */
+      --blue:     #1058C0;
+      --blue2:    #1A76F0;
+      --blue-soft:#EBF2FF;
+      --red:      #C8221C;
+      --red2:     #E03530;
+      --red-soft: #FEF0EF;
+      /* Text */
+      --text:     #0B1526;
+      --text2:    #3A526B;
+      --text3:    #6B8299;
+      --border:   #DDE4EE;
+      --border2:  #C8D5E8;
+      /* Fonts */
       --fd: 'Big Shoulders Display', sans-serif;
       --fb: 'DM Sans', sans-serif;
       --fm: 'JetBrains Mono', monospace;
@@ -35,991 +44,985 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
-      color: var(--dim);
+      background: var(--paper);
+      color: var(--text2);
       font-family: var(--fb);
-      font-weight: 300;
-      line-height: 1.75;
+      font-weight: 400;
+      line-height: 1.7;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
     ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 2px; }
+    ::-webkit-scrollbar-track { background: var(--paper2); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-    @keyframes fadeUp   { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
-    @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
-    @keyframes fadeDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:none; } }
+    /* ── Animations ── */
+    @keyframes fadeUp  { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+    @keyframes lineDrop { 0%,100% { transform:translateY(-100%); } 50% { transform:translateY(100%); } }
 
-    /* ── SHARED ── */
-    .section { padding: 8rem 4rem; }
-    .inner   { max-width: 1280px; margin: 0 auto; }
-    .section-label {
-      font-family: var(--fm);
-      font-size: 0.55rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
+    .reveal { opacity:0; transform:translateY(20px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal.visible { opacity:1; transform:none; }
+    .reveal-delay-1 { transition-delay:.1s; }
+    .reveal-delay-2 { transition-delay:.2s; }
+    .reveal-delay-3 { transition-delay:.3s; }
+
+    /* ── Layout helpers ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 7rem 2rem; }
+
+    /* ── Labels ── */
+    .eyebrow {
+      font-family: var(--fm); font-size: .58rem;
+      letter-spacing: .28em; text-transform: uppercase;
       color: var(--blue2);
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
+      display: inline-flex; align-items: center; gap: .65rem;
+      margin-bottom: 1rem;
     }
-    .section-label::before {
-      content: '';
-      width: 24px; height: 1px;
-      background: var(--blue2);
-      flex-shrink: 0;
+    .eyebrow::before {
+      content: ''; width: 20px; height: 1px;
+      background: var(--blue2); flex-shrink: 0;
     }
-    .section-label.light { color: var(--blue2); }
-    .section-label.onlight { color: var(--blue); }
-    .section-label.onlight::before { background: var(--blue); }
+    .eyebrow.red { color: var(--red); }
+    .eyebrow.red::before { background: var(--red); }
+    .eyebrow.muted { color: var(--text3); }
+    .eyebrow.muted::before { background: var(--text3); }
+    .eyebrow.on-dark { color: rgba(26,118,240,.85); }
+    .eyebrow.on-dark::before { background: rgba(26,118,240,.85); }
 
-    .section-title {
-      font-family: var(--fd);
-      font-size: clamp(3rem, 5.5vw, 5.5rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 0.92;
-      color: var(--white);
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
+    /* ── Headlines ── */
+    .h1 {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(4.5rem,9vw,10rem);
+      line-height: .9; letter-spacing: -.01em;
+      text-transform: uppercase; color: #fff;
     }
-    .section-title em { font-style: normal; color: var(--blue2); }
-    .section-title .r  { font-style: normal; color: var(--red); }
-    .section-title.dark { color: #0C1B35; }
-
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    .grad-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(26,118,240,.3) 30%, rgba(200,34,28,.22) 70%, transparent);
+    .h2 {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(2.8rem,4.5vw,5rem);
+      line-height: .92; letter-spacing: -.01em;
+      text-transform: uppercase; color: var(--text);
+    }
+    .h2.on-dark { color: #fff; }
+    .h2 em, .h2 .accent { font-style:normal; color: var(--blue2); }
+    .h2 .accent-r { font-style:normal; color: var(--red); }
+    .h3 {
+      font-family: var(--fd); font-weight: 700;
+      font-size: clamp(1.6rem,2.5vw,2.4rem);
+      text-transform: uppercase; letter-spacing: -.01em;
+      color: var(--text); line-height: 1;
     }
 
-    /* BUTTONS */
+    /* ── Buttons ── */
     .btn {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      font-family: var(--fd); font-size: 0.78rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0.85rem 1.9rem; border-radius: 10px;
-      cursor: pointer; transition: all 0.25s var(--ease);
-      white-space: nowrap; border: none;
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-family: var(--fd); font-size: .85rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .9rem 2rem; border-radius: 8px;
+      border: none; cursor: pointer;
+      transition: all .2s var(--ease); white-space: nowrap;
     }
-    .btn-primary { background: var(--blue2); color: var(--white); }
-    .btn-primary:hover { background: var(--blue3); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(26,118,240,.32); }
-    .btn-red    { background: var(--red); color: var(--white); }
-    .btn-red:hover    { background: var(--red2); transform: translateY(-1px); }
-    .btn-ghost  { background: transparent; color: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.25); }
-    .btn-ghost:hover  { background: rgba(255,255,255,.07); color: var(--white); border-color: rgba(255,255,255,.4); }
-    .btn-ghost-blue { background: transparent; color: var(--blue2); border: 1px solid var(--border2); }
-    .btn-ghost-blue:hover { background: rgba(26,118,240,.07); color: var(--white); border-color: rgba(26,118,240,.4); }
+    .btn svg { flex-shrink:0; transition: transform .2s var(--ease); }
+    .btn:hover svg { transform: translateX(3px); }
 
-    /* ── PHONE BAR ── */
-    #phone-bar {
-      position: relative; z-index: 600;
-      background: var(--blue);
-      padding: 0.45rem 4rem;
+    .btn-primary {
+      background: var(--blue2); color: #fff;
+      box-shadow: 0 4px 16px rgba(26,118,240,.3);
     }
-    .pb-inner {
-      max-width: 1280px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center;
+    .btn-primary:hover {
+      background: var(--blue); transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(26,118,240,.38);
     }
-    .pb-text {
-      font-family: var(--fm); font-size: 0.55rem;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,255,255,.65);
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1.5px solid var(--border2);
     }
-    .pb-cta {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      font-family: var(--fd); font-size: 0.9rem; font-weight: 700;
-      color: var(--white); background: var(--red);
-      padding: 0.3rem 1rem; border-radius: 5px; transition: background .2s;
+    .btn-outline:hover {
+      background: var(--paper2); border-color: var(--blue2); color: var(--blue2);
     }
-    .pb-cta:hover { background: var(--red2); }
-    @media (max-width: 768px) { #phone-bar { padding: .45rem 1.5rem; } .pb-text { display: none; } }
+    .btn-outline-white {
+      background: transparent; color: rgba(255,255,255,.85);
+      border: 1.5px solid rgba(255,255,255,.25);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,.09); color: #fff;
+      border-color: rgba(255,255,255,.5);
+    }
+    .btn-red {
+      background: var(--red); color: #fff;
+    }
+    .btn-red:hover { background: var(--red2); transform: translateY(-1px); }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 36px; left: 0; right: 0;
-      z-index: 500;
-      height: 68px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 4rem;
-      transition: top .3s var(--ease);
+    /* ── Link arrow ── */
+    .link-arrow {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--fd); font-size: .8rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--blue2); transition: gap .2s;
     }
-    nav.bar-hidden { top: 0; }
-    nav::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: transparent;
-      backdrop-filter: blur(0);
-      border-bottom: 1px solid transparent;
-      transition: all .4s var(--ease);
+    .link-arrow:hover { gap: .75rem; }
+    .link-arrow.dark { color: var(--text); }
+    .link-arrow.dark:hover { color: var(--blue2); }
+
+    /* ── Divider ── */
+    .divider { height: 1px; background: var(--border); }
+    .divider-accent {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue2) 35%, var(--red) 65%, transparent);
+      opacity: .25;
     }
-    nav.scrolled::before {
-      background: rgba(4,9,26,.94);
-      backdrop-filter: blur(24px);
-      border-bottom-color: rgba(26,118,240,.12);
-    }
-    .nav-logo { position: relative; z-index: 1; }
-    .nav-logo-img { height: 32px; width: auto; mix-blend-mode: screen; }
-    .nav-links {
-      position: relative; z-index: 1;
-      display: flex; align-items: center;
-      gap: 2.5rem; list-style: none;
-    }
-    .nav-links a {
-      font-family: var(--fd); font-size: 0.76rem; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(255,255,255,.5); transition: color .2s; position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute; bottom: -3px; left: 0;
-      width: 0; height: 1px; background: var(--blue2);
-      transition: width .3s var(--ease);
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--white); }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-    .nav-right { position: relative; z-index: 1; display: flex; align-items: center; gap: 1.5rem; }
-    .nav-phone {
-      font-family: var(--fd); font-size: 0.88rem; font-weight: 700;
-      color: rgba(255,255,255,.7); transition: color .2s;
-    }
-    .nav-phone:hover { color: var(--white); }
-    .nav-cta {
-      font-family: var(--fd); font-size: 0.72rem; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--white); padding: .55rem 1.4rem;
-      border: 1px solid rgba(26,118,240,.45); border-radius: 10px;
-      cursor: pointer; transition: all .2s;
-    }
-    .nav-cta:hover { background: var(--blue2); border-color: var(--blue2); }
-    @media (max-width: 1024px) { .nav-phone { display: none; } }
-    @media (max-width: 768px) { nav { padding: 0 1.5rem; } .nav-links { display: none; } }
 
     /* ════════════════════════════════════════
-       HERO — FULL BLEED AMG / AUDI STYLE
+       TOPBAR
+    ════════════════════════════════════════ */
+    #topbar {
+      background: var(--blue); padding: .45rem 2rem;
+      position: relative; z-index: 600;
+    }
+    .topbar-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .topbar-left {
+      font-family: var(--fm); font-size: .52rem;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+    }
+    .topbar-phone {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--fd); font-size: .95rem; font-weight: 700;
+      color: #fff; background: var(--red);
+      padding: .28rem .95rem; border-radius: 5px;
+      transition: background .18s;
+    }
+    .topbar-phone:hover { background: var(--red2); }
+    @media (max-width:768px) { #topbar { padding:.4rem 1.25rem; } .topbar-left { display:none; } }
+
+    /* ════════════════════════════════════════
+       NAV
+    ════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 37px; left: 0; right: 0;
+      z-index: 500; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      transition: top .3s var(--ease);
+    }
+    nav.bar-gone { top: 0; }
+    nav::before {
+      content: ''; position: absolute; inset: 0;
+      background: transparent; backdrop-filter: blur(0);
+      border-bottom: 1px solid transparent;
+      transition: all .35s var(--ease);
+    }
+    nav.scrolled::before {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(20px);
+      border-bottom-color: var(--border);
+      box-shadow: 0 1px 20px rgba(0,0,0,.06);
+    }
+    .nav-logo { position:relative; z-index:1; }
+    .nav-logo-img { height: 30px; width: auto; }
+    /* On dark hero: screen blend keeps logo white */
+    .nav-logo-img.invert-on-scroll { mix-blend-mode: screen; transition: filter .3s; }
+    nav.scrolled .nav-logo-img.invert-on-scroll { mix-blend-mode: normal; filter: none; }
+
+    .nav-links {
+      position:relative; z-index:1;
+      display:flex; align-items:center; gap:2.2rem; list-style:none;
+    }
+    .nav-links a {
+      font-family: var(--fd); font-size: .8rem; font-weight: 600;
+      letter-spacing: .09em; text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+      transition: color .2s; position: relative;
+    }
+    nav.scrolled .nav-links a { color: var(--text2); }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 2px; background: var(--blue2);
+      transition: width .25s var(--ease);
+    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    nav.scrolled .nav-links a:hover, nav.scrolled .nav-links a.active { color: var(--text); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    .nav-right { position:relative; z-index:1; display:flex; align-items:center; gap:1.2rem; }
+    .nav-tel {
+      font-family: var(--fd); font-size: .9rem; font-weight: 700;
+      color: rgba(255,255,255,.7); transition: color .2s;
+    }
+    nav.scrolled .nav-tel { color: var(--text2); }
+    .nav-tel:hover { color: #fff; }
+    nav.scrolled .nav-tel:hover { color: var(--text); }
+    .nav-cta {
+      font-family: var(--fd); font-size: .75rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: #fff; padding: .5rem 1.35rem;
+      border: 1.5px solid rgba(255,255,255,.3); border-radius: 7px;
+      transition: all .2s;
+    }
+    nav.scrolled .nav-cta { color: var(--text); border-color: var(--border2); }
+    .nav-cta:hover { background: var(--blue2); border-color: var(--blue2); color: #fff !important; }
+
+    @media (max-width:1024px) { .nav-tel { display:none; } }
+    @media (max-width:768px) { nav { padding:0 1.25rem; } .nav-links { display:none; } }
+
+    /* ════════════════════════════════════════
+       HERO  —  dark, full-bleed
     ════════════════════════════════════════ */
     .hero {
       position: relative;
-      height: 100vh;
-      min-height: 640px;
+      height: 100vh; min-height: 640px;
       overflow: hidden;
-      background: #020712;
+      background: #080F1E;
+      display: flex; align-items: flex-end;
     }
 
-    /* Background visual layer */
-    .hero-bg {
-      position: absolute; inset: 0;
-      z-index: 0;
-    }
-    /* Blueprint SVG scaled to fill right 60% of hero */
-    .hero-bg-blueprint {
-      position: absolute;
-      right: -4%; top: 50%;
-      transform: translateY(-50%);
-      width: 68%;
-      opacity: .18;
-      pointer-events: none;
-    }
-    /* Machine image overlay - right side */
-    .hero-bg-machine {
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 62%;
-      display: flex; align-items: center; justify-content: flex-end;
-      padding-right: 5%;
-      pointer-events: none;
-    }
-    .hero-bg-machine img {
-      max-height: 78vh;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 40px 120px rgba(0,0,0,.9));
-      opacity: 0;
-      animation: fadeIn 1.4s var(--ease) 0.4s forwards;
-    }
-    /* Gradient overlays */
-    .hero-overlay-left {
-      position: absolute; inset: 0; z-index: 1; pointer-events: none;
-      background: linear-gradient(90deg, #020712 30%, rgba(2,7,18,.7) 55%, transparent 80%);
-    }
-    .hero-overlay-bottom {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 35%; z-index: 1; pointer-events: none;
-      background: linear-gradient(to top, #020712, transparent);
-    }
-    /* Subtle radial glows */
-    .hero-glow-blue {
-      position: absolute; z-index: 0; pointer-events: none;
-      width: 700px; height: 700px;
-      left: -10%; top: -20%;
-      background: radial-gradient(ellipse, rgba(26,118,240,.09) 0%, transparent 70%);
-    }
-    .hero-glow-red {
-      position: absolute; z-index: 0; pointer-events: none;
-      width: 500px; height: 500px;
-      right: 15%; bottom: -10%;
-      background: radial-gradient(ellipse, rgba(200,34,28,.07) 0%, transparent 70%);
-    }
-    /* Fine grid texture */
-    .hero-grid-texture {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    /* Grid texture */
+    .hero-grid {
+      position:absolute; inset:0; pointer-events:none;
       background-image:
-        linear-gradient(rgba(26,118,240,.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(26,118,240,.018) 1px, transparent 1px);
-      background-size: 64px 64px;
+        linear-gradient(rgba(26,118,240,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,118,240,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
 
-    /* Hero Content — bottom-left like AMG */
+    /* Ambient glows */
+    .hero-glow {
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 70% at 20% 45%, rgba(16,88,192,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 80% 70%, rgba(200,34,28,.09) 0%, transparent 60%);
+    }
+
+    /* Machine image — right */
+    .hero-machine {
+      position:absolute; right:0; top:0; bottom:0;
+      width: 58%;
+      display:flex; align-items:center; justify-content:flex-end;
+      padding-right: 4%;
+      pointer-events:none;
+    }
+    .hero-machine img {
+      max-height: 76vh; width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 40px 100px rgba(0,0,0,.85));
+      opacity:0;
+      animation: fadeIn 1.6s var(--ease) .5s forwards;
+    }
+
+    /* Gradient overlays */
+    .hero-fade-left {
+      position:absolute; inset:0; pointer-events:none;
+      background: linear-gradient(90deg, #080F1E 28%, rgba(8,15,30,.75) 52%, transparent 76%);
+    }
+    .hero-fade-bottom {
+      position:absolute; bottom:0; left:0; right:0; height:32%;
+      pointer-events:none;
+      background: linear-gradient(to top, #080F1E, transparent);
+    }
+
+    /* Content — bottom-left */
     .hero-content {
-      position: absolute;
-      bottom: 0; left: 0;
-      z-index: 10;
-      padding: 0 4rem 5rem;
-      max-width: 700px;
+      position:relative; z-index:10;
+      padding: 0 2.5rem 5rem;
+      max-width: 680px;
     }
     .hero-eyebrow {
-      font-family: var(--fm);
-      font-size: .52rem;
-      letter-spacing: .3em;
-      text-transform: uppercase;
-      color: var(--blue2);
-      margin-bottom: 1.6rem;
-      display: flex; align-items: center; gap: .7rem;
-      opacity: 0;
-      animation: fadeUp .7s var(--ease) .5s forwards;
+      font-family: var(--fm); font-size: .55rem;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(26,118,240,.9);
+      display: flex; align-items: center; gap: .65rem;
+      margin-bottom: 1.4rem;
+      opacity:0; animation: fadeUp .7s var(--ease) .6s forwards;
     }
-    .eyebrow-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--red); flex-shrink: 0;
+    .hero-eyebrow-dot {
+      width: 5px; height: 5px; border-radius:50%;
+      background: var(--red); flex-shrink:0;
     }
-    .hero-headline {
-      font-family: var(--fd);
+    .hero-h1 {
+      font-family: var(--fd); font-weight: 900;
       font-size: clamp(5rem, 9.5vw, 11rem);
-      font-weight: 800;
-      line-height: .88;
-      letter-spacing: -.02em;
-      text-transform: uppercase;
-      color: var(--white);
-      opacity: 0;
-      animation: fadeUp 1.1s var(--ease) .65s forwards;
+      line-height: .88; letter-spacing: -.015em;
+      text-transform: uppercase; color: #fff;
+      opacity:0; animation: fadeUp 1s var(--ease) .75s forwards;
     }
-    .hero-headline .line2 {
-      display: block;
+    .hero-h1 .outline {
+      display:block;
       color: transparent;
-      -webkit-text-stroke: 1.5px rgba(255,255,255,.3);
-      font-weight: 300;
-      letter-spacing: .02em;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,.22);
+      font-weight: 400;
     }
     .hero-divider {
-      width: 48px; height: 2px;
+      width: 44px; height: 2px;
       background: linear-gradient(90deg, var(--blue2), var(--red));
-      margin: 2rem 0;
-      opacity: 0;
-      animation: fadeIn .6s var(--ease) 1s forwards;
+      margin: 1.8rem 0;
+      opacity:0; animation: fadeIn .6s var(--ease) 1.05s forwards;
     }
     .hero-sub {
-      font-size: 1rem; font-weight: 300; line-height: 1.72;
-      color: rgba(255,255,255,.55);
-      margin-bottom: 2.4rem; max-width: 480px;
-      opacity: 0;
-      animation: fadeUp .7s var(--ease) 1.05s forwards;
+      font-size: .98rem; font-weight: 400; line-height: 1.72;
+      color: rgba(255,255,255,.5);
+      max-width: 440px; margin-bottom: 2.2rem;
+      opacity:0; animation: fadeUp .7s var(--ease) 1.1s forwards;
     }
     .hero-actions {
-      display: flex; flex-wrap: wrap; gap: .85rem;
-      opacity: 0;
-      animation: fadeUp .7s var(--ease) 1.2s forwards;
+      display:flex; flex-wrap:wrap; gap: .75rem;
+      opacity:0; animation: fadeUp .7s var(--ease) 1.25s forwards;
     }
 
-    /* Scroll indicator — right side */
-    .hero-scroll {
-      position: absolute;
-      right: 4rem; bottom: 4rem;
-      z-index: 10;
-      display: flex; flex-direction: column; align-items: center; gap: .7rem;
-      opacity: 0;
-      animation: fadeIn .8s var(--ease) 1.8s forwards;
-    }
-    .hero-scroll-line {
-      width: 1px; height: 52px;
-      background: linear-gradient(to bottom, transparent, rgba(26,118,240,.5));
-      position: relative; overflow: hidden;
-    }
-    .hero-scroll-line::after {
-      content: '';
-      position: absolute; top: -100%; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(to bottom, transparent, var(--blue2));
-      animation: scrollDrop 2.2s ease-in-out 2s infinite;
-    }
-    @keyframes scrollDrop { 0% { top:-100%; } 100% { top:100%; } }
-    .hero-scroll-label {
-      font-family: var(--fm); font-size: .45rem;
-      letter-spacing: .22em; text-transform: uppercase;
-      color: rgba(255,255,255,.3);
-      writing-mode: vertical-lr;
-    }
-
-    /* Floating spec card — top right of hero */
-    .hero-spec-card {
-      position: absolute;
-      right: 4rem; top: 50%;
+    /* Floating spec chip — right */
+    .hero-chip {
+      position:absolute; right: 2.5rem; top: 50%;
       transform: translateY(-50%);
-      z-index: 10;
-      background: rgba(4,9,26,.7);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(26,118,240,.2);
-      border-radius: 14px;
-      padding: 1.4rem;
-      width: 200px;
-      opacity: 0;
-      animation: fadeIn .7s var(--ease) 1.5s forwards;
+      z-index:10;
+      background: rgba(8,15,30,.72);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(26,118,240,.22);
+      border-radius: 12px; padding: 1.3rem 1.5rem;
+      width: 196px;
+      opacity:0; animation: fadeIn .7s var(--ease) 1.6s forwards;
     }
-    .hsc-label {
-      font-family: var(--fm); font-size: .42rem;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: 1.1rem;
+    .hchip-label {
+      font-family: var(--fm); font-size: .44rem;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(26,118,240,.8); margin-bottom: 1rem;
       padding-bottom: .7rem;
-      border-bottom: 1px solid rgba(26,118,240,.2);
+      border-bottom: 1px solid rgba(26,118,240,.18);
     }
-    .hsc-row {
-      display: flex; justify-content: space-between; align-items: baseline;
-      padding: .38rem 0; border-bottom: 1px solid rgba(255,255,255,.04);
+    .hchip-row {
+      display:flex; justify-content:space-between; align-items:baseline;
+      padding: .35rem 0; border-bottom: 1px solid rgba(255,255,255,.04);
     }
-    .hsc-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .hsc-key { font-size: .7rem; color: var(--dim); }
-    .hsc-val { font-family: var(--fm); font-size: .62rem; font-weight: 700; color: var(--white); }
-    .hsc-val.accent { color: var(--blue2); }
+    .hchip-row:last-child { border-bottom:none; }
+    .hchip-key { font-size:.72rem; color: rgba(255,255,255,.4); }
+    .hchip-val { font-family:var(--fm); font-size:.64rem; font-weight:700; color:#fff; }
+    .hchip-val.hi { color: var(--blue2); }
 
-    @media (max-width: 1100px) {
-      .hero-spec-card { display: none; }
-      .hero-bg-machine { width: 55%; }
+    /* Scroll indicator */
+    .hero-scroll {
+      position:absolute; right:2.5rem; bottom:3.5rem; z-index:10;
+      display:flex; flex-direction:column; align-items:center; gap:.6rem;
+      opacity:0; animation: fadeIn 1s var(--ease) 2s forwards;
     }
-    @media (max-width: 768px) {
-      .hero-content { padding: 0 1.5rem 4rem; }
-      .hero-bg-machine { width: 100%; opacity: .3; }
-      .hero-overlay-left { background: rgba(2,7,18,.75); }
-      .hero-scroll { right: 1.5rem; }
+    .hero-scroll-bar {
+      width:1px; height:48px;
+      background: linear-gradient(to bottom, transparent, rgba(26,118,240,.45));
+      overflow:hidden; position:relative;
+    }
+    .hero-scroll-bar::after {
+      content:''; position:absolute; top:-100%; left:0; width:100%; height:100%;
+      background: var(--blue2);
+      animation: lineDrop 2.4s ease-in-out 2.2s infinite;
+    }
+    .hero-scroll-text {
+      font-family:var(--fm); font-size:.42rem;
+      letter-spacing:.2em; text-transform:uppercase;
+      color: rgba(255,255,255,.25);
+      writing-mode:vertical-lr;
     }
 
-    /* ── STATS BAR ── */
+    @media (max-width:1100px) { .hero-chip { display:none; } }
+    @media (max-width:768px) {
+      .hero-content { padding: 0 1.25rem 4.5rem; }
+      .hero-machine { width:100%; justify-content:center; opacity:.18; }
+      .hero-fade-left { background: rgba(8,15,30,.72); }
+      .hero-scroll { display:none; }
+    }
+
+    /* ════════════════════════════════════════
+       STATS BAR  —  white, authoritative
+    ════════════════════════════════════════ */
     .stats-bar {
-      background: var(--blue);
-      border-top: 1px solid rgba(255,255,255,.06);
-      border-bottom: 1px solid rgba(255,255,255,.06);
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 24px rgba(0,0,0,.06);
     }
     .stats-track {
-      max-width: 1280px; margin: 0 auto;
-      display: flex;
+      max-width:1200px; margin:0 auto;
+      display:flex;
     }
     .stat-item {
-      flex: 1; padding: 1.5rem 2rem;
-      border-right: 1px solid rgba(255,255,255,.1);
+      flex:1; padding:1.6rem 2rem;
+      border-right: 1px solid var(--border);
+      transition: background .2s;
     }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      font-family: var(--fd); font-size: 2.1rem; font-weight: 800;
-      color: var(--white); line-height: 1; letter-spacing: -.02em;
+    .stat-item:last-child { border-right:none; }
+    .stat-item:hover { background: var(--paper2); }
+    .stat-val {
+      font-family:var(--fd); font-size: 2.2rem; font-weight: 900;
+      color: var(--text); letter-spacing:-.02em; line-height:1;
     }
     .stat-unit {
-      font-family: var(--fd); font-size: .78rem; font-weight: 500;
-      color: rgba(255,255,255,.85); letter-spacing: .04em;
+      font-family:var(--fd); font-size:.82rem; font-weight:600;
+      color: var(--text2); letter-spacing:.02em;
     }
-    .stat-label {
-      font-family: var(--fm); font-size: .46rem;
-      letter-spacing: .15em; text-transform: uppercase;
-      color: rgba(255,255,255,.42); margin-top: .15rem;
+    .stat-desc {
+      font-family:var(--fm); font-size:.44rem;
+      letter-spacing:.14em; text-transform:uppercase;
+      color: var(--text3); margin-top:.2rem;
     }
-    @media (max-width: 768px) {
-      .stats-track { flex-wrap: wrap; }
-      .stat-item { min-width: 50%; border-bottom: 1px solid rgba(255,255,255,.1); }
+    @media (max-width:768px) {
+      .stats-track { flex-wrap:wrap; }
+      .stat-item { min-width:50%; border-bottom:1px solid var(--border); }
     }
 
     /* ════════════════════════════════════════
-       MACHINE PORTFOLIO — AUDI MODEL GRID
+       INTRO / VALUE PROP  —  light
     ════════════════════════════════════════ */
-    .machines-section {
-      background: var(--bg);
-      padding: 7rem 4rem;
+    .intro-section {
+      background: var(--paper);
+      padding: 7rem 2rem;
     }
-    .machines-inner { max-width: 1280px; margin: 0 auto; }
-    .machines-header {
-      display: flex; justify-content: space-between;
-      align-items: flex-end; margin-bottom: 3rem; gap: 2rem;
+    .intro-inner {
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
     }
-    .machines-view-all {
-      font-family: var(--fd); font-size: .76rem; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--blue2);
-      display: flex; align-items: center; gap: .5rem;
-      transition: gap .2s;
-      white-space: nowrap;
+    .intro-text {}
+    .intro-body {
+      font-size: 1.05rem; font-weight: 400; line-height: 1.82;
+      color: var(--text2); margin-bottom: 2.2rem;
     }
-    .machines-view-all:hover { gap: .85rem; }
+    .intro-pillars {
+      display:flex; flex-direction:column; gap:0;
+    }
+    .pillar {
+      display:flex; align-items:flex-start; gap:1.1rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .pillar:first-child { border-top: 1px solid var(--border); }
+    .pillar-icon {
+      flex-shrink:0; width:38px; height:38px;
+      border-radius:8px;
+      background: var(--blue-soft); color: var(--blue2);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .pillar-title {
+      font-family:var(--fd); font-size:1rem; font-weight:700;
+      color: var(--text); letter-spacing:.01em; margin-bottom:.15rem;
+    }
+    .pillar-desc { font-size:.84rem; color: var(--text2); line-height:1.6; }
 
-    /* Tab filter — Audi style */
-    .machine-tab-bar {
-      display: flex; gap: 0;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      margin-bottom: 3rem;
-      overflow-x: auto;
+    /* Machine image panel */
+    .intro-visual {
+      position:relative; border-radius:16px;
+      background: var(--paper2);
+      border: 1px solid var(--border);
+      overflow:hidden;
+      aspect-ratio:4/3;
+      display:flex; align-items:center; justify-content:center;
     }
-    .machine-tab-bar::-webkit-scrollbar { height: 0; }
-    .mtab {
-      font-family: var(--fd); font-size: .74rem; font-weight: 600;
-      letter-spacing: .08em; text-transform: uppercase;
-      padding: .85rem 1.6rem;
-      background: transparent; border: none;
-      color: rgba(255,255,255,.35);
-      cursor: pointer; transition: color .2s;
-      position: relative; white-space: nowrap;
-    }
-    .mtab::after {
-      content: '';
-      position: absolute; bottom: -1px; left: 0; right: 0;
-      height: 2px; background: var(--blue2);
-      transform: scaleX(0);
-      transition: transform .25s var(--ease);
-    }
-    .mtab:hover { color: rgba(255,255,255,.7); }
-    .mtab.active { color: var(--white); }
-    .mtab.active::after { transform: scaleX(1); }
-
-    /* Portrait cards — Audi vehicle model style */
-    .machines-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-    }
-    .mcard {
-      position: relative; overflow: hidden;
-      background: var(--bg1);
-      border: 1px solid rgba(255,255,255,.05);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: border-color .3s, transform .4s var(--ease), box-shadow .4s;
-      display: flex; flex-direction: column;
-    }
-    .mcard:hover {
-      border-color: rgba(26,118,240,.25);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0,0,0,.4);
-    }
-    .mcard.accent-red:hover { border-color: rgba(200,34,28,.25); }
-    .mcard-img-wrap {
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      background: var(--bg2);
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-    }
-    .mcard-img-wrap::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
-      background: linear-gradient(to top, var(--bg1), transparent);
-      pointer-events: none;
-    }
-    .mcard-img {
-      width: 100%; height: 100%;
-      object-fit: contain;
-      padding: 1.5rem;
-      filter: drop-shadow(0 8px 30px rgba(0,0,0,.6));
-      transition: transform .65s var(--ease);
-    }
-    .mcard:hover .mcard-img { transform: scale(1.06) translateY(-4px); }
-    .mcard-body {
-      padding: 1.2rem 1.4rem 1.5rem;
-      flex: 1; display: flex; flex-direction: column;
-    }
-    .mcard-tag {
-      font-family: var(--fm); font-size: .42rem;
-      letter-spacing: .18em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: .4rem;
-    }
-    .mcard.accent-red .mcard-tag { color: var(--red); }
-    .mcard-name {
-      font-family: var(--fd); font-size: 1.45rem; font-weight: 800;
-      color: var(--white); text-transform: uppercase;
-      letter-spacing: .02em; line-height: 1;
-      margin-bottom: .5rem;
-    }
-    .mcard-desc {
-      font-size: .8rem; color: var(--dim);
-      font-weight: 300; line-height: 1.6; margin-bottom: 1rem;
-      flex: 1;
-    }
-    .mcard-link {
-      font-family: var(--fd); font-size: .68rem; font-weight: 600;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--blue2);
-      display: flex; align-items: center; gap: .4rem;
-      transition: gap .2s;
-    }
-    .mcard.accent-red .mcard-link { color: var(--red); }
-    .mcard:hover .mcard-link { gap: .75rem; }
-    /* Wide card spans 2 columns */
-    .mcard.wide { grid-column: span 2; }
-    .mcard.wide .mcard-img-wrap { aspect-ratio: 16/9; }
-
-    @media (max-width: 1200px) { .machines-grid { grid-template-columns: repeat(3,1fr); } }
-    @media (max-width: 900px) {
-      .machines-grid { grid-template-columns: repeat(2,1fr); }
-      .mcard.wide { grid-column: span 2; }
-    }
-    @media (max-width: 580px) {
-      .machines-grid { grid-template-columns: 1fr; }
-      .mcard.wide { grid-column: span 1; }
-    }
-
-    /* Filter hide animation */
-    .mcard.hidden { display: none; }
-
-    /* ════════════════════════════════════════
-       SPEC SHOWCASE — BOSCH / ALFATEC STYLE
-    ════════════════════════════════════════ */
-    .spec-showcase {
-      background: var(--bg1);
-      position: relative; overflow: hidden;
-    }
-    .spec-showcase::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(26,118,240,.35) 40%, rgba(200,34,28,.25) 60%, transparent);
-    }
-    .spec-showcase-inner {
-      max-width: 1280px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr;
-      min-height: 600px;
-    }
-    /* Left: dark spec panel */
-    .spec-panel {
-      background: #030710;
-      padding: 5rem;
-      display: flex; flex-direction: column; justify-content: center;
-      border-right: 1px solid rgba(26,118,240,.1);
-      position: relative; overflow: hidden;
-    }
-    .spec-panel::before {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(26,118,240,.07) 0%, transparent 65%);
-    }
-    .spec-panel-label {
-      font-family: var(--fm); font-size: .5rem;
-      letter-spacing: .24em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: .6rem;
-    }
-    .spec-panel-model {
-      font-family: var(--fd); font-size: clamp(2.4rem, 3.5vw, 4rem);
-      font-weight: 800; color: var(--white);
-      text-transform: uppercase; letter-spacing: -.02em; line-height: .95;
-      margin-bottom: 2.5rem;
-    }
-    .spec-panel-model span { display: block; color: var(--blue2); font-size: .55em; font-weight: 400; letter-spacing: .06em; margin-top: .4rem; }
-    .spec-table { width: 100%; border-collapse: collapse; }
-    .spec-table tr {
-      border-bottom: 1px solid rgba(255,255,255,.05);
-      transition: background .15s;
-    }
-    .spec-table tr:last-child { border-bottom: none; }
-    .spec-table tr:hover { background: rgba(255,255,255,.025); }
-    .spec-table td {
-      padding: .75rem 0;
-      font-size: .85rem;
-    }
-    .spec-table td:first-child {
-      color: var(--dim); font-weight: 300; width: 50%;
-      padding-right: 1rem;
-    }
-    .spec-table td:last-child {
-      font-family: var(--fm); font-size: .72rem;
-      color: var(--white); font-weight: 700;
-      text-align: right;
-    }
-    .spec-table td .spec-badge {
-      display: inline-block;
-      background: rgba(26,118,240,.12);
-      border: 1px solid rgba(26,118,240,.22);
-      color: var(--blue2);
-      padding: .15rem .55rem; border-radius: 4px;
-      font-size: .64rem; letter-spacing: .06em;
-    }
-    .spec-table td .spec-badge.red {
-      background: rgba(200,34,28,.1);
-      border-color: rgba(200,34,28,.2);
-      color: var(--red2);
-    }
-    .spec-footnote {
-      margin-top: 1.8rem;
-      font-family: var(--fm); font-size: .42rem;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* Right: content panel */
-    .spec-content {
-      padding: 5rem;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .spec-content .section-label { margin-bottom: 1rem; }
-    .spec-headline {
-      font-family: var(--fd);
-      font-size: clamp(2.6rem, 3.8vw, 4.5rem);
-      font-weight: 800; color: var(--white);
-      text-transform: uppercase; letter-spacing: -.02em; line-height: .9;
-      margin-bottom: 1.6rem;
-    }
-    .spec-headline em { font-style: normal; color: var(--blue2); }
-    .spec-body {
-      font-size: .96rem; font-weight: 300;
-      color: var(--dim); line-height: 1.82; margin-bottom: 2.5rem;
-      max-width: 420px;
-    }
-    .spec-features { list-style: none; display: flex; flex-direction: column; gap: 0; margin-bottom: 2.5rem; }
-    .spec-feature {
-      display: flex; align-items: flex-start; gap: 1rem;
-      padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,.05);
-    }
-    .spec-feature:first-child { border-top: 1px solid rgba(255,255,255,.05); }
-    .spec-feature-icon {
-      flex-shrink: 0; width: 36px; height: 36px;
-      border-radius: 8px;
-      background: rgba(26,118,240,.08); border: 1px solid rgba(26,118,240,.18);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--blue2);
-    }
-    .spec-feature-title {
-      font-family: var(--fd); font-size: .95rem; font-weight: 700;
-      color: var(--white); letter-spacing: .02em; margin-bottom: .15rem;
-    }
-    .spec-feature-desc { font-size: .82rem; color: var(--dim); font-weight: 300; }
-    .spec-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    /* Machine visual in spec section */
-    .spec-panel-img {
-      margin-top: 2.5rem;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .spec-panel-img img {
-      max-height: 220px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 20px 60px rgba(0,0,0,.8));
+    .intro-visual img {
+      width:100%; height:100%; object-fit:contain;
+      padding: 2.5rem;
+      filter: drop-shadow(0 12px 40px rgba(0,0,0,.12));
       transition: transform .8s var(--ease);
     }
-    .spec-panel:hover .spec-panel-img img { transform: scale(1.03) translateY(-5px); }
-
-    @media (max-width: 1024px) {
-      .spec-showcase-inner { grid-template-columns: 1fr; }
-      .spec-panel { border-right: none; border-bottom: 1px solid rgba(26,118,240,.1); padding: 3.5rem 2.5rem; }
-      .spec-content { padding: 3.5rem 2.5rem; }
+    .intro-visual:hover img { transform: scale(1.04) translateY(-4px); }
+    .intro-visual-tag {
+      position:absolute; bottom:1.1rem; left:1.1rem;
+      font-family:var(--fm); font-size:.44rem;
+      letter-spacing:.18em; text-transform:uppercase;
+      color: var(--blue2);
+      background: rgba(255,255,255,.92);
+      padding:.3rem .7rem; border-radius:4px;
+      border: 1px solid rgba(26,118,240,.2);
     }
+
+    @media (max-width:1024px) { .intro-inner { grid-template-columns:1fr; gap:3.5rem; } }
 
     /* ════════════════════════════════════════
-       APPLICATIONS — SIEMENS EDITORIAL
+       MACHINES  —  light, Audi grid
     ════════════════════════════════════════ */
-    .applications-section {
-      background: var(--bg); padding: 7rem 4rem;
+    .machines-section {
+      background: var(--paper2);
+      padding: 7rem 2rem;
+      border-top: 1px solid var(--border);
     }
-    .applications-inner { max-width: 1280px; margin: 0 auto; }
-    .applications-top {
-      display: flex; justify-content: space-between;
-      align-items: flex-end; margin-bottom: 3rem; gap: 2rem;
+    .machines-inner { max-width:1200px; margin:0 auto; }
+    .section-header {
+      display:flex; justify-content:space-between; align-items:flex-end;
+      margin-bottom:2.5rem; gap:2rem;
     }
-    .applications-top-link {
-      font-family: var(--fd); font-size: .76rem; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
+
+    /* Filter tabs */
+    .tab-bar {
+      display:flex; gap:0; border-bottom:2px solid var(--border);
+      margin-bottom:3rem; overflow-x:auto;
+    }
+    .tab-bar::-webkit-scrollbar { height:0; }
+    .tab {
+      font-family:var(--fd); font-size:.78rem; font-weight:700;
+      letter-spacing:.07em; text-transform:uppercase;
+      padding:.75rem 1.4rem;
+      background:transparent; border:none;
+      color: var(--text3); cursor:pointer;
+      transition: color .2s; position:relative;
+      white-space:nowrap;
+    }
+    .tab::after {
+      content:''; position:absolute; bottom:-2px; left:0; right:0;
+      height:2px; background:var(--blue2);
+      transform:scaleX(0); transition:transform .25s var(--ease);
+    }
+    .tab:hover { color: var(--text2); }
+    .tab.active { color: var(--text); }
+    .tab.active::after { transform:scaleX(1); }
+
+    /* Cards */
+    .machines-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem;
+    }
+    .mcard {
+      background: var(--paper); border:1px solid var(--border);
+      border-radius:12px; overflow:hidden;
+      cursor:pointer; display:flex; flex-direction:column;
+      transition: border-color .25s, box-shadow .3s, transform .35s var(--ease);
+    }
+    .mcard:hover {
+      border-color: var(--blue2);
+      box-shadow: 0 12px 40px rgba(26,118,240,.1);
+      transform: translateY(-4px);
+    }
+    .mcard.accent:hover {
+      border-color: var(--red);
+      box-shadow: 0 12px 40px rgba(200,34,28,.09);
+    }
+    .mcard-img {
+      aspect-ratio:4/3; overflow:hidden;
+      background: var(--paper2);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .mcard.wide { grid-column:span 2; }
+    .mcard.wide .mcard-img { aspect-ratio:16/9; }
+    .mcard-img img {
+      width:100%; height:100%; object-fit:contain;
+      padding:1.4rem;
+      filter: drop-shadow(0 6px 24px rgba(0,0,0,.1));
+      transition: transform .6s var(--ease);
+    }
+    .mcard:hover .mcard-img img { transform: scale(1.05) translateY(-3px); }
+    .mcard-body { padding:1.2rem 1.4rem 1.5rem; flex:1; display:flex; flex-direction:column; }
+    .mcard-tag {
+      font-family:var(--fm); font-size:.42rem;
+      letter-spacing:.16em; text-transform:uppercase;
+      color: var(--blue2); margin-bottom:.4rem;
+    }
+    .mcard.accent .mcard-tag { color: var(--red); }
+    .mcard-name {
+      font-family:var(--fd); font-size:1.45rem; font-weight:800;
+      color: var(--text); text-transform:uppercase;
+      letter-spacing:.01em; line-height:1; margin-bottom:.5rem;
+    }
+    .mcard-desc {
+      font-size:.82rem; color: var(--text2); line-height:1.62;
+      margin-bottom:1rem; flex:1;
+    }
+    .mcard-link {
+      font-family:var(--fd); font-size:.72rem; font-weight:700;
+      letter-spacing:.07em; text-transform:uppercase;
       color: var(--blue2);
-      display: flex; align-items: center; gap: .5rem;
-      transition: gap .2s; white-space: nowrap;
-    }
-    .applications-top-link:hover { gap: .85rem; }
-    .applications-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    /* Featured large card */
-    .app-card {
-      background: var(--bg1);
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 14px; overflow: hidden;
-      transition: border-color .3s, transform .4s var(--ease);
-    }
-    .app-card:hover { border-color: rgba(26,118,240,.2); transform: translateY(-4px); }
-    .app-card.featured { grid-row: span 2; }
-    .app-card-img {
-      height: 200px;
-      background: var(--bg2);
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden; position: relative;
-    }
-    .app-card.featured .app-card-img { height: 300px; }
-    .app-card-img-inner {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform .65s var(--ease);
-    }
-    .app-card:hover .app-card-img-inner { transform: scale(1.05); }
-    .app-card-body { padding: 1.6rem 1.8rem 2rem; }
-    .app-card-eyebrow {
-      font-family: var(--fm); font-size: .42rem;
-      letter-spacing: .18em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: .5rem;
-    }
-    .app-card.red-accent .app-card-eyebrow { color: var(--red); }
-    .app-card-title {
-      font-family: var(--fd); font-size: 1.5rem; font-weight: 800;
-      color: var(--white); text-transform: uppercase;
-      letter-spacing: .03em; line-height: 1;
-      margin-bottom: .5rem;
-    }
-    .app-card-desc { font-size: .82rem; color: var(--dim); line-height: 1.65; margin-bottom: 1rem; }
-    .app-card-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .app-tag {
-      font-family: var(--fm); font-size: .4rem;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(96,136,176,.7);
-      background: rgba(26,118,240,.06);
-      border: 1px solid rgba(26,118,240,.12);
-      padding: .22rem .52rem; border-radius: 4px;
-    }
-    .app-card-link {
-      display: inline-flex; align-items: center; gap: .4rem;
-      font-family: var(--fd); font-size: .68rem; font-weight: 600;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--blue2); margin-top: 1rem;
+      display:flex; align-items:center; gap:.4rem;
       transition: gap .2s;
     }
-    .app-card:hover .app-card-link { gap: .7rem; }
+    .mcard.accent .mcard-link { color: var(--red); }
+    .mcard:hover .mcard-link { gap:.7rem; }
+    .mcard.hidden { display:none; }
 
-    /* Icon placeholder for app cards */
-    .app-icon-wrap {
-      width: 80px; height: 80px;
-      border-radius: 16px;
-      background: rgba(26,118,240,.06);
-      border: 1px solid rgba(26,118,240,.14);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--blue2);
+    @media (max-width:1100px) { .machines-grid { grid-template-columns:repeat(3,1fr); } }
+    @media (max-width:800px) {
+      .machines-grid { grid-template-columns:repeat(2,1fr); }
+      .mcard.wide { grid-column:span 2; }
     }
-    .app-card.red-accent .app-icon-wrap {
-      background: rgba(200,34,28,.06);
-      border-color: rgba(200,34,28,.14);
-      color: var(--red);
-    }
-
-    @media (max-width: 1024px) { .applications-grid { grid-template-columns: 1fr 1fr; } .app-card.featured { grid-row: auto; } }
-    @media (max-width: 640px) { .applications-grid { grid-template-columns: 1fr; } .applications-section { padding: 5rem 1.5rem; } }
+    @media (max-width:540px) { .machines-grid { grid-template-columns:1fr; } .mcard.wide { grid-column:span 1; } }
 
     /* ════════════════════════════════════════
-       CTA BANNER — FULL BLEED
+       SPEC PANEL  —  dark accent strip
     ════════════════════════════════════════ */
-    .cta-banner {
-      background: var(--blue3);
-      position: relative; overflow: hidden;
-      padding: 7rem 4rem;
+    .spec-section {
+      background: var(--ink);
+      position:relative; overflow:hidden;
     }
-    .cta-banner::before {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
+    .spec-section::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
       background:
-        radial-gradient(ellipse 60% 80% at 15% 50%, rgba(26,118,240,.3) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 60% at 85% 30%, rgba(200,34,28,.15) 0%, transparent 55%);
+        radial-gradient(ellipse 50% 80% at 15% 55%, rgba(26,118,240,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 55% at 85% 40%, rgba(200,34,28,.07) 0%, transparent 55%);
     }
-    .cta-banner-word {
-      position: absolute;
-      font-family: var(--fd); font-size: clamp(10rem, 22vw, 22rem);
-      font-weight: 800; color: rgba(255,255,255,.03);
-      top: 50%; right: -2%;
-      transform: translateY(-50%);
-      white-space: nowrap; pointer-events: none;
-      letter-spacing: -.04em;
+    .spec-grid {
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns:1fr 1fr;
+      min-height:560px;
     }
-    .cta-banner-inner {
-      max-width: 1280px; margin: 0 auto; position: relative; z-index: 1;
-      display: flex; justify-content: space-between; align-items: center; gap: 4rem;
+
+    /* Left: dark panel */
+    .spec-left {
+      padding: 5rem 4rem 5rem 2rem;
+      display:flex; flex-direction:column; justify-content:center;
+      border-right: 1px solid rgba(255,255,255,.06);
     }
-    .cta-banner-text {}
-    .cta-banner-eyebrow {
-      font-family: var(--fm); font-size: .52rem;
-      letter-spacing: .28em; text-transform: uppercase;
-      color: rgba(255,255,255,.55); margin-bottom: 1rem;
+    .spec-model-label {
+      font-family:var(--fm); font-size:.48rem;
+      letter-spacing:.24em; text-transform:uppercase;
+      color: rgba(26,118,240,.8); margin-bottom:.5rem;
     }
-    .cta-banner-headline {
-      font-family: var(--fd);
-      font-size: clamp(3rem, 5vw, 5.5rem);
-      font-weight: 800; color: var(--white);
-      text-transform: uppercase; letter-spacing: -.02em; line-height: .92;
+    .spec-model-name {
+      font-family:var(--fd); font-size: clamp(2.2rem,3.5vw,3.8rem);
+      font-weight:900; color:#fff;
+      text-transform:uppercase; letter-spacing:-.01em; line-height:.92;
+      margin-bottom:2.2rem;
     }
-    .cta-banner-actions { display: flex; gap: 1rem; flex-wrap: wrap; flex-shrink: 0; }
-    @media (max-width: 900px) {
-      .cta-banner-inner { flex-direction: column; align-items: flex-start; }
-      .cta-banner { padding: 5rem 2rem; }
+    .spec-model-name span {
+      display:block; font-size:.52em; font-weight:400;
+      color: rgba(255,255,255,.35); letter-spacing:.05em; margin-top:.4rem;
+    }
+    .spec-table { width:100%; border-collapse:collapse; }
+    .spec-table tr { border-bottom:1px solid rgba(255,255,255,.05); }
+    .spec-table tr:last-child { border-bottom:none; }
+    .spec-table tr:hover { background:rgba(255,255,255,.025); }
+    .spec-table td { padding:.72rem 0; }
+    .spec-table td:first-child { font-size:.85rem; color:rgba(255,255,255,.45); width:52%; }
+    .spec-table td:last-child {
+      font-family:var(--fm); font-size:.7rem; font-weight:700;
+      color:#fff; text-align:right;
+    }
+    .spec-badge {
+      display:inline-block; font-size:.6rem; letter-spacing:.05em;
+      background:rgba(26,118,240,.14); border:1px solid rgba(26,118,240,.25);
+      color: rgba(26,118,240,.9);
+      padding:.14rem .5rem; border-radius:3px;
+    }
+    .spec-badge.r {
+      background:rgba(200,34,28,.12); border-color:rgba(200,34,28,.22);
+      color: rgba(224,53,48,.9);
+    }
+    .spec-note {
+      margin-top:1.5rem;
+      font-family:var(--fm); font-size:.4rem;
+      letter-spacing:.12em; text-transform:uppercase;
+      color: rgba(255,255,255,.22);
+    }
+    /* Machine image below table */
+    .spec-img {
+      margin-top:2rem; text-align:center;
+    }
+    .spec-img img {
+      max-height:200px; width:auto;
+      object-fit:contain;
+      filter: drop-shadow(0 16px 48px rgba(0,0,0,.7));
+      transition: transform .8s var(--ease);
+    }
+    .spec-left:hover .spec-img img { transform: scale(1.04) translateY(-5px); }
+
+    /* Right: content */
+    .spec-right {
+      padding: 5rem 2rem 5rem 4rem;
+      display:flex; flex-direction:column; justify-content:center;
+    }
+    .spec-headline {
+      font-family:var(--fd); font-size: clamp(2.5rem,3.8vw,4.2rem);
+      font-weight:900; color:#fff;
+      text-transform:uppercase; letter-spacing:-.01em; line-height:.9;
+      margin-bottom:1.4rem;
+    }
+    .spec-headline em { font-style:normal; color: var(--blue2); }
+    .spec-body {
+      font-size:.96rem; color:rgba(255,255,255,.45);
+      line-height:1.8; margin-bottom:2.2rem; max-width:400px;
+    }
+    .spec-features { list-style:none; display:flex; flex-direction:column; gap:0; margin-bottom:2.2rem; }
+    .spec-feat {
+      display:flex; align-items:flex-start; gap:1rem;
+      padding:1rem 0; border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .spec-feat:first-child { border-top:1px solid rgba(255,255,255,.05); }
+    .spec-feat-icon {
+      flex-shrink:0; width:36px; height:36px; border-radius:8px;
+      background:rgba(26,118,240,.1); border:1px solid rgba(26,118,240,.2);
+      color:var(--blue2);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .spec-feat-title {
+      font-family:var(--fd); font-size:.95rem; font-weight:700;
+      color:#fff; margin-bottom:.15rem;
+    }
+    .spec-feat-desc { font-size:.82rem; color:rgba(255,255,255,.4); line-height:1.6; }
+    .spec-ctas { display:flex; gap:.8rem; flex-wrap:wrap; }
+
+    @media (max-width:1024px) {
+      .spec-grid { grid-template-columns:1fr; }
+      .spec-left { border-right:none; border-bottom:1px solid rgba(255,255,255,.06); padding:4rem 2rem; }
+      .spec-right { padding:4rem 2rem; }
     }
 
     /* ════════════════════════════════════════
-       CONTACT SECTION
+       APPLICATIONS  —  editorial light
+    ════════════════════════════════════════ */
+    .apps-section {
+      background: var(--paper);
+      padding: 7rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .apps-inner { max-width:1200px; margin:0 auto; }
+    .apps-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1.25rem; margin-top:3rem;
+    }
+    .app-card {
+      background: var(--paper2);
+      border:1px solid var(--border); border-radius:12px;
+      overflow:hidden;
+      transition: border-color .25s, box-shadow .3s, transform .35s var(--ease);
+    }
+    .app-card:hover {
+      border-color: var(--blue2);
+      box-shadow: 0 10px 32px rgba(26,118,240,.09);
+      transform: translateY(-3px);
+    }
+    .app-card.featured { grid-row:span 2; }
+    .app-card-img {
+      height:180px; overflow:hidden;
+      background: var(--paper3);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .app-card.featured .app-card-img { height:270px; }
+    .app-card-icon-wrap {
+      width:72px; height:72px; border-radius:14px;
+      background:var(--blue-soft); color:var(--blue2);
+      display:flex; align-items:center; justify-content:center;
+      transition: transform .35s var(--ease);
+    }
+    .app-card.red-accent .app-card-icon-wrap {
+      background:var(--red-soft); color:var(--red);
+    }
+    .app-card:hover .app-card-icon-wrap { transform: scale(1.06); }
+    .app-body { padding:1.5rem 1.6rem 1.8rem; }
+    .app-tag {
+      font-family:var(--fm); font-size:.42rem;
+      letter-spacing:.16em; text-transform:uppercase;
+      color:var(--blue2); margin-bottom:.4rem;
+    }
+    .app-card.red-accent .app-tag { color:var(--red); }
+    .app-name {
+      font-family:var(--fd); font-size:1.5rem; font-weight:800;
+      color:var(--text); text-transform:uppercase;
+      letter-spacing:.02em; line-height:1; margin-bottom:.5rem;
+    }
+    .app-desc { font-size:.82rem; color:var(--text2); line-height:1.65; margin-bottom:.9rem; }
+    .app-chips { display:flex; flex-wrap:wrap; gap:.35rem; }
+    .app-chip {
+      font-family:var(--fm); font-size:.4rem;
+      letter-spacing:.1em; text-transform:uppercase;
+      color:var(--text3);
+      background:var(--paper3); border:1px solid var(--border);
+      padding:.2rem .5rem; border-radius:3px;
+    }
+
+    @media (max-width:1024px) { .apps-grid { grid-template-columns:1fr 1fr; } .app-card.featured { grid-row:auto; } }
+    @media (max-width:580px) { .apps-grid { grid-template-columns:1fr; } .apps-section { padding:5rem 1.25rem; } }
+
+    /* ════════════════════════════════════════
+       TRUST STRIP  —  blue accent
+    ════════════════════════════════════════ */
+    .trust-strip {
+      background: var(--blue2);
+      padding: 4rem 2rem;
+      position:relative; overflow:hidden;
+    }
+    .trust-strip::before {
+      content:'';
+      position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 60% 100% at 50% 50%, rgba(16,88,192,.5) 0%, transparent 70%);
+    }
+    .trust-inner {
+      max-width:1200px; margin:0 auto; position:relative; z-index:1;
+      display:flex; justify-content:space-between; align-items:center; gap:3rem;
+      flex-wrap:wrap;
+    }
+    .trust-text {}
+    .trust-eyebrow {
+      font-family:var(--fm); font-size:.52rem;
+      letter-spacing:.26em; text-transform:uppercase;
+      color:rgba(255,255,255,.6); margin-bottom:.8rem;
+    }
+    .trust-headline {
+      font-family:var(--fd); font-weight:900;
+      font-size: clamp(2.2rem,4vw,4rem);
+      color:#fff; text-transform:uppercase;
+      letter-spacing:-.01em; line-height:.92;
+    }
+    .trust-actions { display:flex; gap:.8rem; flex-wrap:wrap; flex-shrink:0; }
+
+    /* ════════════════════════════════════════
+       CONTACT  —  light
     ════════════════════════════════════════ */
     .contact-section {
-      background: #F1F5FB; position: relative;
-      padding: 8rem 4rem;
+      background: var(--paper);
+      padding: 7rem 2rem;
+      border-top: 1px solid var(--border);
     }
-    .contact-inner { max-width: 1280px; margin: 0 auto; }
-    .contact-layout {
-      display: grid; grid-template-columns: 1fr 380px;
-      gap: 6rem; align-items: start;
+    .contact-inner { max-width:1200px; margin:0 auto; }
+    .contact-grid {
+      display:grid; grid-template-columns:1fr 360px;
+      gap:5rem; align-items:start;
     }
     .contact-lead {
-      font-family: var(--fd);
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 800; color: #0C1B35;
-      letter-spacing: -.02em; line-height: 1.05; margin-bottom: .9rem;
+      font-family:var(--fd); font-weight:800;
+      font-size: clamp(2rem,3.2vw,3rem);
+      color:var(--text); text-transform:uppercase;
+      letter-spacing:-.01em; line-height:1;
+      margin-bottom:.8rem;
     }
     .contact-sub {
-      font-size: 1rem; color: #4A6275;
-      font-weight: 300; line-height: 1.78; margin-bottom: 2.5rem; max-width: 460px;
+      font-size:.98rem; color:var(--text2);
+      line-height:1.78; margin-bottom:2.2rem; max-width:440px;
     }
-    .form-group { margin-bottom: 1.1rem; }
-    .form-row { display: flex; gap: 1rem; }
-    .form-row > .form-group { flex: 1; }
+    .form-group { margin-bottom:1rem; }
+    .form-row { display:flex; gap:.9rem; }
+    .form-row>.form-group { flex:1; }
     .form-label {
-      display: block; font-family: var(--fm); font-size: .5rem;
-      letter-spacing: .18em; text-transform: uppercase;
-      color: #4A6275; margin-bottom: .45rem;
+      display:block; font-family:var(--fm); font-size:.48rem;
+      letter-spacing:.18em; text-transform:uppercase;
+      color:var(--text3); margin-bottom:.4rem;
     }
     .form-input {
-      width: 100%; padding: .8rem 1rem;
-      font-family: var(--fb); font-size: .95rem;
-      color: #0C1B35; background: #FFFFFF;
-      border: 1px solid #C4D4E8; border-radius: 8px;
-      outline: none; transition: border-color .2s, box-shadow .2s;
+      width:100%; padding:.8rem 1rem;
+      font-family:var(--fb); font-size:.95rem;
+      color:var(--text); background:var(--paper);
+      border:1.5px solid var(--border2); border-radius:8px;
+      outline:none;
+      transition: border-color .2s, box-shadow .2s;
     }
     .form-input:focus {
-      border-color: var(--blue2);
+      border-color:var(--blue2);
       box-shadow: 0 0 0 3px rgba(26,118,240,.1);
     }
-    .form-input::placeholder { color: #8AABC8; }
-    .form-textarea { resize: vertical; min-height: 125px; }
+    .form-input::placeholder { color:var(--text3); }
+    .form-textarea { resize:vertical; min-height:120px; }
     .form-select {
-      cursor: pointer; -webkit-appearance: none; color-scheme: light;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236088B0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 1rem center;
-      padding-right: 2.5rem;
+      cursor:pointer; -webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B8299' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 1rem center;
+      padding-right:2.4rem;
     }
-    .form-privacy {
-      display: flex; align-items: flex-start; gap: .7rem;
-      font-size: .8rem; color: #4A6275; line-height: 1.5; margin-bottom: 1.4rem;
+    .form-check {
+      display:flex; align-items:flex-start; gap:.65rem;
+      font-size:.82rem; color:var(--text2); line-height:1.55; margin-bottom:1.3rem;
     }
-    .form-privacy input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; accent-color: var(--blue2); }
+    .form-check input { width:15px; height:15px; margin-top:2px; flex-shrink:0; accent-color:var(--blue2); }
+    .form-check a { color:var(--blue2); text-decoration:underline; }
     .form-submit {
-      width: 100%;
-      display: flex; align-items: center; justify-content: center; gap: .6rem;
-      background: var(--blue2); color: var(--white);
-      font-family: var(--fd); font-size: .92rem; font-weight: 700;
-      letter-spacing: .06em; text-transform: uppercase;
-      padding: 1rem 2rem; border: none; border-radius: 10px;
-      cursor: pointer; transition: all .25s var(--ease);
+      width:100%; display:flex; align-items:center; justify-content:center; gap:.6rem;
+      background:var(--blue2); color:#fff;
+      font-family:var(--fd); font-size:.92rem; font-weight:700;
+      letter-spacing:.07em; text-transform:uppercase;
+      padding:.95rem 2rem; border:none; border-radius:8px;
+      cursor:pointer; transition: all .2s var(--ease);
+      box-shadow: 0 4px 16px rgba(26,118,240,.28);
     }
-    .form-submit:hover { background: var(--blue3); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(26,118,240,.3); }
-    .contact-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+    .form-submit:hover { background:var(--blue); transform:translateY(-1px); box-shadow:0 8px 28px rgba(26,118,240,.35); }
+
+    /* Sidebar */
+    .contact-sidebar { display:flex; flex-direction:column; gap:1.25rem; }
     .cbox {
-      background: #FFFFFF; border: 1px solid #C4D4E8;
-      border-radius: 14px; overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,.05);
+      background:var(--paper); border:1.5px solid var(--border);
+      border-radius:12px; overflow:hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
     }
     .cbox-head {
-      background: #EEF3FB; border-bottom: 1px solid #C4D4E8;
-      padding: .78rem 1.4rem;
-      font-family: var(--fm); font-size: .5rem;
-      letter-spacing: .2em; text-transform: uppercase; color: var(--blue2);
+      background:var(--paper2); border-bottom:1px solid var(--border);
+      padding:.7rem 1.3rem;
+      font-family:var(--fm); font-size:.46rem;
+      letter-spacing:.2em; text-transform:uppercase; color:var(--blue2);
     }
-    .cbox-body { padding: 1.4rem; }
-    .c-phone-row {
-      display: flex; align-items: center; gap: 1rem;
-      background: var(--red); padding: .95rem 1.2rem;
-      border-radius: 9px; margin-bottom: 1.1rem;
-      transition: background .2s; text-decoration: none;
+    .cbox-body { padding:1.3rem; }
+    .cphone {
+      display:flex; align-items:center; gap:.9rem;
+      background:var(--red); padding:.9rem 1.1rem;
+      border-radius:8px; margin-bottom:1rem;
+      transition:background .2s; text-decoration:none;
     }
-    .c-phone-row:hover { background: var(--red2); }
-    .c-phone-label  { display: block; font-size: .6rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.8); }
-    .c-phone-number { display: block; font-family: var(--fd); font-size: 1.35rem; font-weight: 800; color: var(--white); letter-spacing: .02em; line-height: 1.2; }
-    .c-phone-hours  { display: block; font-size: .7rem; color: rgba(255,255,255,.72); }
-    .c-detail-row {
-      display: flex; align-items: center; gap: .8rem;
-      padding: .7rem 0; border-bottom: 1px solid #E2EAFA;
-    }
-    .c-detail-row:last-child { border-bottom: none; }
-    .c-detail-label { display: block; font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; color: #8AABC8; }
-    .c-detail-val   { display: block; font-size: .9rem; font-weight: 500; color: #0C1B35; }
-    @media (max-width: 1024px) { .contact-layout { grid-template-columns: 1fr; gap: 4rem; } .form-row { flex-direction: column; } }
-    @media (max-width: 768px) { .contact-section { padding: 5rem 1.5rem; } }
+    .cphone:hover { background:var(--red2); }
+    .cphone-lbl { display:block; font-size:.58rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.8); }
+    .cphone-num { display:block; font-family:var(--fd); font-size:1.3rem; font-weight:800; color:#fff; line-height:1.2; }
+    .cphone-hrs { display:block; font-size:.7rem; color:rgba(255,255,255,.7); }
+    .cdetail { display:flex; align-items:center; gap:.75rem; padding:.65rem 0; border-bottom:1px solid var(--border); }
+    .cdetail:last-child { border-bottom:none; }
+    .cdetail-lbl { display:block; font-size:.6rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text3); }
+    .cdetail-val { display:block; font-size:.9rem; font-weight:500; color:var(--text); }
+    .ctrust { display:flex; align-items:center; gap:.65rem; padding:.45rem 0; font-size:.84rem; color:var(--text2); }
+    .ctrust-check { flex-shrink:0; width:18px; height:18px; border-radius:50%; background:var(--blue-soft); color:var(--blue2); display:flex; align-items:center; justify-content:center; }
 
-    /* ── FOOTER ── */
+    @media (max-width:1024px) { .contact-grid { grid-template-columns:1fr; gap:3.5rem; } .form-row { flex-direction:column; } }
+    @media (max-width:768px) { .contact-section { padding:5rem 1.25rem; } }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
     footer {
-      background: #070E20;
-      border-top: 1px solid var(--border);
-      padding: 5rem 4rem 2.5rem;
+      background: var(--ink);
+      border-top:1px solid rgba(255,255,255,.06);
+      padding: 5rem 2rem 2.5rem;
     }
-    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-inner { max-width:1200px; margin:0 auto; }
     .footer-top {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 4rem; padding-bottom: 4rem;
-      border-bottom: 1px solid var(--border); margin-bottom: 2.5rem;
+      display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+      gap:3.5rem; padding-bottom:3.5rem;
+      border-bottom:1px solid rgba(255,255,255,.06); margin-bottom:2.5rem;
     }
-    .footer-logo-img { height: 34px; width: auto; mix-blend-mode: screen; margin-bottom: 1.2rem; }
-    .footer-tagline { font-size: .84rem; color: var(--muted); line-height: 1.75; max-width: 280px; margin-bottom: 1.5rem; }
-    .footer-address-line { font-size: .8rem; color: var(--muted); line-height: 1.85; }
-    .footer-phone-link { font-family: var(--fd); font-size: 1rem; font-weight: 700; color: var(--white); transition: color .2s; }
-    .footer-phone-link:hover { color: var(--dim); }
-    .footer-certs { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.2rem; }
+    .footer-logo { height:28px; width:auto; mix-blend-mode:screen; margin-bottom:1rem; }
+    .footer-tagline { font-size:.84rem; color:rgba(255,255,255,.3); line-height:1.75; max-width:260px; margin-bottom:1.3rem; }
+    .footer-address { font-size:.8rem; color:rgba(255,255,255,.3); line-height:1.9; font-style:normal; }
+    .footer-address a { color:rgba(255,255,255,.55); transition:color .2s; }
+    .footer-address a:hover { color:#fff; }
+    .footer-certs { display:flex; flex-wrap:wrap; gap:.45rem; margin-top:1.1rem; }
     .footer-cert {
-      font-family: var(--fm); font-size: .43rem;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: rgba(255,255,255,.45);
-      background: rgba(255,255,255,.035); border: 1px solid var(--border);
-      padding: .3rem .7rem; border-radius: 4px;
+      font-family:var(--fm); font-size:.4rem; letter-spacing:.14em; text-transform:uppercase;
+      color:rgba(255,255,255,.35); background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      padding:.27rem .65rem; border-radius:3px;
     }
     .footer-col-title {
-      font-family: var(--fd); font-size: .76rem; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 1.3rem;
+      font-family:var(--fd); font-size:.78rem; font-weight:700;
+      letter-spacing:.09em; text-transform:uppercase;
+      color:rgba(255,255,255,.65); margin-bottom:1.2rem;
     }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
-    .footer-links a { font-size: .84rem; color: var(--muted); transition: color .2s; }
-    .footer-links a:hover { color: var(--white); }
+    .footer-nav { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+    .footer-nav a { font-size:.82rem; color:rgba(255,255,255,.3); transition:color .2s; }
+    .footer-nav a:hover { color:rgba(255,255,255,.75); }
     .footer-bottom {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:1rem;
     }
-    .footer-copy { font-family: var(--fm); font-size: .46rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-    .footer-legal { display: flex; gap: 1.5rem; }
-    .footer-legal a { font-size: .78rem; color: var(--muted); transition: color .2s; }
-    .footer-legal a:hover { color: var(--white); }
-    @media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
-    @media (max-width: 580px) { .footer-top { grid-template-columns: 1fr; } footer { padding: 4rem 1.5rem 2rem; } }
+    .footer-copy { font-family:var(--fm); font-size:.44rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.25); }
+    .footer-legal { display:flex; gap:1.4rem; }
+    .footer-legal a { font-size:.8rem; color:rgba(255,255,255,.3); transition:color .2s; }
+    .footer-legal a:hover { color:rgba(255,255,255,.65); }
+    @media (max-width:900px) { .footer-top { grid-template-columns:1fr 1fr; gap:2.5rem; } }
+    @media (max-width:540px) { .footer-top { grid-template-columns:1fr; } footer { padding:4rem 1.25rem 2rem; } }
   </style>
 </head>
 <body>
 
-  <!-- ═══ PHONE BAR ═══ -->
-  <div id="phone-bar">
-    <div class="pb-inner">
-      <span class="pb-text">Gefertigt in Stuttgart seit 1987 &nbsp;·&nbsp; ISO 9001 &nbsp;·&nbsp; CE-Kennzeichnung &nbsp;·&nbsp; 500+ Anlagen weltweit</span>
-      <a href="tel:+4971140950-0" class="pb-cta">
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-inner">
+      <span class="topbar-left">Tampondruckmaschinen · Made in Stuttgart seit 1987 · ISO 9001 · CE · 500+ Anlagen weltweit</span>
+      <a href="tel:+4971140950-0" class="topbar-phone">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.5a16 16 0 0 0 6.56 6.56l1.36-1.35a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         +49 (0)711 40950-0
       </a>
     </div>
   </div>
 
-  <!-- ═══ NAV ═══ -->
+  <!-- NAV -->
   <nav id="nav">
     <a href="index.html" class="nav-logo">
-      <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img">
+      <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img invert-on-scroll">
     </a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Startseite</a></li>
@@ -1028,71 +1031,29 @@
       <li><a href="ueber-uns.html">Unternehmen</a></li>
     </ul>
     <div class="nav-right">
-      <a href="tel:+4971140950-0" class="nav-phone">+49 (0)711 40950-0</a>
+      <a href="tel:+4971140950-0" class="nav-tel">+49 (0)711 40950-0</a>
       <a href="#kontakt" class="nav-cta">Anfrage</a>
     </div>
   </nav>
 
-  <!-- ═══ HERO — FULL BLEED ═══ -->
+  <!-- ═══ HERO ═══ -->
   <section class="hero" id="hero">
-    <div class="hero-bg">
-      <div class="hero-glow-blue"></div>
-      <div class="hero-glow-red"></div>
-      <div class="hero-grid-texture"></div>
-
-      <!-- Blueprint SVG background -->
-      <svg class="hero-bg-blueprint" viewBox="760 110 660 780" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <marker id="ha" markerWidth="5" markerHeight="4" refX="0" refY="2" orient="auto"><path d="M0,0 L5,2 L0,4 Z" fill="#2B72D4"/></marker>
-          <marker id="har" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto"><path d="M5,0 L0,2 L5,4 Z" fill="#2B72D4"/></marker>
-          <pattern id="hatch45" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#2B72D4" stroke-width="0.35"/></pattern>
-        </defs>
-        <rect x="758" y="105" width="668" height="784" stroke="#2B72D4" stroke-width="0.7" fill="none" opacity="0.12"/>
-        <g stroke="#2B72D4" fill="none" opacity="0.22" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="840" y="772" width="510" height="30" stroke-width="0.9" fill="url(#hatch45)" fill-opacity="0.08"/>
-          <rect x="1224" y="172" width="52" height="600" stroke-width="0.9" fill="rgba(43,114,212,0.05)"/>
-          <rect x="1212" y="162" width="76" height="20" stroke-width="0.7" fill="rgba(43,114,212,0.06)"/>
-          <line x1="1250" y1="172" x2="1250" y2="772" stroke-width="0.3" stroke-dasharray="5 3"/>
-          <rect x="840" y="168" width="384" height="40" stroke-width="0.9" fill="rgba(43,114,212,0.05)"/>
-          <rect x="840" y="208" width="38" height="108" stroke-width="0.8" fill="rgba(43,114,212,0.06)"/>
-          <path d="M 852 326 C 847 340 840 362 840 382 C 840 404 852 420 870 426 C 888 432 910 420 912 398 C 914 376 906 350 900 326 Z" stroke-width="0.9" fill="rgba(43,114,212,0.07)"/>
-          <rect x="855" y="725" width="318" height="48" stroke-width="0.8" fill="rgba(43,114,212,0.05)"/>
-          <line x1="870" y1="115" x2="870" y2="712" stroke-width="0.35" stroke-dasharray="12 3 2 3" opacity="0.7"/>
-          <line x1="825" y1="721" x2="1200" y2="721" stroke-width="0.35" stroke-dasharray="12 3 2 3" opacity="0.7"/>
-          <line x1="808" y1="188" x2="1225" y2="188" stroke-width="0.35" stroke-dasharray="12 3 2 3" opacity="0.7"/>
-          <line x1="795" y1="180" x2="795" y2="792" stroke-width="0.4" marker-end="url(#ha)" marker-start="url(#har)"/>
-          <text x="789" y="492" fill="#2B72D4" font-family="monospace" font-size="6.5" text-anchor="middle" transform="rotate(-90,789,492)" opacity="0.8">1280 mm</text>
-          <line x1="848" y1="147" x2="1216" y2="147" stroke-width="0.4" marker-end="url(#ha)" marker-start="url(#har)"/>
-          <text x="1032" y="143" fill="#2B72D4" font-family="monospace" font-size="6.5" text-anchor="middle" opacity="0.8">384 mm</text>
-          <text x="1308" y="161" fill="#2B72D4" font-family="monospace" font-size="5" opacity="0.75">SERVO</text>
-          <text x="1308" y="169" fill="#2B72D4" font-family="monospace" font-size="5" opacity="0.75">400W</text>
-        </g>
-        <g stroke="#2B72D4" fill="none" opacity="0.18">
-          <text x="1126" y="857" fill="#2B72D4" font-family="monospace" font-size="5.5" opacity="0.9" font-weight="bold">KENT STUTTGART GMBH</text>
-          <text x="1126" y="869" fill="#2B72D4" font-family="monospace" font-size="5" opacity="0.75">TAMPONDRUCKMASCHINE KS-400</text>
-          <text x="1126" y="881" fill="#2B72D4" font-family="monospace" font-size="4.5" opacity="0.6">DWG: KS400-001  REV.A</text>
-        </g>
-      </svg>
-
-      <!-- Machine image right side -->
-      <div class="hero-bg-machine">
-        <img src="Maschienen/Tampondruckmaschine Turbo 350.png" alt="Kent Tampondruckmaschine" />
-      </div>
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-machine">
+      <img src="Maschienen/Tampondruckmaschine Turbo 350.png" alt="Kent Tampondruckmaschine" />
     </div>
+    <div class="hero-fade-left"></div>
+    <div class="hero-fade-bottom"></div>
 
-    <!-- Gradient overlays -->
-    <div class="hero-overlay-left"></div>
-    <div class="hero-overlay-bottom"></div>
-
-    <!-- Content — bottom left like AMG -->
     <div class="hero-content">
       <div class="hero-eyebrow">
-        <span class="eyebrow-dot"></span>
-        Tampondruck &nbsp;·&nbsp; Seit 1987 &nbsp;·&nbsp; Stuttgart
+        <span class="hero-eyebrow-dot"></span>
+        Tampondruck · Seit 1987 · Stuttgart
       </div>
-      <h1 class="hero-headline">
+      <h1 class="hero-h1">
         Präzision.
-        <span class="line2">Ohne Kompromisse.</span>
+        <span class="outline">Ohne Kompromisse.</span>
       </h1>
       <div class="hero-divider"></div>
       <p class="hero-sub">
@@ -1101,43 +1062,24 @@
       <div class="hero-actions">
         <a href="maschinen/index.html" class="btn btn-primary">
           Maschinen entdecken
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#kontakt" class="btn btn-ghost">
-          Anfrage stellen
-        </a>
+        <a href="#kontakt" class="btn btn-outline-white">Anfrage stellen</a>
       </div>
     </div>
 
-    <!-- Floating spec card -->
-    <div class="hero-spec-card">
-      <div class="hsc-label">Technische Werte</div>
-      <div class="hsc-row">
-        <span class="hsc-key">Genauigkeit</span>
-        <span class="hsc-val accent">±0.01 mm</span>
-      </div>
-      <div class="hsc-row">
-        <span class="hsc-key">Installationen</span>
-        <span class="hsc-val">500+</span>
-      </div>
-      <div class="hsc-row">
-        <span class="hsc-key">Exportländer</span>
-        <span class="hsc-val">40</span>
-      </div>
-      <div class="hsc-row">
-        <span class="hsc-key">Gegründet</span>
-        <span class="hsc-val">1987</span>
-      </div>
-      <div class="hsc-row">
-        <span class="hsc-key">Norm</span>
-        <span class="hsc-val">ISO 9001</span>
-      </div>
+    <div class="hero-chip">
+      <div class="hchip-label">Technische Eckdaten</div>
+      <div class="hchip-row"><span class="hchip-key">Genauigkeit</span><span class="hchip-val hi">±0.01 mm</span></div>
+      <div class="hchip-row"><span class="hchip-key">Installationen</span><span class="hchip-val">500+</span></div>
+      <div class="hchip-row"><span class="hchip-key">Exportländer</span><span class="hchip-val">40</span></div>
+      <div class="hchip-row"><span class="hchip-key">Gegründet</span><span class="hchip-val">1987</span></div>
+      <div class="hchip-row"><span class="hchip-key">Norm</span><span class="hchip-val">ISO 9001</span></div>
     </div>
 
-    <!-- Scroll indicator -->
     <div class="hero-scroll">
-      <div class="hero-scroll-line"></div>
-      <span class="hero-scroll-label">Scroll</span>
+      <div class="hero-scroll-bar"></div>
+      <span class="hero-scroll-text">Scroll</span>
     </div>
   </section>
 
@@ -1145,210 +1087,191 @@
   <div class="stats-bar">
     <div class="stats-track">
       <div class="stat-item">
-        <div class="stat-num">1987</div>
+        <div class="stat-val">1987</div>
         <div class="stat-unit">Gegründet</div>
-        <div class="stat-label">Stuttgart, Deutschland</div>
+        <div class="stat-desc">Stuttgart, Deutschland</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">35+</div>
+        <div class="stat-val">35+</div>
         <div class="stat-unit">Jahre</div>
-        <div class="stat-label">Branchenerfahrung</div>
+        <div class="stat-desc">Branchenerfahrung</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">500+</div>
+        <div class="stat-val">500+</div>
         <div class="stat-unit">Installationen</div>
-        <div class="stat-label">Weltweit im Einsatz</div>
+        <div class="stat-desc">Weltweit im Einsatz</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">40</div>
+        <div class="stat-val">40</div>
         <div class="stat-unit">Länder</div>
-        <div class="stat-label">Globale Präsenz</div>
+        <div class="stat-desc">Globale Präsenz</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">±0.01</div>
+        <div class="stat-val">±0.01</div>
         <div class="stat-unit">mm Toleranz</div>
-        <div class="stat-label">Reproduzierbare Genauigkeit</div>
+        <div class="stat-desc">Reproduzierbare Genauigkeit</div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ MASCHINEN PORTFOLIO — AUDI GRID ═══ -->
+  <!-- ═══ INTRO / VALUE PROP ═══ -->
+  <section class="intro-section">
+    <div class="intro-inner">
+      <div class="intro-text reveal">
+        <div class="eyebrow onlight">Tampondruck aus Stuttgart</div>
+        <h2 class="h2" style="margin-bottom:1.4rem;">Ihre Anforderung.<br><em>Unsere</em> Lösung.</h2>
+        <p class="intro-body">
+          Tampondruck ist das Verfahren der Wahl für dreidimensionale, unregelmäßige oder empfindliche Oberflächen. Kent liefert die richtige Maschine — vom kompakten Tischgerät bis zur vollautomatischen Industrielinie. Direkt vom Hersteller, mit 35 Jahren Know-how.
+        </p>
+        <ul class="intro-pillars">
+          <li class="pillar">
+            <div class="pillar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            </div>
+            <div>
+              <div class="pillar-title">Präzision bis ±0.01 mm</div>
+              <div class="pillar-desc">Reproduzierbare Druckergebnisse — Schicht für Schicht, Teil für Teil.</div>
+            </div>
+          </li>
+          <li class="pillar">
+            <div class="pillar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <div>
+              <div class="pillar-title">Standard bis Sonderlösung</div>
+              <div class="pillar-desc">7 bewährte Serien und maßgeschneiderte Sondermaschinen aus einer Hand.</div>
+            </div>
+          </li>
+          <li class="pillar">
+            <div class="pillar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <div class="pillar-title">ISO 9001 · CE · Made in Germany</div>
+              <div class="pillar-desc">Jede Maschine nach deutschen Standards entwickelt, geprüft und ausgeliefert.</div>
+            </div>
+          </li>
+        </ul>
+        <div style="margin-top:2rem;display:flex;gap:.9rem;flex-wrap:wrap;">
+          <a href="maschinen/index.html" class="btn btn-primary">Alle Maschinen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="#kontakt" class="btn btn-outline">Beratung anfragen</a>
+        </div>
+      </div>
+      <div class="intro-visual reveal reveal-delay-2">
+        <img src="Maschienen/Tampondruckmaschine vollautomatisch.png" alt="Kent Vollautomatische Tampondruckmaschine" loading="lazy">
+        <span class="intro-visual-tag">Vollautomatisch · Made in Stuttgart</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ MASCHINEN GRID ═══ -->
   <section class="machines-section" id="maschinen">
     <div class="machines-inner">
-      <div class="machines-header reveal">
+      <div class="section-header reveal">
         <div>
-          <div class="section-label">Maschinenprogramm</div>
-          <h2 class="section-title">Maschinen.<br><em>Die arbeiten.</em></h2>
+          <div class="eyebrow onlight">Maschinenprogramm</div>
+          <h2 class="h2">Maschinen.<br><em>Die arbeiten.</em></h2>
         </div>
-        <a href="maschinen/index.html" class="machines-view-all">
+        <a href="maschinen/index.html" class="link-arrow dark">
           Alle Modelle
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
 
-      <div class="machine-tab-bar reveal" style="transition-delay:.08s">
-        <button class="mtab active" onclick="filterMachines('alle', this)">Alle</button>
-        <button class="mtab" onclick="filterMachines('standard', this)">Standardmaschinen</button>
-        <button class="mtab" onclick="filterMachines('turbo', this)">Turbo-Serie</button>
-        <button class="mtab" onclick="filterMachines('alps', this)">ALPS</button>
-        <button class="mtab" onclick="filterMachines('sonder', this)">Sondermaschinen</button>
-        <button class="mtab" onclick="filterMachines('klischees', this)">Klischees</button>
+      <div class="tab-bar reveal reveal-delay-1">
+        <button class="tab active" onclick="filterMachines('alle',this)">Alle</button>
+        <button class="tab" onclick="filterMachines('standard',this)">Standardmaschinen</button>
+        <button class="tab" onclick="filterMachines('turbo',this)">Turbo-Serie</button>
+        <button class="tab" onclick="filterMachines('alps',this)">ALPS</button>
+        <button class="tab" onclick="filterMachines('sonder',this)">Sondermaschinen</button>
+        <button class="tab" onclick="filterMachines('klischees',this)">Klischees</button>
       </div>
 
-      <div class="machines-grid reveal" style="transition-delay:.15s" id="machine-grid">
+      <div class="machines-grid reveal reveal-delay-2" id="machine-grid">
 
-        <!-- Standardmaschinen — wide -->
         <div class="mcard wide" data-filter="standard turbo">
-          <div class="mcard-img-wrap">
-            <img class="mcard-img" src="Maschienen/Tampondruckmaschine Turbo 350.png" alt="Turbo-Serie" loading="lazy">
+          <div class="mcard-img">
+            <img src="Maschienen/Tampondruckmaschine Turbo 350.png" alt="Standardmaschinen" loading="lazy">
           </div>
           <div class="mcard-body">
             <div class="mcard-tag">HVA · Turbo · PP · IDS · Alien · KCNC</div>
-            <div class="mcard-name">Standard­maschinen</div>
-            <div class="mcard-desc">7 bewährte Serien für jeden Anspruch. Von der kompakten Einfarbmaschine bis zur vollautomatischen Mehrfarblinie.</div>
-            <a href="maschinen/standardmaschinen/index.html" class="mcard-link">
-              Zum Programm
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <div class="mcard-name">Standardmaschinen</div>
+            <div class="mcard-desc">7 bewährte Serien für jeden Anspruch — von der kompakten Einfarbmaschine bis zur vollautomatischen Mehrfarblinie.</div>
+            <a href="maschinen/standardmaschinen/index.html" class="mcard-link">Zum Programm <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
 
-        <!-- Sondermaschinen -->
-        <div class="mcard accent-red" data-filter="sonder">
-          <div class="mcard-img-wrap">
-            <img class="mcard-img" src="Maschienen/Tampondruckmaschine Sonderbau5.png" alt="Sondermaschinen" loading="lazy">
+        <div class="mcard accent" data-filter="sonder">
+          <div class="mcard-img">
+            <img src="Maschienen/Tampondruckmaschine Sonderbau5.png" alt="Sondermaschinen" loading="lazy">
           </div>
           <div class="mcard-body">
             <div class="mcard-tag">Sondermaschinenbau · ALF-Serie</div>
-            <div class="mcard-name">Sonder­maschinen</div>
+            <div class="mcard-name">Sondermaschinen</div>
             <div class="mcard-desc">Roboterintegration, Inline-Systeme, Sondergeometrien — entwickelt nach Ihrer Aufgabenstellung.</div>
-            <a href="maschinen/sondermaschinen/index.html" class="mcard-link">
-              Mehr erfahren
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <a href="maschinen/sondermaschinen/index.html" class="mcard-link">Mehr erfahren <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
 
-        <!-- ALPS -->
         <div class="mcard" data-filter="standard alps">
-          <div class="mcard-img-wrap">
-            <img class="mcard-img" src="Maschienen/Tampondruckmaschiene ALPSS2000.png" alt="ALPS 2000" loading="lazy">
+          <div class="mcard-img">
+            <img src="Maschienen/Tampondruckmaschiene ALPSS2000.png" alt="ALPS 2000" loading="lazy">
           </div>
           <div class="mcard-body">
             <div class="mcard-tag">Vollautomatisch · ALPS-Serie</div>
             <div class="mcard-name">ALPS 2000</div>
             <div class="mcard-desc">Hochleistungs-Automatiklinie für industrielle Serienfertigung. Maximale Ausbringung.</div>
-            <a href="maschinen/standardmaschinen/alps-200.html" class="mcard-link">
-              Details
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <a href="maschinen/standardmaschinen/alps-200.html" class="mcard-link">Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
 
-        <!-- Turbo-Serie einzeln -->
         <div class="mcard" data-filter="standard turbo">
-          <div class="mcard-img-wrap">
-            <img class="mcard-img" src="Maschienen/Turbo 650 vierfarbig.png" alt="Turbo 650" loading="lazy">
+          <div class="mcard-img">
+            <img src="Maschienen/Turbo 650 vierfarbig.png" alt="Turbo 650" loading="lazy">
           </div>
           <div class="mcard-body">
             <div class="mcard-tag">Turbo-Serie · 4-farbig</div>
             <div class="mcard-name">Turbo 650</div>
-            <div class="mcard-desc">Vier unabhängige Druckköpfe, synchronisierter Antrieb, geschlossenes Farbsystem.</div>
-            <a href="maschinen/standardmaschinen/turbo-serie/index.html" class="mcard-link">
-              Turbo-Serie
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <div class="mcard-desc">Vier Druckköpfe, synchronisierter Antrieb, geschlossenes Farbsystem.</div>
+            <a href="maschinen/standardmaschinen/turbo-serie/index.html" class="mcard-link">Turbo-Serie <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
 
-        <!-- HVA 150 -->
         <div class="mcard" data-filter="standard">
-          <div class="mcard-img-wrap">
-            <img class="mcard-img" src="Maschienen/Tampondruckmaschine HVA 150 .png" alt="HVA 150" loading="lazy">
+          <div class="mcard-img">
+            <img src="Maschienen/Tampondruckmaschine HVA 150 .png" alt="HVA 150" loading="lazy">
           </div>
           <div class="mcard-body">
             <div class="mcard-tag">HVA-Serie · Standardmaschinen</div>
             <div class="mcard-name">HVA 150</div>
             <div class="mcard-desc">Bewährt, kompakt, präzise. Einfarbmaschine der HVA-Serie.</div>
-            <a href="maschinen/standardmaschinen/hva-serie/hva-150.html" class="mcard-link">
-              Details
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <a href="maschinen/standardmaschinen/hva-serie/hva-150.html" class="mcard-link">Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
 
-        <!-- Vollautomatisch -->
-        <div class="mcard" data-filter="sonder standard">
-          <div class="mcard-img-wrap">
-            <img class="mcard-img" src="Maschienen/Tampondruckmaschine vollautomatisch.png" alt="Vollautomatische Linie" loading="lazy">
-          </div>
-          <div class="mcard-body">
-            <div class="mcard-tag">Vollautomatisch · Sonderbau</div>
-            <div class="mcard-name">Vollautomatik</div>
-            <div class="mcard-desc">Komplette Automatiklinie mit integrierter Zuführung, Bedruckung und Qualitätskontrolle.</div>
-            <a href="maschinen/sondermaschinen/alf-serie.html" class="mcard-link">
-              Mehr erfahren
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Siebdruck -->
-        <div class="mcard accent-red" data-filter="sonder">
-          <div class="mcard-img-wrap" style="background:#0A1020;">
-            <svg viewBox="0 0 280 210" style="width:85%;max-height:170px;opacity:.65" xmlns="http://www.w3.org/2000/svg">
-              <g stroke="#2B72D4" fill="none" stroke-linecap="round" opacity=".9">
-                <rect x="30" y="30" width="220" height="150" rx="4" stroke-width="1.2" fill="rgba(43,114,212,.04)"/>
-                <rect x="50" y="50" width="180" height="110" rx="2" stroke-width=".8" fill="rgba(43,114,212,.03)" stroke-dasharray="4 2"/>
-                <line x1="90" y1="50" x2="90" y2="160" stroke-width=".5" stroke-dasharray="3 2" opacity=".5"/>
-                <line x1="140" y1="50" x2="140" y2="160" stroke-width=".5" stroke-dasharray="3 2" opacity=".5"/>
-                <line x1="190" y1="50" x2="190" y2="160" stroke-width=".5" stroke-dasharray="3 2" opacity=".5"/>
-                <line x1="50" y1="90" x2="230" y2="90" stroke-width=".5" stroke-dasharray="3 2" opacity=".5"/>
-                <line x1="50" y1="120" x2="230" y2="120" stroke-width=".5" stroke-dasharray="3 2" opacity=".5"/>
-                <rect x="100" y="65" width="80" height="55" rx="2" stroke-width=".9" fill="rgba(43,114,212,.1)"/>
-                <circle cx="140" cy="92" r="16" stroke-width=".8" fill="rgba(43,114,212,.08)"/>
-                <circle cx="140" cy="92" r="6" stroke-width=".7" fill="rgba(43,114,212,.2)"/>
-                <text x="140" y="185" fill="#2B72D4" font-family="monospace" font-size="9" text-anchor="middle" opacity=".7">SIEBDRUCK · SP-400 / SP-500</text>
-              </g>
-            </svg>
-          </div>
-          <div class="mcard-body">
-            <div class="mcard-tag">Siebdruck · SP-400 · SP-500</div>
-            <div class="mcard-name">Siebdruck</div>
-            <div class="mcard-desc">SP 400 und SP 500 — Siebdruckmaschinen von Kent für professionelle Anwendungen.</div>
-            <a href="maschinen/siebdruck/index.html" class="mcard-link">
-              SP-Serie
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Klischees -->
-        <div class="mcard accent-red" data-filter="klischees">
-          <div class="mcard-img-wrap" style="background:#080F1E;">
-            <svg viewBox="0 0 260 200" style="width:80%;max-height:160px;opacity:.75" xmlns="http://www.w3.org/2000/svg">
-              <defs><pattern id="ch" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="5" stroke="#2B72D4" stroke-width=".4"/></pattern></defs>
-              <g stroke="#2B72D4" fill="none" stroke-linecap="round">
-                <rect x="20" y="45" width="220" height="14" stroke-width="1.1" fill="rgba(43,114,212,.1)"/>
-                <rect x="20" y="59" width="220" height="110" stroke-width=".8" fill="rgba(43,114,212,.04)"/>
-                <rect x="42" y="70" width="80" height="48" stroke-width=".6" stroke-dasharray="3 2" fill="url(#ch)" fill-opacity=".15"/>
-                <circle cx="50" cy="148" r="9" stroke-width=".7" fill="rgba(43,114,212,.12)"/>
-                <circle cx="50" cy="148" r="3.5" stroke-width=".5" fill="rgba(43,114,212,.25)"/>
-                <circle cx="210" cy="148" r="9" stroke-width=".7" fill="rgba(43,114,212,.12)"/>
-                <circle cx="210" cy="148" r="3.5" stroke-width=".5" fill="rgba(43,114,212,.25)"/>
-                <text x="130" y="101" fill="#2B72D4" font-family="monospace" font-size="11" text-anchor="middle" opacity=".75" font-weight="bold">STAHL</text>
-                <text x="130" y="116" fill="#2B72D4" font-family="monospace" font-size="8.5" text-anchor="middle" opacity=".5">10 mm · 65 Rc</text>
+        <div class="mcard accent" data-filter="klischees">
+          <div class="mcard-img" style="background:var(--paper3);">
+            <svg viewBox="0 0 260 200" style="width:78%;max-height:150px;opacity:.6" xmlns="http://www.w3.org/2000/svg">
+              <g stroke="#1A76F0" fill="none" stroke-linecap="round">
+                <rect x="20" y="45" width="220" height="14" stroke-width="1.1" fill="rgba(26,118,240,.08)"/>
+                <rect x="20" y="59" width="220" height="110" stroke-width=".8" fill="rgba(26,118,240,.03)"/>
+                <rect x="42" y="70" width="80" height="48" stroke-width=".6" stroke-dasharray="3 2" fill="rgba(26,118,240,.07)"/>
+                <circle cx="50" cy="148" r="9" stroke-width=".7" fill="rgba(26,118,240,.1)"/>
+                <circle cx="50" cy="148" r="3.5" stroke-width=".5" fill="rgba(26,118,240,.2)"/>
+                <circle cx="210" cy="148" r="9" stroke-width=".7" fill="rgba(26,118,240,.1)"/>
+                <circle cx="210" cy="148" r="3.5" stroke-width=".5" fill="rgba(26,118,240,.2)"/>
+                <text x="130" y="101" fill="#1058C0" font-family="monospace" font-size="11" text-anchor="middle" opacity=".7" font-weight="bold">STAHL</text>
+                <text x="130" y="116" fill="#1058C0" font-family="monospace" font-size="8.5" text-anchor="middle" opacity=".5">10 mm · 65 Rc</text>
               </g>
             </svg>
           </div>
           <div class="mcard-body">
             <div class="mcard-tag">Stahl · Bandstahl · Kunststoff · Laser</div>
             <div class="mcard-name">Klischees</div>
-            <div class="mcard-desc">Eigene Klischee-Fertigung für alle Tampondruckmaschinen. Stahl, Bandstahl, Kunststoff und Laser.</div>
-            <a href="klischees/index.html" class="mcard-link">
-              Klischee-Programm
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <div class="mcard-desc">Eigene Klischee-Fertigung für alle Tampondruckmaschinen — alle Materialien, alle Größen.</div>
+            <a href="klischees/index.html" class="mcard-link">Klischee-Programm <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
 
@@ -1356,232 +1279,153 @@
     </div>
   </section>
 
-  <!-- ═══ SPEC SHOWCASE — BOSCH / ALFATEC STYLE ═══ -->
-  <section class="spec-showcase">
-    <div class="spec-showcase-inner">
-
-      <!-- Left: Spec panel -->
-      <div class="spec-panel reveal">
-        <div class="spec-panel-label">Technische Daten</div>
-        <div class="spec-panel-model">
+  <!-- ═══ SPEC PANEL  —  dark ═══ -->
+  <section class="spec-section">
+    <div class="spec-grid">
+      <div class="spec-left reveal">
+        <div class="spec-model-label">Technische Daten</div>
+        <div class="spec-model-name">
           G-Turbo 350
           <span>Geschlossenes System · Standardmaschinen</span>
         </div>
         <table class="spec-table">
-          <tr>
-            <td>Tampon-Durchmesser</td>
-            <td><span class="spec-badge">350 mm</span></td>
-          </tr>
-          <tr>
-            <td>Taktzeit (max.)</td>
-            <td>1.800 Hub/h</td>
-          </tr>
-          <tr>
-            <td>Druckfarben</td>
-            <td>1-farbig</td>
-          </tr>
-          <tr>
-            <td>Farbsystem</td>
-            <td><span class="spec-badge">Geschlossen</span></td>
-          </tr>
-          <tr>
-            <td>Steuerung</td>
-            <td>SPS / Touchpanel</td>
-          </tr>
-          <tr>
-            <td>Positionsgenauigkeit</td>
-            <td><span class="spec-badge">± 0.01 mm</span></td>
-          </tr>
-          <tr>
-            <td>Schutzklasse</td>
-            <td>IP 54</td>
-          </tr>
-          <tr>
-            <td>Zertifizierung</td>
-            <td><span class="spec-badge red">CE · ISO</span></td>
-          </tr>
-          <tr>
-            <td>Gewicht</td>
-            <td>ca. 280 kg</td>
-          </tr>
-          <tr>
-            <td>Abmessungen (L×B×H)</td>
-            <td>900 × 600 × 1300 mm</td>
-          </tr>
+          <tr><td>Tampon-Durchmesser</td><td><span class="spec-badge">350 mm</span></td></tr>
+          <tr><td>Taktzeit (max.)</td><td>1.800 Hub/h</td></tr>
+          <tr><td>Druckfarben</td><td>1-farbig</td></tr>
+          <tr><td>Farbsystem</td><td><span class="spec-badge">Geschlossen</span></td></tr>
+          <tr><td>Steuerung</td><td>SPS / Touchpanel</td></tr>
+          <tr><td>Positionsgenauigkeit</td><td><span class="spec-badge">± 0.01 mm</span></td></tr>
+          <tr><td>Schutzklasse</td><td>IP 54</td></tr>
+          <tr><td>Zertifizierung</td><td><span class="spec-badge r">CE · ISO 9001</span></td></tr>
+          <tr><td>Gewicht</td><td>ca. 280 kg</td></tr>
+          <tr><td>Abmessungen (L×B×H)</td><td>900 × 600 × 1300 mm</td></tr>
         </table>
-        <div class="spec-footnote">
-          Technische Änderungen vorbehalten · Kent Stuttgart GmbH · Rev. 2024
-        </div>
-        <div class="spec-panel-img">
+        <div class="spec-note">Technische Änderungen vorbehalten · Kent Stuttgart GmbH · Rev. 2024</div>
+        <div class="spec-img">
           <img src="Maschienen/Tampondruckmaschine Turbo 350.png" alt="G-Turbo 350" loading="lazy">
         </div>
       </div>
 
-      <!-- Right: Content -->
-      <div class="spec-content reveal" style="transition-delay:.15s">
-        <div class="section-label">Flaggschiff · Turbo-Serie</div>
-        <h2 class="spec-headline">
-          Turbo.<br><em>Geschlossen.</em><br>Präzise.
-        </h2>
+      <div class="spec-right reveal reveal-delay-2">
+        <div class="eyebrow on-dark">Flaggschiff · Turbo-Serie</div>
+        <h2 class="spec-headline">Turbo.<br><em>Geschlossen.</em><br>Präzise.</h2>
         <p class="spec-body">
-          Der G-Turbo 350 kombiniert die Hochleistung der Turbo-Serie mit einem vollständig geschlossenen Farbsystem — für lösemittelfreien Betrieb, minimale Emissionen und maximale Reproduzierbarkeit in der Industrieserienfertigung.
+          Der G-Turbo 350 vereint die Hochleistung der Turbo-Serie mit einem vollständig geschlossenen Farbsystem — für lösemittelfreien Betrieb, minimale Emissionen und maximale Reproduzierbarkeit in der Industrieserienfertigung.
         </p>
         <ul class="spec-features">
-          <li class="spec-feature">
-            <div class="spec-feature-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
+          <li class="spec-feat">
+            <div class="spec-feat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
             <div>
-              <div class="spec-feature-title">Geschlossenes Farbsystem</div>
-              <div class="spec-feature-desc">Keine Lösemittelemissionen. Konform mit Arbeitsschutzrichtlinien und ATEX-Zonen.</div>
+              <div class="spec-feat-title">Geschlossenes Farbsystem</div>
+              <div class="spec-feat-desc">Keine Lösemittelemissionen. Konform mit ATEX und Arbeitsschutzrichtlinien.</div>
             </div>
           </li>
-          <li class="spec-feature">
-            <div class="spec-feature-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-            </div>
+          <li class="spec-feat">
+            <div class="spec-feat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
             <div>
-              <div class="spec-feature-title">±0.01 mm Positionsgenauigkeit</div>
-              <div class="spec-feature-desc">Servo-gesteuerte Achsen für reproduzierbare Druckpositionen — auch nach 500.000 Zyklen.</div>
+              <div class="spec-feat-title">±0.01 mm Positionsgenauigkeit</div>
+              <div class="spec-feat-desc">Servo-gesteuerte Achsen. Reproduzierbar auch nach 500.000 Zyklen.</div>
             </div>
           </li>
-          <li class="spec-feature">
-            <div class="spec-feature-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            </div>
+          <li class="spec-feat">
+            <div class="spec-feat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
             <div>
-              <div class="spec-feature-title">SPS-Steuerung mit Touchpanel</div>
-              <div class="spec-feature-desc">Intuitives HMI, Parameterspeicher für 100+ Programme, Fernwartungs-Interface.</div>
+              <div class="spec-feat-title">SPS-Steuerung mit Touchpanel</div>
+              <div class="spec-feat-desc">100+ Parameterprogramme, Fernwartungs-Interface, intuitives HMI.</div>
             </div>
           </li>
         </ul>
         <div class="spec-ctas">
-          <a href="#kontakt" class="btn btn-primary">Anfrage stellen</a>
-          <a href="maschinen/standardmaschinen/turbo-serie/g-turbo-350.html" class="btn btn-ghost-blue">G-Turbo 350</a>
+          <a href="#kontakt" class="btn btn-primary">Anfrage stellen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="maschinen/standardmaschinen/turbo-serie/g-turbo-350.html" class="btn btn-outline-white">G-Turbo 350</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ ANWENDUNGEN — SIEMENS EDITORIAL ═══ -->
-  <section class="applications-section" id="branchen">
-    <div class="applications-inner">
-      <div class="applications-top reveal">
+  <!-- ═══ APPLICATIONS ═══ -->
+  <section class="apps-section" id="branchen">
+    <div class="apps-inner">
+      <div class="section-header reveal">
         <div>
-          <div class="section-label">Anwendungsbereiche</div>
-          <h2 class="section-title">Druck auf <em>allem.</em></h2>
+          <div class="eyebrow onlight">Anwendungsbereiche</div>
+          <h2 class="h2">Druck auf <em>allem.</em></h2>
         </div>
-        <a href="maschinen/anwendungsbereiche/index.html" class="applications-top-link">
-          Alle Branchen
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <a href="maschinen/anwendungsbereiche/index.html" class="link-arrow dark">
+          Alle Branchen <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
+      <div class="apps-grid reveal reveal-delay-1">
 
-      <div class="applications-grid reveal" style="transition-delay:.1s">
-
-        <!-- Featured: Automotive -->
         <div class="app-card featured">
           <div class="app-card-img">
-            <div class="app-card-img-inner" style="background: radial-gradient(ellipse at center, rgba(26,118,240,.12) 0%, transparent 70%);">
-              <div class="app-icon-wrap" style="width:110px;height:110px;border-radius:22px;">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-              </div>
+            <div class="app-card-icon-wrap" style="width:96px;height:96px;border-radius:18px;">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
             </div>
           </div>
-          <div class="app-card-body">
-            <div class="app-card-eyebrow">Hauptbranche · Automotive</div>
-            <div class="app-card-title">Automobil­industrie</div>
-            <div class="app-card-desc">Bedruckung von Schaltern, Blenden, Armaturenbrettteilen und Motorkomponenten mit höchster Wiederholgenauigkeit — für Tier-1 und OEM weltweit.</div>
-            <div class="app-card-tags">
-              <span class="app-tag">Schalter</span>
-              <span class="app-tag">Blenden</span>
-              <span class="app-tag">Panels</span>
-              <span class="app-tag">Motorabdeckungen</span>
+          <div class="app-body">
+            <div class="app-tag">Hauptbranche</div>
+            <div class="app-name">Automobil­industrie</div>
+            <div class="app-desc">Bedruckung von Schaltern, Blenden, Armaturenbrettteilen und Motorkomponenten mit höchster Wiederholgenauigkeit — für Tier-1 und OEM weltweit.</div>
+            <div class="app-chips">
+              <span class="app-chip">Schalter</span><span class="app-chip">Blenden</span><span class="app-chip">Panels</span><span class="app-chip">Motorabdeckungen</span>
             </div>
-            <a href="maschinen/anwendungsbereiche/index.html" class="app-card-link">
-              Mehr erfahren
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
           </div>
         </div>
 
-        <!-- Medizintechnik -->
         <div class="app-card">
           <div class="app-card-img">
-            <div class="app-card-img-inner" style="background: radial-gradient(ellipse at center, rgba(26,118,240,.08) 0%, transparent 70%);">
-              <div class="app-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-              </div>
+            <div class="app-card-icon-wrap">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </div>
           </div>
-          <div class="app-card-body">
-            <div class="app-card-eyebrow">Medizintechnik</div>
-            <div class="app-card-title">Medizin</div>
-            <div class="app-card-desc">Hochpräzise Beschriftung von Instrumenten, Implantaten und medizinischen Geräten gemäß strengster Normen.</div>
-            <div class="app-card-tags">
-              <span class="app-tag">Instrumente</span>
-              <span class="app-tag">Implantate</span>
-            </div>
+          <div class="app-body">
+            <div class="app-tag">Medizintechnik</div>
+            <div class="app-name">Medizin</div>
+            <div class="app-desc">Hochpräzise Beschriftung von Instrumenten, Implantaten und Geräten.</div>
+            <div class="app-chips"><span class="app-chip">Instrumente</span><span class="app-chip">Implantate</span></div>
           </div>
         </div>
 
-        <!-- Elektronik -->
         <div class="app-card red-accent">
           <div class="app-card-img">
-            <div class="app-card-img-inner" style="background: radial-gradient(ellipse at center, rgba(200,34,28,.07) 0%, transparent 70%);">
-              <div class="app-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>
-              </div>
+            <div class="app-card-icon-wrap">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>
             </div>
           </div>
-          <div class="app-card-body">
-            <div class="app-card-eyebrow">Elektronik · OEM</div>
-            <div class="app-card-title">Elektronik</div>
-            <div class="app-card-desc">Kennzeichnung von Leiterplatten, Gehäusen und Tastaturen für globale OEM-Kunden.</div>
-            <div class="app-card-tags">
-              <span class="app-tag">Leiterplatten</span>
-              <span class="app-tag">Gehäuse</span>
-            </div>
+          <div class="app-body">
+            <div class="app-tag">Elektronik</div>
+            <div class="app-name">Elektronik</div>
+            <div class="app-desc">Kennzeichnung von Leiterplatten, Gehäusen und Tastaturen für OEM.</div>
+            <div class="app-chips"><span class="app-chip">Leiterplatten</span><span class="app-chip">Gehäuse</span></div>
           </div>
         </div>
 
-        <!-- Pharmaindustrie -->
         <div class="app-card">
           <div class="app-card-img">
-            <div class="app-card-img-inner" style="background: radial-gradient(ellipse at center, rgba(26,118,240,.08) 0%, transparent 70%);">
-              <div class="app-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
+            <div class="app-card-icon-wrap">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
           </div>
-          <div class="app-card-body">
-            <div class="app-card-eyebrow">Pharmaindustrie · FDA</div>
-            <div class="app-card-title">Pharma</div>
-            <div class="app-card-desc">Bedruckung von Verpackungen, Ampullen und Tabletten mit rückverfolgbaren Druckprozessen.</div>
-            <div class="app-card-tags">
-              <span class="app-tag">Ampullen</span>
-              <span class="app-tag">FDA-konform</span>
-            </div>
+          <div class="app-body">
+            <div class="app-tag">Pharmaindustrie</div>
+            <div class="app-name">Pharma</div>
+            <div class="app-desc">Ampullen, Verpackungen, FDA-konform mit rückverfolgbaren Druckprozessen.</div>
+            <div class="app-chips"><span class="app-chip">FDA-konform</span><span class="app-chip">Ampullen</span></div>
           </div>
         </div>
 
-        <!-- Uhren -->
         <div class="app-card red-accent">
           <div class="app-card-img">
-            <div class="app-card-img-inner" style="background: radial-gradient(ellipse at center, rgba(200,34,28,.07) 0%, transparent 70%);">
-              <div class="app-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="7"/><path d="M12 9v4l2 2M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42"/></svg>
-              </div>
+            <div class="app-card-icon-wrap">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="7"/><path d="M12 9v4l2 2"/></svg>
             </div>
           </div>
-          <div class="app-card-body">
-            <div class="app-card-eyebrow">Uhren &amp; Schmuck</div>
-            <div class="app-card-title">Uhren</div>
-            <div class="app-card-desc">Feinste Ziffernblatt-Beschriftungen und Logoprägungen auf Gehäusen — Präzision auf höchstem Niveau.</div>
-            <div class="app-card-tags">
-              <span class="app-tag">Zifferblätter</span>
-              <span class="app-tag">Gehäuse</span>
-            </div>
+          <div class="app-body">
+            <div class="app-tag">Uhren &amp; Schmuck</div>
+            <div class="app-name">Uhren</div>
+            <div class="app-desc">Feinste Ziffernblatt-Beschriftungen und Logoprägungen auf Gehäusen.</div>
+            <div class="app-chips"><span class="app-chip">Zifferblätter</span><span class="app-chip">Gehäuse</span></div>
           </div>
         </div>
 
@@ -1589,39 +1433,30 @@
     </div>
   </section>
 
-  <!-- ═══ CTA BANNER ═══ -->
-  <section class="cta-banner">
-    <div class="cta-banner-word">Stuttgart</div>
-    <div class="cta-banner-inner reveal">
-      <div class="cta-banner-text">
-        <div class="cta-banner-eyebrow">Kent Stuttgart GmbH · Seit 1987</div>
-        <h2 class="cta-banner-headline">
-          Stellen Sie uns<br>Ihr Projekt vor.
-        </h2>
+  <!-- ═══ TRUST STRIP / CTA BANNER ═══ -->
+  <section class="trust-strip">
+    <div class="trust-inner reveal">
+      <div class="trust-text">
+        <div class="trust-eyebrow">Kent Stuttgart GmbH · Seit 1987</div>
+        <h2 class="trust-headline">Stellen Sie uns<br>Ihr Projekt vor.</h2>
       </div>
-      <div class="cta-banner-actions">
-        <a href="#kontakt" class="btn btn-red">
-          Anfrage stellen
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="ueber-uns.html" class="btn btn-ghost">Über uns</a>
+      <div class="trust-actions">
+        <a href="#kontakt" class="btn btn-red">Anfrage stellen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="ueber-uns.html" class="btn btn-outline-white">Über uns</a>
       </div>
     </div>
   </section>
 
-  <div class="grad-line"></div>
+  <div class="divider"></div>
 
   <!-- ═══ CONTACT ═══ -->
   <section class="contact-section" id="kontakt">
     <div class="contact-inner">
-      <div class="contact-layout">
+      <div class="contact-grid">
         <div class="reveal">
-          <div class="section-label onlight">Kontakt &amp; Anfrage</div>
+          <div class="eyebrow onlight">Kontakt &amp; Anfrage</div>
           <h2 class="contact-lead">Stellen Sie uns<br>Ihr Projekt vor.</h2>
-          <p class="contact-sub">
-            Schildern Sie uns Ihre Anforderungen. Unsere Ingenieure melden sich innerhalb von 24 Stunden persönlich bei Ihnen — mit konkreten Lösungsvorschlägen.
-          </p>
-
+          <p class="contact-sub">Schildern Sie uns Ihre Anforderungen. Unsere Ingenieure melden sich innerhalb von 24 Stunden mit konkreten Lösungsvorschlägen.</p>
           <form name="anfrage" method="POST" action="mailto:info@kent-stuttgart.de" enctype="text/plain">
             <div class="form-row">
               <div class="form-group">
@@ -1629,23 +1464,23 @@
                 <input class="form-input" type="text" id="cf-name" name="name" placeholder="Max Mustermann" required>
               </div>
               <div class="form-group">
-                <label class="form-label" for="cf-company">Unternehmen</label>
-                <input class="form-input" type="text" id="cf-company" name="unternehmen" placeholder="Mustermann GmbH">
+                <label class="form-label" for="cf-co">Unternehmen</label>
+                <input class="form-input" type="text" id="cf-co" name="unternehmen" placeholder="Mustermann GmbH">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="cf-email">E-Mail *</label>
-                <input class="form-input" type="email" id="cf-email" name="email" placeholder="max@mustermann.de" required>
+                <label class="form-label" for="cf-mail">E-Mail *</label>
+                <input class="form-input" type="email" id="cf-mail" name="email" placeholder="max@mustermann.de" required>
               </div>
               <div class="form-group">
-                <label class="form-label" for="cf-phone">Telefon</label>
-                <input class="form-input" type="tel" id="cf-phone" name="telefon" placeholder="+49 711 ...">
+                <label class="form-label" for="cf-tel">Telefon</label>
+                <input class="form-input" type="tel" id="cf-tel" name="telefon" placeholder="+49 711 ...">
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label" for="cf-interest">Interesse</label>
-              <select class="form-input form-select" id="cf-interest" name="interesse">
+              <label class="form-label" for="cf-int">Interesse</label>
+              <select class="form-input form-select" id="cf-int" name="interesse">
                 <option value="">Bitte wählen...</option>
                 <option>Standardmaschinen — HVA / Turbo / PP / IDS / Alien</option>
                 <option>ALPS-Automatiklinien</option>
@@ -1660,64 +1495,47 @@
               <label class="form-label" for="cf-msg">Ihre Anfrage *</label>
               <textarea class="form-input form-textarea" id="cf-msg" name="nachricht" placeholder="Beschreiben Sie Ihre Anwendung, das zu bedruckende Material, gewünschte Taktzeiten oder sonstige Anforderungen..." required></textarea>
             </div>
-            <div class="form-privacy">
-              <input type="checkbox" id="cf-privacy" required>
-              <label for="cf-privacy">Ich stimme der Verarbeitung meiner Daten gemäß der <a href="#">Datenschutzerklärung</a> zu.</label>
+            <div class="form-check">
+              <input type="checkbox" id="cf-prv" required>
+              <label for="cf-prv">Ich stimme der Verarbeitung meiner Daten gemäß der <a href="#">Datenschutzerklärung</a> zu.</label>
             </div>
             <button type="submit" class="form-submit">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2 15 22 11 13 2 9l20-7z"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2 15 22 11 13 2 9l20-7z"/></svg>
               Anfrage senden
             </button>
           </form>
         </div>
 
-        <div class="contact-sidebar reveal" style="transition-delay:.15s">
+        <div class="contact-sidebar reveal reveal-delay-2">
           <div class="cbox">
             <div class="cbox-head">Direktkontakt</div>
             <div class="cbox-body">
-              <a href="tel:+4971140950-0" class="c-phone-row">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.5a16 16 0 0 0 6.56 6.56l1.36-1.35a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:+4971140950-0" class="cphone">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.5a16 16 0 0 0 6.56 6.56l1.36-1.35a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                 <div>
-                  <span class="c-phone-label">Rufen Sie uns an</span>
-                  <span class="c-phone-number">+49 (0)711 40950-0</span>
-                  <span class="c-phone-hours">Mo–Fr, 8:00–17:00 Uhr</span>
+                  <span class="cphone-lbl">Rufen Sie uns an</span>
+                  <span class="cphone-num">+49 (0)711 40950-0</span>
+                  <span class="cphone-hrs">Mo–Fr, 8:00–17:00 Uhr</span>
                 </div>
               </a>
-              <div class="c-detail-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <div>
-                  <span class="c-detail-label">E-Mail</span>
-                  <span class="c-detail-val">info@kent-stuttgart.de</span>
-                </div>
+              <div class="cdetail">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="var(--text3)"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <div><span class="cdetail-lbl">E-Mail</span><span class="cdetail-val">info@kent-stuttgart.de</span></div>
               </div>
-              <div class="c-detail-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <div>
-                  <span class="c-detail-label">Adresse</span>
-                  <span class="c-detail-val">Benzstraße 2, 71254 Ditzingen</span>
-                </div>
+              <div class="cdetail">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="var(--text3)"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div><span class="cdetail-lbl">Adresse</span><span class="cdetail-val">Benzstraße 2, 71254 Ditzingen</span></div>
               </div>
             </div>
           </div>
           <div class="cbox">
             <div class="cbox-head">Warum Kent?</div>
             <div class="cbox-body">
-              <div class="c-detail-row" style="border:none;padding:.55rem 0;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#1A76F0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span style="font-size:.85rem;color:#4A6275;">Antwort innerhalb 24h</span>
-              </div>
-              <div class="c-detail-row" style="border:none;padding:.55rem 0;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#1A76F0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span style="font-size:.85rem;color:#4A6275;">Persönliche Fachberatung</span>
-              </div>
-              <div class="c-detail-row" style="border:none;padding:.55rem 0;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#1A76F0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span style="font-size:.85rem;color:#4A6275;">35+ Jahre Erfahrung</span>
-              </div>
-              <div class="c-detail-row" style="border:none;padding:.55rem 0;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#1A76F0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span style="font-size:.85rem;color:#4A6275;">ISO 9001 zertifiziert</span>
-              </div>
+              <div class="ctrust"><div class="ctrust-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Antwort innerhalb 24 Stunden</div>
+              <div class="ctrust"><div class="ctrust-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Persönliche Fachberatung</div>
+              <div class="ctrust"><div class="ctrust-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>35+ Jahre Erfahrung</div>
+              <div class="ctrust"><div class="ctrust-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>ISO 9001 zertifiziert</div>
+              <div class="ctrust"><div class="ctrust-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>500+ Anlagen weltweit</div>
             </div>
           </div>
         </div>
@@ -1730,12 +1548,12 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div>
-          <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
+          <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo">
           <p class="footer-tagline">Tampondruckmaschinen und Klischees — entwickelt, gefertigt und gewartet in Stuttgart seit 1987.</p>
-          <address class="footer-address-line" style="font-style:normal;">
+          <address class="footer-address">
             Benzstraße 2 · 71254 Ditzingen<br>
-            <a href="tel:+4971140950-0" class="footer-phone-link">+49 (0)711 40950-0</a><br>
-            <a href="mailto:info@kent-stuttgart.de" style="color:var(--dim);transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--dim)'">info@kent-stuttgart.de</a>
+            <a href="tel:+4971140950-0">+49 (0)711 40950-0</a><br>
+            <a href="mailto:info@kent-stuttgart.de">info@kent-stuttgart.de</a>
           </address>
           <div class="footer-certs">
             <span class="footer-cert">ISO 9001</span>
@@ -1746,7 +1564,7 @@
         </div>
         <div>
           <div class="footer-col-title">Maschinen</div>
-          <ul class="footer-links">
+          <ul class="footer-nav">
             <li><a href="maschinen/standardmaschinen/hva-serie/index.html">HVA-Serie</a></li>
             <li><a href="maschinen/standardmaschinen/turbo-serie/index.html">Turbo-Serie</a></li>
             <li><a href="maschinen/standardmaschinen/pp-serie/index.html">PP-Serie</a></li>
@@ -1759,7 +1577,7 @@
         </div>
         <div>
           <div class="footer-col-title">Klischees</div>
-          <ul class="footer-links">
+          <ul class="footer-nav">
             <li><a href="klischees/stahlklischees.html">Stahlklischees</a></li>
             <li><a href="klischees/bandstahlklischees.html">Bandstahlklischees</a></li>
             <li><a href="klischees/stahlwalzen.html">Stahlwalzen</a></li>
@@ -1770,7 +1588,7 @@
         </div>
         <div>
           <div class="footer-col-title">Unternehmen</div>
-          <ul class="footer-links">
+          <ul class="footer-nav">
             <li><a href="ueber-uns.html">Über uns</a></li>
             <li><a href="maschinen/anwendungsbereiche/index.html">Anwendungen</a></li>
             <li><a href="maschinen/zubehoer/index.html">Zubehör</a></li>
@@ -1791,50 +1609,29 @@
   </footer>
 
   <script>
-    // ── Nav scroll + phone bar hide ──
+    // Nav scroll behaviour
     const nav = document.getElementById('nav');
-    const bar = document.getElementById('phone-bar');
-    let lastScroll = 0;
-
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
-      if (y > 60) {
-        nav.classList.add('scrolled');
-        nav.classList.add('bar-hidden');
-      } else {
-        nav.classList.remove('scrolled');
-        nav.classList.remove('bar-hidden');
-      }
-      lastScroll = y;
+      nav.classList.toggle('scrolled', y > 50);
+      nav.classList.toggle('bar-gone', y > 50);
     }, { passive: true });
 
-    // ── Scroll reveal ──
-    const revealEls = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => io.observe(el));
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // ── Machine filter ──
+    // Machine filter
     function filterMachines(filter, btn) {
-      document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('.mcard').forEach(card => {
-        if (filter === 'alle') {
-          card.classList.remove('hidden');
-        } else {
-          const filters = card.dataset.filter || '';
-          if (filters.split(' ').includes(filter)) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        }
+        const tags = (card.dataset.filter || '').split(' ');
+        card.classList.toggle('hidden', filter !== 'alle' && !tags.includes(filter));
       });
     }
   </script>
-
 </body>
 </html>
