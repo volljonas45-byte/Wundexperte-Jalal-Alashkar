@@ -89,6 +89,7 @@
     .eyebrow.red::before { background: var(--red); }
     .eyebrow.muted { color: var(--text3); }
     .eyebrow.muted::before { background: var(--text3); }
+    .eyebrow.onlight { /* inherits default blue — no extra rules needed */ }
     .eyebrow.on-dark { color: rgba(26,118,240,.85); }
     .eyebrow.on-dark::before { background: rgba(26,118,240,.85); }
 
@@ -750,19 +751,19 @@
     }
     .spec-features { list-style:none; display:flex; flex-direction:column; gap:0; margin-bottom:2.2rem; }
     .spec-feat {
-      display:flex; align-items:flex-start; gap:1rem;
+      display:flex; align-items:flex-start; gap:1.3rem;
       padding:1rem 0; border-bottom:1px solid rgba(255,255,255,.05);
     }
     .spec-feat:first-child { border-top:1px solid rgba(255,255,255,.05); }
-    .spec-feat-icon {
-      flex-shrink:0; width:36px; height:36px; border-radius:8px;
-      background:rgba(26,118,240,.1); border:1px solid rgba(26,118,240,.2);
-      color:var(--blue2);
-      display:flex; align-items:center; justify-content:center;
+    .spec-feat-num {
+      font-family:var(--fm); font-size:.6rem;
+      color:rgba(26,118,240,.55); letter-spacing:.1em;
+      flex-shrink:0; padding-top:.2rem; min-width:22px;
     }
     .spec-feat-title {
-      font-family:var(--fd); font-size:.95rem; font-weight:700;
-      color:#fff; margin-bottom:.15rem;
+      font-family:'Oswald', sans-serif; font-size:.95rem; font-weight:500;
+      text-transform:uppercase; letter-spacing:.05em;
+      color:#fff; margin-bottom:.2rem;
     }
     .spec-feat-desc { font-size:.82rem; color:rgba(255,255,255,.4); line-height:1.6; }
     .spec-ctas { display:flex; gap:.8rem; flex-wrap:wrap; }
@@ -774,7 +775,7 @@
     }
 
     /* ════════════════════════════════════════
-       APPLICATIONS  —  editorial light
+       APPLICATIONS  —  editorial list
     ════════════════════════════════════════ */
     .apps-section {
       background: var(--paper);
@@ -782,62 +783,66 @@
       border-top: 1px solid var(--border);
     }
     .apps-inner { max-width:1200px; margin:0 auto; }
-    .apps-grid {
-      display:grid; grid-template-columns:repeat(3,1fr);
-      gap:1.25rem; margin-top:3rem;
+
+    .apps-list { margin-top:2.5rem; border-top:1px solid var(--border); }
+    .app-row {
+      display:grid;
+      grid-template-columns: 38px 1fr auto;
+      align-items:center; gap:2.5rem;
+      padding:1.5rem 0;
+      border-bottom:1px solid var(--border);
+      position:relative;
+      transition: padding-left .35s var(--ease);
     }
-    .app-card {
-      background: var(--paper2);
-      border:1px solid var(--border); border-radius:12px;
-      overflow:hidden;
-      transition: border-color .25s, box-shadow .3s, transform .35s var(--ease);
-    }
-    .app-card:hover {
-      border-color: var(--blue2);
-      box-shadow: 0 10px 32px rgba(26,118,240,.09);
-      transform: translateY(-3px);
-    }
-    .app-card.featured { grid-row:span 2; }
-    .app-card-img {
-      height:180px; overflow:hidden;
-      background: var(--paper3);
-      display:flex; align-items:center; justify-content:center;
-    }
-    .app-card.featured .app-card-img { height:270px; }
-    .app-card-icon-wrap {
-      width:72px; height:72px; border-radius:14px;
-      background:var(--blue-soft); color:var(--blue2);
-      display:flex; align-items:center; justify-content:center;
+    .app-row::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+      background:var(--blue2);
+      transform:scaleY(0); transform-origin:top;
       transition: transform .35s var(--ease);
     }
-    .app-card.red-accent .app-card-icon-wrap {
-      background:var(--red-soft); color:var(--red);
+    .app-row:hover::before { transform:scaleY(1); }
+    .app-row:hover { padding-left:.9rem; }
+    .app-row-num {
+      font-family:var(--fm); font-size:.58rem;
+      color:var(--text3); letter-spacing:.1em; flex-shrink:0;
     }
-    .app-card:hover .app-card-icon-wrap { transform: scale(1.06); }
-    .app-body { padding:1.5rem 1.6rem 1.8rem; }
-    .app-tag {
-      font-family:var(--fm); font-size:.42rem;
-      letter-spacing:.16em; text-transform:uppercase;
-      color:var(--blue2); margin-bottom:.4rem;
+    .app-row-main {
+      display:flex; align-items:baseline; gap:2rem; flex-wrap:wrap;
     }
-    .app-card.red-accent .app-tag { color:var(--red); }
-    .app-name {
-      font-family:var(--fd); font-size:1.5rem; font-weight:800;
-      color:var(--text); text-transform:uppercase;
-      letter-spacing:.02em; line-height:1; margin-bottom:.5rem;
+    .app-row-name {
+      font-family:'Oswald', sans-serif;
+      font-size:1.1rem; font-weight:500;
+      text-transform:uppercase; letter-spacing:.04em;
+      color:var(--text); min-width:190px;
+      transition:color .2s;
     }
-    .app-desc { font-size:.82rem; color:var(--text2); line-height:1.65; margin-bottom:.9rem; }
-    .app-chips { display:flex; flex-wrap:wrap; gap:.35rem; }
-    .app-chip {
+    .app-row:hover .app-row-name { color:var(--blue2); }
+    .app-row-detail {
+      font-size:.82rem; color:var(--text3); line-height:1.5;
+    }
+    .app-row-meta {
+      display:flex; align-items:center; gap:1.2rem; flex-shrink:0;
+    }
+    .app-row-chips { display:flex; flex-wrap:wrap; gap:.3rem; }
+    .app-row-chip {
       font-family:var(--fm); font-size:.4rem;
       letter-spacing:.1em; text-transform:uppercase;
-      color:var(--text3);
-      background:var(--paper3); border:1px solid var(--border);
-      padding:.2rem .5rem; border-radius:3px;
+      color:var(--text3); background:var(--paper2);
+      border:1px solid var(--border);
+      padding:.18rem .45rem; border-radius:2px;
     }
+    .app-row-arrow {
+      color:var(--text3); flex-shrink:0;
+      transition: color .2s, transform .2s;
+    }
+    .app-row:hover .app-row-arrow { color:var(--blue2); transform:translateX(5px); }
 
-    @media (max-width:1024px) { .apps-grid { grid-template-columns:1fr 1fr; } .app-card.featured { grid-row:auto; } }
-    @media (max-width:580px) { .apps-grid { grid-template-columns:1fr; } .apps-section { padding:5rem 1.25rem; } }
+    @media (max-width:900px) {
+      .app-row { grid-template-columns:28px 1fr; gap:1rem; }
+      .app-row-meta { display:none; }
+      .app-row-main { flex-direction:column; gap:.3rem; }
+    }
+    @media (max-width:580px) { .apps-section { padding:5rem 1.25rem; } }
 
     /* ════════════════════════════════════════
        TRUST STRIP  —  blue accent
@@ -1325,21 +1330,21 @@
         </p>
         <ul class="spec-features">
           <li class="spec-feat">
-            <div class="spec-feat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="spec-feat-num">01</div>
             <div>
               <div class="spec-feat-title">Geschlossenes Farbsystem</div>
               <div class="spec-feat-desc">Keine Lösemittelemissionen. Konform mit ATEX und Arbeitsschutzrichtlinien.</div>
             </div>
           </li>
           <li class="spec-feat">
-            <div class="spec-feat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+            <div class="spec-feat-num">02</div>
             <div>
               <div class="spec-feat-title">±0.01 mm Positionsgenauigkeit</div>
               <div class="spec-feat-desc">Servo-gesteuerte Achsen. Reproduzierbar auch nach 500.000 Zyklen.</div>
             </div>
           </li>
           <li class="spec-feat">
-            <div class="spec-feat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+            <div class="spec-feat-num">03</div>
             <div>
               <div class="spec-feat-title">SPS-Steuerung mit Touchpanel</div>
               <div class="spec-feat-desc">100+ Parameterprogramme, Fernwartungs-Interface, intuitives HMI.</div>
@@ -1362,81 +1367,81 @@
           <div class="eyebrow onlight">Anwendungsbereiche</div>
           <h2 class="h2">Druck auf <em>allem.</em></h2>
         </div>
-        <a href="maschinen/anwendungsbereiche/index.html" class="link-arrow dark">
+        <a href="maschinen/index.html" class="link-arrow dark">
           Alle Branchen <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
-      <div class="apps-grid reveal reveal-delay-1">
+      <div class="apps-list reveal reveal-delay-1">
 
-        <div class="app-card featured">
-          <div class="app-card-img">
-            <div class="app-card-icon-wrap" style="width:96px;height:96px;border-radius:18px;">
-              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            </div>
+        <div class="app-row">
+          <span class="app-row-num">01</span>
+          <div class="app-row-main">
+            <span class="app-row-name">Automobilindustrie</span>
+            <span class="app-row-detail">Schalter, Blenden, Armaturen und Motorkomponenten für Tier-1 und OEM weltweit</span>
           </div>
-          <div class="app-body">
-            <div class="app-tag">Hauptbranche</div>
-            <div class="app-name">Automobil­industrie</div>
-            <div class="app-desc">Bedruckung von Schaltern, Blenden, Armaturenbrettteilen und Motorkomponenten mit höchster Wiederholgenauigkeit — für Tier-1 und OEM weltweit.</div>
-            <div class="app-chips">
-              <span class="app-chip">Schalter</span><span class="app-chip">Blenden</span><span class="app-chip">Panels</span><span class="app-chip">Motorabdeckungen</span>
-            </div>
+          <div class="app-row-meta">
+            <div class="app-row-chips"><span class="app-row-chip">Schalter</span><span class="app-row-chip">Blenden</span><span class="app-row-chip">Tier-1</span></div>
+            <svg class="app-row-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </div>
         </div>
 
-        <div class="app-card">
-          <div class="app-card-img">
-            <div class="app-card-icon-wrap">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            </div>
+        <div class="app-row">
+          <span class="app-row-num">02</span>
+          <div class="app-row-main">
+            <span class="app-row-name">Medizintechnik</span>
+            <span class="app-row-detail">Hochpräzise Beschriftung von Instrumenten, Implantaten und Diagnosegeräten</span>
           </div>
-          <div class="app-body">
-            <div class="app-tag">Medizintechnik</div>
-            <div class="app-name">Medizin</div>
-            <div class="app-desc">Hochpräzise Beschriftung von Instrumenten, Implantaten und Geräten.</div>
-            <div class="app-chips"><span class="app-chip">Instrumente</span><span class="app-chip">Implantate</span></div>
+          <div class="app-row-meta">
+            <div class="app-row-chips"><span class="app-row-chip">Instrumente</span><span class="app-row-chip">Implantate</span><span class="app-row-chip">FDA</span></div>
+            <svg class="app-row-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </div>
         </div>
 
-        <div class="app-card red-accent">
-          <div class="app-card-img">
-            <div class="app-card-icon-wrap">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>
-            </div>
+        <div class="app-row">
+          <span class="app-row-num">03</span>
+          <div class="app-row-main">
+            <span class="app-row-name">Elektronik &amp; Halbleiter</span>
+            <span class="app-row-detail">Kennzeichnung von Leiterplatten, Gehäusen, Tastaturen und Komponenten</span>
           </div>
-          <div class="app-body">
-            <div class="app-tag">Elektronik</div>
-            <div class="app-name">Elektronik</div>
-            <div class="app-desc">Kennzeichnung von Leiterplatten, Gehäusen und Tastaturen für OEM.</div>
-            <div class="app-chips"><span class="app-chip">Leiterplatten</span><span class="app-chip">Gehäuse</span></div>
+          <div class="app-row-meta">
+            <div class="app-row-chips"><span class="app-row-chip">Leiterplatten</span><span class="app-row-chip">Gehäuse</span><span class="app-row-chip">OEM</span></div>
+            <svg class="app-row-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </div>
         </div>
 
-        <div class="app-card">
-          <div class="app-card-img">
-            <div class="app-card-icon-wrap">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
+        <div class="app-row">
+          <span class="app-row-num">04</span>
+          <div class="app-row-main">
+            <span class="app-row-name">Pharmaindustrie</span>
+            <span class="app-row-detail">Ampullen, Verpackungen und Primärpackmittel mit rückverfolgbaren Druckprozessen</span>
           </div>
-          <div class="app-body">
-            <div class="app-tag">Pharmaindustrie</div>
-            <div class="app-name">Pharma</div>
-            <div class="app-desc">Ampullen, Verpackungen, FDA-konform mit rückverfolgbaren Druckprozessen.</div>
-            <div class="app-chips"><span class="app-chip">FDA-konform</span><span class="app-chip">Ampullen</span></div>
+          <div class="app-row-meta">
+            <div class="app-row-chips"><span class="app-row-chip">Ampullen</span><span class="app-row-chip">FDA-konform</span><span class="app-row-chip">GMP</span></div>
+            <svg class="app-row-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </div>
         </div>
 
-        <div class="app-card red-accent">
-          <div class="app-card-img">
-            <div class="app-card-icon-wrap">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="7"/><path d="M12 9v4l2 2"/></svg>
-            </div>
+        <div class="app-row">
+          <span class="app-row-num">05</span>
+          <div class="app-row-main">
+            <span class="app-row-name">Uhren &amp; Luxusgüter</span>
+            <span class="app-row-detail">Feinste Zifferblatt-Beschriftungen, Logos und Gravuren auf Edelstahl und Keramik</span>
           </div>
-          <div class="app-body">
-            <div class="app-tag">Uhren &amp; Schmuck</div>
-            <div class="app-name">Uhren</div>
-            <div class="app-desc">Feinste Ziffernblatt-Beschriftungen und Logoprägungen auf Gehäusen.</div>
-            <div class="app-chips"><span class="app-chip">Zifferblätter</span><span class="app-chip">Gehäuse</span></div>
+          <div class="app-row-meta">
+            <div class="app-row-chips"><span class="app-row-chip">Zifferblätter</span><span class="app-row-chip">Gehäuse</span><span class="app-row-chip">Logos</span></div>
+            <svg class="app-row-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <div class="app-row">
+          <span class="app-row-num">06</span>
+          <div class="app-row-main">
+            <span class="app-row-name">Sport &amp; Freizeit</span>
+            <span class="app-row-detail">Bedruckung von Sportgeräten, Helmen, Griffen und dreidimensionalen Formteilen</span>
+          </div>
+          <div class="app-row-meta">
+            <div class="app-row-chips"><span class="app-row-chip">Helme</span><span class="app-row-chip">Schläger</span><span class="app-row-chip">Formteile</span></div>
+            <svg class="app-row-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </div>
         </div>
 
@@ -1448,11 +1453,11 @@
   <section class="trust-strip">
     <div class="trust-inner reveal">
       <div class="trust-text">
-        <div class="trust-eyebrow">Kent Stuttgart GmbH · Seit 1987</div>
-        <h2 class="trust-headline">Stellen Sie uns<br>Ihr Projekt vor.</h2>
+        <div class="trust-eyebrow">Direktkontakt · Antwort in 24 Stunden</div>
+        <h2 class="trust-headline">Vom Gespräch<br>zur Maschine.</h2>
       </div>
       <div class="trust-actions">
-        <a href="#kontakt" class="btn btn-red">Anfrage stellen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="#kontakt" class="btn btn-red">Jetzt anfragen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         <a href="ueber-uns.html" class="btn btn-outline-white">Über uns</a>
       </div>
     </div>
@@ -1601,7 +1606,7 @@
           <div class="footer-col-title">Unternehmen</div>
           <ul class="footer-nav">
             <li><a href="ueber-uns.html">Über uns</a></li>
-            <li><a href="maschinen/anwendungsbereiche/index.html">Anwendungen</a></li>
+            <li><a href="maschinen/index.html">Anwendungen</a></li>
             <li><a href="maschinen/zubehoer/index.html">Zubehör</a></li>
             <li><a href="#kontakt">Kontakt</a></li>
             <li><a href="#kontakt">Anfrage stellen</a></li>
@@ -1633,6 +1638,26 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Stagger app rows when the list enters view
+    const appListObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.app-row').forEach((row, i) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateY(12px)';
+            setTimeout(() => {
+              row.style.transition = 'opacity .5s ease, transform .5s ease';
+              row.style.opacity = '1';
+              row.style.transform = 'none';
+            }, i * 70);
+          });
+          appListObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    const appList = document.querySelector('.apps-list');
+    if (appList) appListObs.observe(appList);
 
     // Machine filter
     function filterMachines(filter, btn) {
