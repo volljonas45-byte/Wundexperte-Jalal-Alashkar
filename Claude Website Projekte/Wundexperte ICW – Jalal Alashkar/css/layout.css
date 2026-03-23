@@ -207,6 +207,22 @@
   .split--reversed {
     grid-template-columns: 1fr;
     direction: ltr;
+    gap: var(--space-4);
+  }
+
+  .page-hero {
+    padding: var(--space-5) 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid--2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid--2-1,
+  .grid--1-2 {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -220,6 +236,6 @@
   }
 
   .page-hero {
-    padding: var(--space-6) 0;
+    padding: var(--space-4) 0;
   }
 }

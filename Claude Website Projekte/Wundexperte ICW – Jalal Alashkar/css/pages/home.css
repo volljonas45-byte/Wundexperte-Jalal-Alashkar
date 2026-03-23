@@ -294,11 +294,12 @@
 
   .hero {
     min-height: auto;
-    padding: var(--space-6) 0;
+    padding: var(--space-5) 0;
   }
 
   .hero-container {
     grid-template-columns: 1fr;
+    gap: var(--space-4);
   }
 
   .hero::before {
@@ -323,7 +324,22 @@
   }
 }
 
+@media (max-width: 768px) {
+  .hero-subline {
+    max-width: 100%;
+    font-size: 17px;
+  }
+
+  .about-teaser-img .img-placeholder {
+    min-height: 300px;
+  }
+}
+
 @media (max-width: 640px) {
+  .hero {
+    padding: var(--space-4) 0;
+  }
+
   .hero-ctas {
     flex-direction: column;
   }
@@ -335,5 +351,15 @@
 
   .hero h1 {
     font-size: 26px;
+  }
+
+  .hero-trust-badges {
+    gap: var(--space-1);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 23px;
   }
 }

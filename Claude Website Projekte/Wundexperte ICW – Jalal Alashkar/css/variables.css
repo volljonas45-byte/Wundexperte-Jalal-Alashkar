@@ -69,10 +69,10 @@
   --shadow-card-hover: 0 6px 24px rgba(0,0,0,0.10);
 
   /* ── Layout ── */
-  --container-max: 1200px;
-  --container-padding: var(--space-4);
+  --container-max: 1400px;
+  --container-padding: clamp(16px, 5vw, 48px);
   --section-py: var(--space-7);
-  --nav-height: 80px;
+  --nav-height: 72px;
 
   /* ── Transitions ── */
   --transition-fast: 0.15s ease;
@@ -82,19 +82,28 @@
   --focus-ring: 0 0 0 3px rgba(46,134,171,0.4);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   :root {
     --section-py: var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-py: var(--space-5);
     --font-size-h1: 28px;
     --font-size-h2: 26px;
     --font-size-h3: 22px;
+    --font-size-lg: 18px;
+    --nav-height: 64px;
   }
 }
 
 @media (max-width: 480px) {
   :root {
     --font-size-h1: 24px;
-    --font-size-h2: 22px;
-    --container-padding: var(--space-2);
+    --font-size-h2: 21px;
+    --font-size-h3: 19px;
+    --font-size-base: 16px;
   }
 }
