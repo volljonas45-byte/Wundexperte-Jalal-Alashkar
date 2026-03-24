@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force\")",
+      "Bash(powershell -Command \"Get-ExecutionPolicy -List\")",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"C:/Users/jonas\" && git add \"Claude Website Projekte/Kent Stuttgart GMBH\" && git diff --cached --quiet || git commit -m \"Auto-deploy: $(date '+%Y-%m-%d %H:%M')\" && git push kent main --force 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

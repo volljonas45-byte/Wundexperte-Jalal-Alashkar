@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node screenshot.mjs http://localhost:3000)",
+      "Bash(node screenshot.mjs http://localhost:3000 final)",
+      "Bash(Start-Sleep -Seconds 2)",
+      "Bash(node \"c:\\\\Users\\\\jonas\\\\Claude Website Projekte\\\\Kent Stuttgart GMBH\\\\screenshot.mjs\")",
+      "Bash(node screenshot.mjs)",
+      "Bash(node -e \":*)",
+      "Read(//c/Users/jonas/**)",
+      "Bash(gh auth:*)",
+      "Bash(git:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"c:/Users/jonas/Claude Website Projekte/Kent Stuttgart GMBH\" && git add -A && (git diff --cached --quiet || (git commit -m \"Auto-publish: $(date +%Y%m%d-%H%M%S)\" && git push origin main)) 2>/dev/null || true",
+            "timeout": 60,
+            "async": true,
+            "statusMessage": "Veröffentlichen..."
+          }
+        ]
+      }
+    ]
+  }
+}

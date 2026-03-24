@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tampons — Kent Stuttgart GmbH</title>
+  <meta name="description" content="Drucktampons von Kent Stuttgart: 3 Qualitätsstufen, 9 Formen — Klick & Fix, Länglich, Quadratisch, Rechteckig, Rund, Sattel, Sonder, Walzen, Segmente." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:       #0B1526;
+      --ink2:      #1C2E45;
+      --paper:     #FFFFFF;
+      --paper2:    #F5F7FA;
+      --paper3:    #EEF1F6;
+      --blue:      #1058C0;
+      --blue2:     #1A76F0;
+      --blue-soft: #EBF2FF;
+      --red:       #C8221C;
+      --red2:      #E03530;
+      --red-soft:  #FEF0EF;
+      --text:      #0B1526;
+      --text2:     #3A526B;
+      --text3:     #6B8299;
+      --border:    #DDE4EE;
+      --border2:   #C8D5E8;
+      --fd: 'Big Shoulders Display', sans-serif;
+      --fo: 'Oswald', sans-serif;
+      --fb: 'DM Sans', sans-serif;
+      --fm: 'JetBrains Mono', monospace;
+      --ease: cubic-bezier(0.19,1,0.22,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--text2); font-family: var(--fb); font-weight: 400; line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--paper2); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    @keyframes fadeUp  { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+    @keyframes heroBreath { 0%,100% { opacity:.8; } 50% { opacity:1; } }
+
+    .reveal { opacity:0; transform:translateY(20px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal.visible { opacity:1; transform:none; }
+    .reveal-delay-1 { transition-delay:.1s; }
+    .reveal-delay-2 { transition-delay:.2s; }
+    .reveal-delay-3 { transition-delay:.3s; }
+    .reveal-delay-4 { transition-delay:.4s; }
+    .reveal-delay-5 { transition-delay:.5s; }
+
+    .divider-accent { height: 1px; background: linear-gradient(90deg, transparent, var(--blue2) 35%, var(--red) 65%, transparent); opacity: .2; }
+
+    /* TOPBAR */
+    @media (max-width:768px) {
+    }
+
+    /* NAV */
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; transition: top .3s var(--ease); }
+    #nav::before { content: ''; position: absolute; inset: 0;       background: rgba(4,9,26,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(43,114,212,0.15); transition: all .35s var(--ease); }
+    #
+    .nav-logo { position:relative; z-index:1; }
+    .nav-logo-img { height: 30px; width: auto; mix-blend-mode: screen; transition: filter .3s; }
+    #nav.scrolled .nav-logo-img { mix-blend-mode: normal; }
+    .nav-links { position:relative; z-index:1; display:flex; align-items:center; gap:1.5rem; list-style:none; }
+    .nav-links a { font-family: var(--fd); font-size: .73rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: rgba(255,255,255,.65); transition: color .2s; position: relative; }
+    #nav.scrolled .nav-links a { color: var(--text2); }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--blue2); transition: width .25s var(--ease); }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    #nav.scrolled .nav-links a:hover, #nav.scrolled .nav-links a.active { color: var(--text); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-right { position:relative; z-index:1; display:flex; align-items:center; gap:1.2rem; }
+    .nav-cta { font-family: var(--fd); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #fff; padding: .5rem 1.35rem; border: 1.5px solid rgba(255,255,255,.3); border-radius: 7px; transition: all .2s; }
+    #nav.scrolled .nav-cta { color: var(--text); border-color: var(--border2); }
+    .nav-cta:hover { background: var(--blue2); border-color: var(--blue2); color: #fff !important; }
+    @media (max-width:768px) { #nav { padding:0 1.25rem; } .nav-links { display:none; } }
+
+    /* HERO */
+    .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; background: #080F1E; display: flex; align-items: flex-end; }
+    .hero-grid { position:absolute; inset:0; pointer-events:none; background-image: linear-gradient(rgba(26,118,240,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(26,118,240,.025) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-glow { position:absolute; inset:0; pointer-events:none; background: radial-gradient(ellipse 55% 70% at 15% 55%, rgba(16,88,192,.2) 0%, transparent 65%), radial-gradient(ellipse 35% 50% at 75% 70%, rgba(200,34,28,.09) 0%, transparent 60%); animation: heroBreath 9s ease-in-out infinite; }
+    .hero-fade-bottom { position:absolute; bottom:0; left:0; right:0; height:35%; background: linear-gradient(to top, #080F1E, transparent); pointer-events:none; }
+    .hero-content { position:relative; z-index:10; padding: 0 2.5rem 5rem; max-width: 760px; }
+    .hero-eyebrow { font-family: var(--fm); font-size: .55rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(26,118,240,.85); display: flex; align-items: center; gap: .65rem; margin-bottom: 1.8rem; opacity: 0; animation: fadeIn 1s ease .3s forwards; }
+    .hero-eyebrow::before { content: ''; width: 20px; height: 1px; background: rgba(26,118,240,.7); }
+    .hero-h1 { font-family: var(--fd); font-weight: 900; font-size: clamp(5rem, 12vw, 13rem); line-height: .88; letter-spacing: -.01em; text-transform: uppercase; color: #fff; opacity: 0; transform: translateY(40px); animation: fadeUp 1.4s var(--ease) .5s forwards; }
+    .hero-h1 .ghost { display: block; color: rgba(255,255,255,.08); font-weight: 300; letter-spacing: .06em; font-size: .65em; }
+    .hero-h1 .solid { display: block; }
+    .hero-sub { font-family: var(--fo); font-size: 1rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-top: 2rem; opacity: 0; animation: fadeIn 1s ease 1.4s forwards; }
+    .hero-cta { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; opacity: 0; animation: fadeIn 1s ease 1.6s forwards; }
+    .btn-hero-primary { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--fd); font-size: .85rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #fff; background: var(--blue2); padding: .8rem 1.8rem; border-radius: 7px; transition: background .2s, transform .2s; box-shadow: 0 4px 20px rgba(26,118,240,.35); }
+    .btn-hero-primary:hover { background: var(--blue); transform: translateY(-1px); }
+    .btn-hero-outline { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--fd); font-size: .85rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: rgba(255,255,255,.7); border: 1.5px solid rgba(255,255,255,.2); padding: .8rem 1.8rem; border-radius: 7px; transition: all .2s; }
+    .btn-hero-outline:hover { color: #fff; border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
+
+    /* STATS STRIP */
+    .stats-strip { background: var(--ink); padding: 3.5rem 2rem; }
+    .stats-strip-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .stat-item { text-align: center; }
+    .stat-num { font-family: var(--fd); font-size: clamp(2.8rem,4vw,4rem); font-weight: 900; line-height: 1; color: #fff; letter-spacing: -.02em; }
+    .stat-num span { color: var(--blue2); }
+    .stat-num.red span { color: var(--red); }
+    .stat-unit { font-family: var(--fm); font-size: .52rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.3); display: block; margin-top: .4rem; }
+    @media (max-width:768px) { .stats-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1rem; } }
+
+    /* INTRO */
+    .intro-section { background: var(--paper2); padding: 7rem 2rem; }
+    .intro-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 420px; gap: 6rem; align-items: start; }
+    .eyebrow { font-family: var(--fm); font-size: .58rem; letter-spacing: .28em; text-transform: uppercase; color: var(--blue2); display: inline-flex; align-items: center; gap: .65rem; margin-bottom: 1rem; }
+    .eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--blue2); flex-shrink:0; }
+    .eyebrow.red { color: var(--red); }
+    .eyebrow.red::before { background: var(--red); }
+    .section-h2 { font-family: var(--fd); font-weight: 800; font-size: clamp(2.8rem,4.5vw,5rem); line-height: .92; letter-spacing: -.01em; text-transform: uppercase; color: var(--text); margin-bottom: 1.5rem; }
+    .section-h2 em { font-style:normal; color: var(--blue2); }
+    .intro-body { font-size: .95rem; line-height: 1.8; color: var(--text2); }
+    .intro-body + .intro-body { margin-top: 1rem; }
+    .fact-list { display: flex; flex-direction: column; gap: 0; }
+    .fact-row { display: flex; align-items: flex-start; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+    .fact-row:first-child { padding-top: 0; }
+    .fact-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .fact-num { font-family: var(--fo); font-size: 2.4rem; font-weight: 600; line-height: 1; color: var(--blue2); flex-shrink: 0; min-width: 60px; }
+    .fact-row:nth-child(even) .fact-num { color: var(--red); }
+    .fact-label { font-family: var(--fd); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--text); margin-bottom: .25rem; }
+    .fact-desc { font-size: .85rem; color: var(--text3); line-height: 1.6; }
+    @media (max-width:1024px) { .intro-inner { grid-template-columns: 1fr; gap: 3.5rem; } }
+
+    /* QUALITÄTSSTUFEN */
+    .qualit-section { background: var(--paper); padding: 7rem 2rem; }
+    .qualit-header { max-width: 1200px; margin: 0 auto 4.5rem; }
+    .qualit-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .qualit-card { border: 1px solid var(--border); border-top: 4px solid var(--blue2); padding: 2.5rem 2rem 2rem; position: relative; transition: box-shadow .3s, transform .3s var(--ease); }
+    .qualit-card.q2 { border-top-color: var(--red); }
+    .qualit-card.q2a { border-top-color: #9333ea; }
+    .qualit-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,.08); transform: translateY(-3px); }
+    .qualit-swatch {
+      width: 48px; height: 48px; border-radius: 50%;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.15);
+    }
+    .qualit-card .qualit-swatch { background: linear-gradient(135deg, #22c55e, #86efac); }
+    .qualit-card.q2 .qualit-swatch { background: linear-gradient(135deg, #3b82f6, #93c5fd); }
+    .qualit-card.q2a .qualit-swatch { background: linear-gradient(135deg, #ec4899, #f9a8d4); }
+    .qualit-level { font-family: var(--fm); font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text3); margin-bottom: .75rem; }
+    .qualit-name { font-family: var(--fd); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; color: var(--text); line-height: 1; margin-bottom: .5rem; }
+    .qualit-badge { display: inline-block; font-family: var(--fm); font-size: .55rem; letter-spacing: .1em; text-transform: uppercase; padding: .25rem .65rem; border-radius: 4px; margin-bottom: 1rem; background: var(--blue-soft); color: var(--blue); border: 1px solid rgba(26,118,240,.2); }
+    .qualit-card.q2 .qualit-badge { background: var(--red-soft); color: var(--red); border-color: rgba(200,34,28,.2); }
+    .qualit-card.q2a .qualit-badge { background: #faf5ff; color: #9333ea; border-color: rgba(147,51,234,.2); }
+    .qualit-desc { font-size: .88rem; color: var(--text2); line-height: 1.65; }
+    .qualit-shore { font-family: var(--fo); font-size: .85rem; font-weight: 500; color: var(--text3); margin-top: 1rem; }
+    @media (max-width:900px) { .qualit-grid { grid-template-columns: 1fr; } }
+
+    /* FORMEN SECTION */
+    .formen-section { background: var(--paper2); padding: 7rem 2rem; }
+    .formen-header { max-width: 1200px; margin: 0 auto 4.5rem; }
+    .formen-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .form-card { background: var(--paper); border: 1px solid var(--border); border-left: 3px solid var(--blue2); padding: 1.8rem 2rem; transition: box-shadow .25s, transform .25s var(--ease); }
+    .form-card:nth-child(even) { border-left-color: var(--red); }
+    .form-card:hover { box-shadow: 0 6px 30px rgba(0,0,0,.07); transform: translateY(-2px); }
+    .form-num { font-family: var(--fo); font-size: 1.6rem; font-weight: 600; color: var(--blue2); margin-bottom: .4rem; }
+    .form-card:nth-child(even) .form-num { color: var(--red); }
+    .form-name { font-family: var(--fd); font-size: 1.2rem; font-weight: 800; text-transform: uppercase; color: var(--text); margin-bottom: .4rem; }
+    .form-desc { font-size: .82rem; color: var(--text3); line-height: 1.55; }
+    @media (max-width:900px) { .formen-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width:600px) { .formen-grid { grid-template-columns: 1fr; } }
+
+    /* CTA */
+    .cta-section { background: var(--ink); padding: 7rem 2rem; position: relative; overflow: hidden; }
+    .cta-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 80% at 20% 50%, rgba(16,88,192,.15) 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 80% 60%, rgba(200,34,28,.08) 0%, transparent 60%); }
+    .cta-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
+    .cta-heading { font-family: var(--fd); font-weight: 900; font-size: clamp(2.5rem,4vw,4.5rem); line-height: .92; text-transform: uppercase; color: #fff; letter-spacing: -.01em; position: relative; z-index: 1; }
+    .cta-heading span { color: var(--blue2); }
+    .cta-sub { font-size: .95rem; color: rgba(255,255,255,.45); margin-top: 1rem; max-width: 480px; position: relative; z-index: 1; }
+    .cta-actions { display: flex; flex-direction: column; gap: 1rem; position: relative; z-index: 1; flex-shrink: 0; }
+    .btn-cta-primary { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--fd); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--blue2); padding: .9rem 2rem; border-radius: 7px; box-shadow: 0 4px 20px rgba(26,118,240,.35); transition: background .2s, transform .2s; }
+    .btn-cta-primary:hover { background: var(--blue); transform: translateY(-1px); }
+    .btn-cta-outline { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--fd); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.65); border: 1.5px solid rgba(255,255,255,.2); padding: .9rem 2rem; border-radius: 7px; transition: all .2s; }
+    .btn-cta-outline:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+    @media (max-width:768px) { .cta-inner { grid-template-columns: 1fr; } .cta-actions { flex-direction: row; flex-wrap: wrap; } }
+
+    /* FOOTER */
+    footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,.06); padding: 4rem 2rem 2.5rem; }
+    .footer-top { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 2rem; }
+    .footer-logo-img { height: 32px; width: auto; display: block; margin-bottom: 1rem; mix-blend-mode: screen; }
+    .footer-tagline { font-size: .82rem; color: rgba(255,255,255,.3); line-height: 1.7; max-width: 260px; margin-bottom: 1.2rem; }
+    .footer-address-line { font-size: .78rem; color: rgba(255,255,255,.28); line-height: 1.75; }
+    .footer-certs { display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .footer-cert { display: flex; align-items: center; gap: .4rem; font-family: var(--fm); font-size: .47rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.18); }
+    .footer-cert::before { content: '▸'; color: rgba(26,118,240,.4); font-size: .44rem; }
+    .footer-col-title { font-family: var(--fd); font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 1.2rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-links a { font-size: .82rem; color: rgba(255,255,255,.28); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.7); }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-family: var(--fm); font-size: .6rem; color: rgba(255,255,255,.22); letter-spacing: .1em; }
+    .footer-legal { display: flex; gap: 2rem; }
+    .footer-legal a { font-size: .75rem; color: rgba(255,255,255,.28); transition: color .2s; }
+    .footer-legal a:hover { color: rgba(255,255,255,.6); }
+    @media (max-width:1024px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+    @media (max-width:600px) { .footer-top { grid-template-columns: 1fr; gap: 2rem; } .footer-bottom { flex-direction:column; gap:1rem; text-align:center; } }
+  </style>
+</head>
+<body>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Startseite</a></li>
+      <li><a href="maschinen/index.html">Maschinen</a></li>
+      <li><a href="klischees/index.html">Klischees</a></li>
+      <li><a href="farben.html">Farben</a></li>
+      <li><a href="tampons.html" class="active">Tampons</a></li>
+      <li><a href="schulungen.html">Schulungen</a></li>
+      <li><a href="unternehmen.html">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="index.html#kontakt" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-fade-bottom"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Drucktampons &nbsp;·&nbsp; Kent Stuttgart GmbH &nbsp;·&nbsp; Seit 1987</div>
+      <h1 class="hero-h1">
+        <span class="ghost">DRUCKTAMPONS</span>
+        <span class="solid">TAMPONS.</span>
+      </h1>
+      <p class="hero-sub">3 Qualitätsstufen &nbsp;·&nbsp; 9 Formen &nbsp;·&nbsp; Standard &nbsp;·&nbsp; Dental &nbsp;·&nbsp; Antistatisch</p>
+      <div class="hero-cta">
+        <a href="#qualitaet" class="btn-hero-primary">
+          Qualitätsstufen entdecken
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+        <a href="index.html#kontakt" class="btn-hero-outline">
+          Anfrage stellen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stats-strip-inner">
+      <div class="stat-item reveal">
+        <div class="stat-num"><span>3</span></div>
+        <span class="stat-unit">Qualitätsstufen</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num red"><span>9</span></div>
+        <span class="stat-unit">Formen</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num"><span>100%</span></div>
+        <span class="stat-unit">Silikon</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-num"><span style="color:rgba(255,255,255,.7)">Made in</span></div>
+        <span class="stat-unit">Germany · Stuttgart</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-accent"></div>
+
+  <!-- INTRO -->
+  <section class="intro-section" id="intro">
+    <div class="intro-inner">
+      <div class="reveal">
+        <span class="eyebrow">Drucktampons</span>
+        <h2 class="section-h2">PRÄZISION<br><em>IN JEDER</em><br>FORM.</h2>
+        <p class="intro-body">
+          Kent fertigt hochwertige Drucktampons aus reinem Silikon in drei Qualitätsstufen und neun verschiedenen Grundformen. Jeder Tampon wird exakt auf die Anforderungen des Druckmotivs und des Substrats abgestimmt.
+        </p>
+        <p class="intro-body">
+          Die richtige Wahl des Tampons ist entscheidend für die Druckqualität: Härte, Form und Geometrie bestimmen, wie die Farbe vom Klischee aufgenommen und auf das Objekt übertragen wird. Kent berät Sie bei der Auswahl.
+        </p>
+      </div>
+      <div class="fact-list reveal reveal-delay-2">
+        <div class="fact-row">
+          <div class="fact-num">01</div>
+          <div>
+            <div class="fact-label">Standard (grün)</div>
+            <div class="fact-desc">Für allgemeine Tampondruckanwendungen. In verschiedenen Shore A-Härtegraden — weiß und gelb für spezifische Anpassungen.</div>
+          </div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-num">02</div>
+          <div>
+            <div class="fact-label">Qualität II (blau)</div>
+            <div class="fact-desc">Dental-Qualität für Präzisionsanwendungen mit höchsten Reinheitsanforderungen — zertifiziert für medizintechnische Bereiche.</div>
+          </div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-num">03</div>
+          <div>
+            <div class="fact-label">Qualität II A (pink)</div>
+            <div class="fact-desc">Antistatische Ausführung für die Elektronikindustrie und alle Bereiche, in denen elektrostatische Entladungen vermieden werden müssen.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-accent"></div>
+
+  <!-- QUALITÄTSSTUFEN -->
+  <section class="qualit-section" id="qualitaet">
+    <div class="qualit-header reveal">
+      <span class="eyebrow">Produktübersicht</span>
+      <h2 class="section-h2">DREI QUALITÄTEN.<br><em>JEDE ANFORDERUNG.</em></h2>
+    </div>
+    <div class="qualit-grid">
+
+      <div class="qualit-card reveal">
+        <div class="qualit-swatch"></div>
+        <div class="qualit-level">Qualitätsstufe 01</div>
+        <div class="qualit-name">Standard</div>
+        <div class="qualit-badge">Grün / Weiß / Gelb</div>
+        <p class="qualit-desc">Die universelle Wahl für den täglichen Tampondruckeinsatz. Erhältlich in verschiedenen Shore A-Härtegraden — grün als Standardhärte, weiß für weichere Anwendungen, gelb für erhöhte Anforderungen.</p>
+        <div class="qualit-shore">Shore A · Verschiedene Härtegrade</div>
+      </div>
+
+      <div class="qualit-card q2 reveal reveal-delay-1">
+        <div class="qualit-swatch"></div>
+        <div class="qualit-level">Qualitätsstufe 02</div>
+        <div class="qualit-name">Dental</div>
+        <div class="qualit-badge">Blau · Dental-Qualität</div>
+        <p class="qualit-desc">Höchste Reinheitsanforderungen für medizintechnische und dentalmedizinische Anwendungen. Zertifizierte Materialien, präzise gefertigt für exakteste Druckergebnisse in sensiblen Bereichen.</p>
+        <div class="qualit-shore">Shore A · Dental-zertifiziert</div>
+      </div>
+
+      <div class="qualit-card q2a reveal reveal-delay-2">
+        <div class="qualit-swatch"></div>
+        <div class="qualit-level">Qualitätsstufe 02 A</div>
+        <div class="qualit-name">Antistatisch</div>
+        <div class="qualit-badge">Pink · ESD-sicher</div>
+        <p class="qualit-desc">Speziell für die Elektronikindustrie — verhindert elektrostatische Entladungen beim Druckprozess. Unverzichtbar beim Bedrucken empfindlicher Elektronikbauteile und Platinen.</p>
+        <div class="qualit-shore">Shore A · Antistatisch (ESD)</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider-accent"></div>
+
+  <!-- FORMEN -->
+  <section class="formen-section" id="formen">
+    <div class="formen-header reveal">
+      <span class="eyebrow">Formenvarianten</span>
+      <h2 class="section-h2">NEUN FORMEN.<br><em>JEDES MOTIV.</em></h2>
+    </div>
+    <div class="formen-grid">
+
+      <div class="form-card reveal">
+        <div class="form-num">01</div>
+        <div class="form-name">Klick &amp; Fix</div>
+        <p class="form-desc">Schnellwechselsystem für effizienten Tamponwechsel im laufenden Betrieb — ohne Werkzeug, in Sekunden.</p>
+      </div>
+
+      <div class="form-card reveal reveal-delay-1">
+        <div class="form-num">02</div>
+        <div class="form-name">Längliche</div>
+        <p class="form-desc">Für schmale, längliche Druckmotive und Linien. Optimale Druckverteilung bei rechteckigen und ovalen Formaten.</p>
+      </div>
+
+      <div class="form-card reveal reveal-delay-2">
+        <div class="form-num">03</div>
+        <div class="form-name">Quadratische</div>
+        <p class="form-desc">Für quadratische Druckflächen. Gleichmäßige Druckübertragung in alle Richtungen ohne Verzerrung.</p>
+      </div>
+
+      <div class="form-card reveal reveal-delay-1">
+        <div class="form-num">04</div>
+        <div class="form-name">Rechteckige</div>
+        <p class="form-desc">Universalform für die meisten Standardanwendungen. Hohe Flexibilität bei verschiedenen Motivgrößen.</p>
+      </div>
+
+      <div class="form-card reveal reveal-delay-2">
+        <div class="form-num">05</div>
+        <div class="form-name">Runde</div>
+        <p class="form-desc">Ideal für kreisrunde Motive und Logos. Gleichmäßige Druckverteilung in alle Richtungen.</p>
+      </div>
+
+      <div class="form-card reveal reveal-delay-3">
+        <div class="form-num">06</div>
+        <div class="form-name">Sattel</div>
+        <p class="form-desc">Für gewölbte Substrate wie Kugelschreiber, Rundobjekte und zylindrische Flächen — passt sich der Kontur an.</p>
+      </div>
+
+      <div class="form-card reveal reveal-delay-2">
+        <div class="form-num">07</div>
+        <div class="form-name">Sonder</div>
+        <p class="form-desc">Kundenspezifische Sonderformen nach Zeichnung oder Muster — für besondere Druckanforderungen und schwer zugängliche Flächen.</p>
+      </div>
+
+      <div class="form-card reveal reveal-delay-3">
+        <div class="form-num">08</div>
+        <div class="form-name">Walzen</div>
+        <p class="form-desc">Für den Rotationstampondruck. Kontinuierliche Druckübertragung auf zylindrische und endlose Substrat-Oberflächen.</p>
+      </div>
+
+      <div class="form-card reveal reveal-delay-4">
+        <div class="form-num">09</div>
+        <div class="form-name">Segmente</div>
+        <p class="form-desc">Segmentierte Walzenform für den Rotationsdruck mit abgesetzten Motiven — flexibel einsetzbar bei Mehrfarbdruck.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="cta-inner">
+      <div class="reveal">
+        <h2 class="cta-heading">TAMPON<br><span>ANFRAGEN.</span></h2>
+        <p class="cta-sub">Teilen Sie uns Ihr Druckmotiv und die Substratgeometrie mit — wir empfehlen den optimalen Tampon für Ihre Anwendung.</p>
+      </div>
+      <div class="cta-actions reveal reveal-delay-1">
+        <a href="index.html#kontakt" class="btn-cta-primary">
+          Jetzt anfragen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="farben.html" class="btn-cta-outline">
+          Farben ansehen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
+        <p class="footer-tagline">Tampondruckmaschinen und Klischees für die internationale Industrie. Entwickelt und gefertigt in Stuttgart seit 1987.</p>
+        <div>
+          <div class="footer-address-line">Kent Stuttgart GmbH</div>
+          <div class="footer-address-line">Böblinger Straße, 70565 Stuttgart</div>
+          <div class="footer-address-line" style="margin-top:.4rem">info@kent-stuttgart.de</div>
+        </div>
+        <div class="footer-certs">
+          <span class="footer-cert">DIN EN ISO 9001</span>
+          <span class="footer-cert">CE-Kennzeichnung</span>
+          <span class="footer-cert">Made in Germany</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Tampons</div>
+        <ul class="footer-links">
+          <li><a href="#qualitaet">Qualitätsstufen</a></li>
+          <li><a href="#formen">Alle 9 Formen</a></li>
+          <li><a href="index.html#kontakt">Tampon anfragen</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Produkte</div>
+        <ul class="footer-links">
+          <li><a href="maschinen/index.html">Maschinen</a></li>
+          <li><a href="klischees/index.html">Klischees</a></li>
+          <li><a href="farben.html">Farben</a></li>
+          <li><a href="schulungen.html">Schulungen</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a href="unternehmen.html">Über Kent Stuttgart</a></li>
+          <li><a href="index.html#kontakt">Kontakt</a></li>
+          <li><a href="index.html">Startseite</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Kent Stuttgart GmbH · Alle Rechte vorbehalten</span>
+      <div class="footer-legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+        <a href="#">AGB</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => obs.observe(r));
+  </script>
+</body>
+</html>

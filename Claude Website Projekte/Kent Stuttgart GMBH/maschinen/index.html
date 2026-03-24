@@ -180,16 +180,12 @@
     #nav.bar-gone { top: 0; }
     #nav::before {
       content: ''; position: absolute; inset: 0;
-      background: transparent; backdrop-filter: blur(0);
-      border-bottom: 1px solid transparent;
+            background: rgba(4,9,26,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(43,114,212,0.15);
       transition: all .35s var(--ease);
     }
-    #nav.scrolled::before {
-      background: rgba(255,255,255,.96);
-      backdrop-filter: blur(20px);
-      border-bottom-color: var(--border);
-      box-shadow: 0 1px 20px rgba(0,0,0,.06);
-    }
+    #
     .nav-logo { position: relative; z-index: 1; }
     .nav-logo-img { height: 30px; width: auto; }
     .nav-logo-img.invert-on-scroll { mix-blend-mode: screen; transition: filter .3s; }

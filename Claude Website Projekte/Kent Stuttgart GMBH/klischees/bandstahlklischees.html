@@ -28,8 +28,10 @@
     @media(max-width:768px){#topbar{padding:.4rem 1.25rem}.topbar-left{display:none}}
     #nav{position:fixed;top:37px;left:0;right:0;z-index:500;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;transition:top .3s var(--ease)}
     #nav.bar-gone{top:0}
-    #nav::before{content:'';position:absolute;inset:0;background:transparent;backdrop-filter:blur(0);border-bottom:1px solid transparent;transition:all .35s var(--ease)}
-    #nav.scrolled::before{background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom-color:var(--border);box-shadow:0 1px 20px rgba(0,0,0,.06)}
+    #nav::before{content:'';position:absolute;inset:0;      background: rgba(4,9,26,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(43,114,212,0.15);transition:all .35s var(--ease)}
+    #
     .nav-logo{position:relative;z-index:1}.nav-logo-img{height:30px;width:auto;mix-blend-mode:screen;transition:filter .3s}
     #nav.scrolled .nav-logo-img{mix-blend-mode:normal}
     .nav-links{position:relative;z-index:1;display:flex;align-items:center;gap:2.2rem;list-style:none}
