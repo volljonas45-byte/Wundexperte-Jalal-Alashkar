@@ -1263,9 +1263,8 @@
     const nav     = document.getElementById('main-nav');
 
     function handleNavScroll() {
-      const y    = window.scrollY;
-      const tbH  =
-      nav.classList.toggle('bar-gone', y > tbH);
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 10);
     }
     window.addEventListener('scroll', handleNavScroll, { passive: true });
     handleNavScroll();
