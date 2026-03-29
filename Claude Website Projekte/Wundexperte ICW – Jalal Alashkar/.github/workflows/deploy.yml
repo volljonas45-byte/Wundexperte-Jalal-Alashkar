@@ -3,6 +3,9 @@ name: Deploy Wundexperte to GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'Claude Website Projekte/Wundexperte ICW – Jalal Alashkar/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
@@ -25,6 +28,6 @@ jobs:
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: 'Claude Website Projekte/Wundexperte ICW – Jalal Alashkar'
       - id: deployment
         uses: actions/deploy-pages@v4
